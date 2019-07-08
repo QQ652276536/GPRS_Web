@@ -1,9 +1,12 @@
-package com.zistone.entity;
+package com.zistone.bean;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
@@ -36,6 +39,9 @@ public class UserInfo {
     /**
      * 用户名
      */
+    //TODO:使用自定义验证注解更好
+    @NotEmpty(message = "用户名不能为空")
+    @NotBlank(message = "用户名不能为空")
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '用户名'")
     private String m_userName;
 
@@ -50,6 +56,9 @@ public class UserInfo {
     /**
      * 用户实名
      */
+    //TODO:使用自定义验证注解更好
+    @NotEmpty(message = "姓名不能为空")
+    @NotBlank(message = "姓名不能为空")
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '用户实名'")
     private String m_realName;
 
@@ -64,6 +73,8 @@ public class UserInfo {
     /**
      * 注册手机号
      */
+    //TODO:使用自定义验证注解更好
+    @Length(min = 11, max = 11, message = "手机号码非法")
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '注册手机号'")
     private int m_phoneNumber;
 
@@ -95,7 +106,7 @@ public class UserInfo {
     @Column(columnDefinition = "int default '1' comment '用户留痕:0已注销1正在使用'")
     private boolean m_isDelete;
 
-    public boolean isM_isDelete() {
+    public boolean getM_isDelete() {
         return m_isDelete;
     }
 

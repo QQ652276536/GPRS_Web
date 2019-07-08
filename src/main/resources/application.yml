@@ -1,0 +1,29 @@
+server:
+  servlet:
+    context-path: /Blowdown
+  port: 8080
+
+spring:
+  datasource:
+    driver: mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    #使用Unicode编码,UTF-8编码,SSL连接,中国标准时间
+    url: jdbc:mysql://101.132.102.203:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSS=true&serverTimezone=Asia/Shanghai
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+
+logging:
+  #样式
+  pattern:
+  #路径
+  path: "./logs"
+  file:
+    max-history: 30
+    max-size: 10MB
+  #级别
+  level:
+    root: INFO

@@ -32,6 +32,7 @@ public class UserInfoService {
      */
     public UserInfo Register(UserInfo userInfo) {
         return InsertUser(userInfo);
+
     }
 
     @Transactional
@@ -62,7 +63,7 @@ public class UserInfoService {
         tempUserInfo.setM_realName(userInfo.getM_userName());
         tempUserInfo.setM_phoneNumber(userInfo.getM_phoneNumber());
         tempUserInfo.setM_level(userInfo.getM_level());
-        tempUserInfo.setM_isDelete(userInfo.getM_isDelete());
+        tempUserInfo.setM_state(userInfo.getM_state());
         return m_userInfoRepository.save(userInfo);
     }
 

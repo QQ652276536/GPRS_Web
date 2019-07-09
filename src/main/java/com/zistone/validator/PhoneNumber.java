@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = PhoneNumberValidator.class)
 //注解应用类型
 @Target({ElementType.METHOD, ElementType.FIELD})
-//保留至运行时,可以被反射读取
+//注解的生命周期
 @Retention(RetentionPolicy.RUNTIME)
 @NotNull
 public @interface PhoneNumber {

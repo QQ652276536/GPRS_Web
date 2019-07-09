@@ -4,11 +4,14 @@ import com.zistone.validator.PhoneNumber;
 import com.zistone.validator.UserName;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+//监听实体类增删操作
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "userinfo")
 public class UserInfo {
 
@@ -17,7 +20,7 @@ public class UserInfo {
 
     @Override
     public String toString() {
-        return "UserInfo{" + "m_id=" + m_id + ", m_userName='" + m_userName + '\'' + ", m_realName='" + m_realName + '\'' + ", m_phoneNumber=" + m_phoneNumber + ", m_level=" + m_level + ", m_isDelete=" + m_isDelete + ", m_craeteTime=" + m_craeteTime + ", m_updateTime=" + m_updateTime + '}';
+        return "UserInfo{" + "m_id=" + m_id + ", m_userName='" + m_userName + '\'' + ", m_realName='" + m_realName + '\'' + ", m_phoneNumber='" + m_phoneNumber + '\'' + ", m_level=" + m_level + ", m_state=" + m_state + ", m_craeteTime=" + m_craeteTime + ", m_updateTime=" + m_updateTime + ", m_password='" + m_password + '\'' + '}';
     }
 
     /**
@@ -94,17 +97,17 @@ public class UserInfo {
     }
 
     /**
-     * 用户留痕
+     * 用户状态
      */
-    @Column(columnDefinition = "boolean default 'false' comment '用户留痕:true已注销false正在使用'")
-    private boolean m_isDelete;
+    @Column(columnDefinition = "int default '1' comment '用户状态:1正常使用2注销3冻结'")
+    private int m_state;
 
-    public boolean getM_isDelete() {
-        return m_isDelete;
+    public int getM_state() {
+        return m_state;
     }
 
-    public void setM_isDelete(boolean m_isDelete) {
-        this.m_isDelete = m_isDelete;
+    public void setM_state(int m_state) {
+        this.m_state = m_state;
     }
 
     /**

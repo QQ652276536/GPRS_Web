@@ -4,6 +4,7 @@ server:
   port: 8080
 
 spring:
+  #数据源
   datasource:
     driver: mysql.cj.jdbc.Driver
     username: root
@@ -42,6 +43,10 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000;druid.stat.logSlowSql=true
     #合并多个DruidDataSource的监控数据
     useGlobalDataSourceStat: true
+  #时间戳统一转换
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 
 logging:
   #样式
@@ -54,3 +59,4 @@ logging:
   #级别
   level:
     root: INFO
+

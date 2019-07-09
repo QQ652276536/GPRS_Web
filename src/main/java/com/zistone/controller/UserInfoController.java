@@ -4,7 +4,10 @@ import com.zistone.bean.UserInfo;
 import com.zistone.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -21,7 +24,6 @@ public class UserInfoController {
     public UserInfo Login(@RequestBody UserInfo userInfo) {
         logger.info("收到登录请求,参数是:" + userInfo.toString());
         //TODO:校验参数
-
         return m_userInfoService.Login(userInfo);
     }
 

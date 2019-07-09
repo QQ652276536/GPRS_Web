@@ -143,4 +143,19 @@ public class UserInfo {
     public void setM_updateTime(Date m_updateTime) {
         this.m_updateTime = m_updateTime;
     }
+
+    /**
+     * 密码
+     */
+    //TODO:应该使用加密
+    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '登录密码'")
+    private String m_password;
+
+    public String getM_password() {
+        return m_password;
+    }
+
+    public void setM_password(String m_password) {
+        this.m_password = m_password;
+    }
 }

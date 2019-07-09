@@ -2,18 +2,29 @@ package com.zistone.service;
 
 import com.zistone.bean.UserInfo;
 import com.zistone.repository.UserInfoRepository;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
 
+@Service
 public class UserInfoService {
 
     @Resource
     private UserInfoRepository m_userInfoRepository;
 
+    /**
+     * 登录
+     * @param userInfo
+     * @return
+     */
+    public UserInfo Login(UserInfo userInfo) {
+        return m_userInfoRepository.FindUserByNameAndPwd(userInfo.getM_userName(), userInfo.getM_password());
+    }
+
     @Transactional
-    public void SaveAll(List<UserInfo> userInfoList) {
+    public void SaveList(List<UserInfo> userInfoList) {
         m_userInfoRepository.saveAll(userInfoList);
     }
 
@@ -42,6 +53,18 @@ public class UserInfoService {
         tempUserInfo.setM_level(userInfo.getM_level());
         tempUserInfo.setM_isDelete(userInfo.getM_isDelete());
         return m_userInfoRepository.save(userInfo);
+    }
+
+    public void DelUserById(Integer id) {
+        m_userInfoRepository.deleteById(id);
+    }
+
+    public UserInfo DelUserByName(String name) {
+        UserInfo tempUser = m_userInfoRepository.FindUserByName(name);
+        if (tempUser != null) {
+            m_userInfoRepository.delete(tempUser);
+        }
+        return tempUser;
     }
 
 }

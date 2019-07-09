@@ -16,11 +16,22 @@ public class UserInfoService {
 
     /**
      * 登录
+     *
      * @param userInfo
      * @return
      */
     public UserInfo Login(UserInfo userInfo) {
         return m_userInfoRepository.FindUserByNameAndPwd(userInfo.getM_userName(), userInfo.getM_password());
+    }
+
+    /**
+     * 注册
+     *
+     * @param userInfo
+     * @return
+     */
+    public UserInfo Register(UserInfo userInfo) {
+        return InsertUser(userInfo);
     }
 
     @Transactional

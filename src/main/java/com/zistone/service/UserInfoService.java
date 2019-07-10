@@ -30,9 +30,8 @@ public class UserInfoService {
      * @param userInfo
      * @return
      */
-    public UserInfo Register(UserInfo userInfo) {
+    public String Register(UserInfo userInfo) {
         return InsertUser(userInfo);
-
     }
 
     @Transactional
@@ -48,12 +47,15 @@ public class UserInfoService {
         return m_userInfoRepository.findAll();
     }
 
-    public UserInfo InsertUser(UserInfo userInfo) {
+    public String InsertUser(UserInfo userInfo) {
         UserInfo existUser = m_userInfoRepository.FindUserByName(userInfo.getM_userName());
         if (existUser == null) {
-            return m_userInfoRepository.save(userInfo);
+            m_userInfoRepository.save(userInfo);
+            return "注册成功";
+        } else if (userInfo.getM_userName().equals(existUser.getM_userName())) {
+            return "注册失败,该用户名已存在";
         } else {
-            return existUser;
+            return "注册失败";
         }
     }
 

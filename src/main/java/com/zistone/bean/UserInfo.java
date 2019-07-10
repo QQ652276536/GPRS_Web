@@ -1,6 +1,7 @@
 package com.zistone.bean;
 
 import com.zistone.validator.PhoneNumber;
+import com.zistone.validator.RealName;
 import com.zistone.validator.UserName;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -56,6 +57,7 @@ public class UserInfo {
     /**
      * 用户实名
      */
+    @RealName
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '用户实名'")
     private String m_realName;
 

@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @NotNull
 public @interface UserName {
-    String message() default "非法用户名";
+    String message() default "非法姓名";
 
     Class<?>[] groups() default {};
 

@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, String> {
 
-    private Pattern pattern = Pattern.compile("^(13\\d|14[579]|15[^4\\D]|17[^49\\D]|18\\d)\\d{8}$");
+    private Pattern pattern = Pattern.compile("^(13|14|15|18|17)[0-9]{9}");
 
     @Override
     public void initialize(PhoneNumber constraintAnnotation) {

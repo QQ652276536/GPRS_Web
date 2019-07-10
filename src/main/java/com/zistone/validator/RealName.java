@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @NotNull
 public @interface RealName {
-    String message() default "非法手机号码";
+    String message() default "非法姓名";
 
     Class<?>[] groups() default {};
 

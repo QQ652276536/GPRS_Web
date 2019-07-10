@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @NotNull
 public @interface PhoneNumber {
-    String message() default "非法手机号码";
+    String message() default "非法手机号";
 
     Class<?>[] groups() default {};
 

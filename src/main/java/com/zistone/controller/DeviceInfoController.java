@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/DeviceInfo")
@@ -27,8 +28,28 @@ public class DeviceInfoController {
     @RequestMapping(value = "/Delete", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String Delete(@RequestParam int id) {
         logger.info("收到删除设备请求,参数是:" + id);
-        //TODO:校验参数
         m_deviceInfoService.DelDeviceById(id);
         return "success";
     }
+
+    @RequestMapping(value = "/FindAll", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public List<DeviceInfo> FindAllDevice() {
+        return m_deviceInfoService.FindAllDevice();
+    }
+
+    @RequestMapping(value = "/FindById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public DeviceInfo FindById(int id) {
+        return m_deviceInfoService.FindDeviceById(id);
+    }
+
+    @RequestMapping(value = "/FindByName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public DeviceInfo FindByName(String name) {
+        return m_deviceInfoService.FindDeviceByName(name);
+    }
+
+    @RequestMapping(value = "/FindByNameAndId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public DeviceInfo FindByNameAndId(String name, int id) {
+        return m_deviceInfoService.FindDeviceByNameAndId(name, id);
+    }
+
 }

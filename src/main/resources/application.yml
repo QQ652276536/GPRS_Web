@@ -10,7 +10,8 @@ spring:
     username: root
     password: root
     #使用Unicode编码,UTF-8编码,SSL连接,中国标准时间
-    url: jdbc:mysql://101.132.102.203:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSS=true&serverTimezone=Asia/Shanghai
+    #url: jdbc:mysql://101.132.102.203:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSS=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSS=true&serverTimezone=Asia/Shanghai
   jpa:
     hibernate:
       ddl-auto: update
@@ -23,14 +24,14 @@ spring:
     #配置获取连接等待超时的时间
     maxWait: 60000
     #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-    timeBetweenEvictionRunsMillis: 6000
+    timeBetweenEvictionRunsMillis: 60000
     #配置一个连接在池中最小生存的时间，单位是毫秒
     minEvictableIdleTimeMillis: 300000
     #验证连接是否有效。此参数必须设置为非空字符串，下面三项设置成true才能生效
     validationQuery: SELECT 1
     #指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除
     testWhileIdle: true
-    #指明是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个
+    #指明是否在从池中取出连接检验可用性,如果检验失败,则从池中去除连接并尝试取出另一个
     testOnBorrow: true
     #指明是否在归还到池中前进行检验
     testOnReturn: false

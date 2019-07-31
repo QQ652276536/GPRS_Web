@@ -17,6 +17,12 @@ public class DeviceInfo
     {
     }
 
+    @Override
+    public String toString()
+    {
+        return "DeviceInfo{" + "m_id=" + m_id + ", m_deviceName='" + m_deviceName + '\'' + ", m_type='" + m_type + '\'' + ", m_state=" + m_state + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_craeteTime=" + m_craeteTime + ", m_updateTime=" + m_updateTime + ", m_description='" + m_description + '\'' + '}';
+    }
+
     /**
      * 设备编号(由数据库生成)
      */

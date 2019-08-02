@@ -11,7 +11,7 @@
     <groupId>com.zistone</groupId>
     <artifactId>Blowdown_Web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
+    <name>Blowdown_web</name>
     <description>排污项目的服务端框架</description>
 
     <properties>

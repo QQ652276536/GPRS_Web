@@ -9,13 +9,15 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class DeviceInfoService {
+public class DeviceInfoService
+{
 
     @Resource
     private DeviceInfoRepository m_deviceInfoRepository;
 
     @Transactional
-    public void SaveList(List<DeviceInfo> deviceInfoList) {
+    public void SaveList(List<DeviceInfo> deviceInfoList)
+    {
         m_deviceInfoRepository.saveAll(deviceInfoList);
     }
 
@@ -25,7 +27,8 @@ public class DeviceInfoService {
      * @param id
      * @return
      */
-    public DeviceInfo FindDeviceById(int id) {
+    public DeviceInfo FindDeviceById(int id)
+    {
         return m_deviceInfoRepository.FindDeviceById(id);
     }
 
@@ -36,7 +39,8 @@ public class DeviceInfoService {
      * @param id
      * @return
      */
-    public DeviceInfo FindDeviceByNameAndId(String name, int id) {
+    public DeviceInfo FindDeviceByNameAndId(String name, int id)
+    {
         return m_deviceInfoRepository.FindDeviceByNameAndId(name, id);
     }
 
@@ -46,7 +50,8 @@ public class DeviceInfoService {
      * @param name
      * @return
      */
-    public DeviceInfo FindDeviceByName(String name) {
+    public DeviceInfo FindDeviceByName(String name)
+    {
         return m_deviceInfoRepository.FindDeviceByName(name);
     }
 
@@ -55,7 +60,8 @@ public class DeviceInfoService {
      *
      * @return
      */
-    public List<DeviceInfo> FindAllDevice() {
+    public List<DeviceInfo> FindAllDevice()
+    {
         return m_deviceInfoRepository.findAll();
     }
 
@@ -65,15 +71,23 @@ public class DeviceInfoService {
      * @param deviceInfo
      * @return
      */
-    public String InsertDevice(DeviceInfo deviceInfo) {
+    public String InsertDevice(DeviceInfo deviceInfo)
+    {
         DeviceInfo existDevice = m_deviceInfoRepository.FindDeviceByName(deviceInfo.getM_deviceName());
-        if (existDevice == null) {
-            m_deviceInfoRepository.save(deviceInfo);
-            return "设备添加成功";
-        } else if (deviceInfo.getM_deviceName().equals(existDevice.getM_deviceName())) {
-            return "设备添加失败,该设备名已存在";
-        } else {
-            return "设备添加失败";
+        if (existDevice == null)
+        {
+            DeviceInfo saveDevice = m_deviceInfoRepository.save(deviceInfo);
+            return saveDevice.getM_id() + "";
+        }
+        else if (deviceInfo.getM_deviceName().equals(existDevice.getM_deviceName()))
+        {
+            //设备添加失败,该设备名已存在
+            return "-1";
+        }
+        else
+        {
+            //设备添加失败
+            return "-2";
         }
     }
 
@@ -83,7 +97,8 @@ public class DeviceInfoService {
      * @param deviceInfo
      * @return
      */
-    public DeviceInfo UpdateDevice(DeviceInfo deviceInfo) {
+    public DeviceInfo UpdateDevice(DeviceInfo deviceInfo)
+    {
         DeviceInfo tempDeviceInfo = new DeviceInfo();
         tempDeviceInfo.setM_deviceName(deviceInfo.getM_deviceName());
         tempDeviceInfo.setM_type(deviceInfo.getM_type());
@@ -99,7 +114,8 @@ public class DeviceInfoService {
      *
      * @param id
      */
-    public void DelDeviceById(Integer id) {
+    public void DelDeviceById(Integer id)
+    {
         m_deviceInfoRepository.deleteById(id);
     }
 
@@ -109,9 +125,11 @@ public class DeviceInfoService {
      * @param name
      * @return
      */
-    public DeviceInfo DelDeviceByName(String name) {
+    public DeviceInfo DelDeviceByName(String name)
+    {
         DeviceInfo tempDevice = m_deviceInfoRepository.FindDeviceByName(name);
-        if (tempDevice != null) {
+        if (tempDevice != null)
+        {
             m_deviceInfoRepository.delete(tempDevice);
         }
         return tempDevice;

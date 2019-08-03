@@ -29,9 +29,9 @@ spring:
     maximum-pool-size: 15
     auto-commit: true
     idle-timeout: 30000
-    pool-name: DatebookHikariCP
-    #一个连接的有效时长
-    max-lifetime: 1800000
+    #一个连接在池中的存活时间,默认是1800000即30分钟
+    max-lifetime: 30000
+    #连接超时
     connection-timeout: 30000
     connection-test-query: SELECT 1
     type: com.zaxxer.hikari.HikariDataSource

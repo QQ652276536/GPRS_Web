@@ -4,46 +4,64 @@ server:
   port: 8080
 
 spring:
-  #数据源
+  #通用数据源
   datasource:
     driver: mysql.cj.jdbc.Driver
     username: root
-    password: root
+    password: Passw0rd
     #使用Unicode编码,UTF-8编码,SSL连接,中国标准时间
-    url: jdbc:mysql://101.132.102.203:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    #url: jdbc:mysql://101.132.102.203:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     #url: jdbc:mysql://localhost:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://49.234.4.245:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+  #JPA配置
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    #禁用OpenSessionInView
     open-in-view: false
-    #初始化大小
-    initialSize: 5
-    minIdle: 10
-    maxActive: 1000
-    #配置获取连接等待超时的时间
-    maxWait: 60000
-    #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-    timeBetweenEvictionRunsMillis: 60000
-    #配置一个连接在池中最小生存的时间，单位是毫秒
-    minEvictableIdleTimeMillis: 300000
-    #验证连接是否有效。此参数必须设置为非空字符串，下面三项设置成true才能生效
-    validationQuery: SELECT 1
-    #指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除
-    testWhileIdle: true
-    #指明是否在从池中取出连接检验可用性,如果检验失败,则从池中去除连接并尝试取出另一个
-    testOnBorrow: true
-    #指明是否在归还到池中前进行检验
-    testOnReturn: false
-    #打开PSCache，并且指定每个连接上PSCache的大小
-    poolPreparedStatements: true
-    maxPoolPreparedStatementPerConnectionSize: 20
-    #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-    filters: stat,wall,log4j
-    #通过connectProperties属性来打开mergeSql功能；慢SQL记录
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000;druid.stat.logSlowSql=true
-    #合并多个DruidDataSource的监控数据
-    useGlobalDataSourceStat: true
+  #SpringBoot2.0以后默认连接池是Hikari
+  hikari:
+    read-only: false
+    #维护的最小空闲数
+    minimum-idle: 5
+    #最大连接数
+    maximum-pool-size: 15
+    auto-commit: true
+    idle-timeout: 30000
+    #一个连接在池中的存活时间,默认是1800000即30分钟
+    max-lifetime: 30000
+    #连接超时
+    connection-timeout: 30000
+    connection-test-query: SELECT 1
+    type: com.zaxxer.hikari.HikariDataSource
+  #    #初始化大小
+  #    initialSize: 5
+  #    minIdle: 10
+  #    maxActive: 1000
+  #    #配置获取连接等待超时的时间
+  #    maxWait: 60000
+  #    #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+  #    timeBetweenEvictionRunsMillis: 60000
+  #    #配置一个连接在池中最小生存的时间，单位是毫秒
+  #    minEvictableIdleTimeMillis: 300000
+  #    #验证连接是否有效。此参数必须设置为非空字符串，下面三项设置成true才能生效
+  #    validationQuery: SELECT 1
+  #    #指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除
+  #    testWhileIdle: true
+  #    #指明是否在从池中取出连接检验可用性,如果检验失败,则从池中去除连接并尝试取出另一个
+  #    testOnBorrow: true
+  #    #指明是否在归还到池中前进行检验
+  #    testOnReturn: false
+  #    #打开PSCache，并且指定每个连接上PSCache的大小
+  #    poolPreparedStatements: true
+  #    maxPoolPreparedStatementPerConnectionSize: 20
+  #    #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+  #    filters: stat,wall,log4j
+  #    #通过connectProperties属性来打开mergeSql功能；慢SQL记录
+  #    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000;druid.stat.logSlowSql=true
+  #    #合并多个DruidDataSource的监控数据
+  #    useGlobalDataSourceStat: true
   #时间戳统一转换
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss

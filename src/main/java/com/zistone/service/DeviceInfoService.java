@@ -86,7 +86,7 @@ public class DeviceInfoService
         }
         else
         {
-            //设备添加失败
+            //设备添加失败,未知错误
             return "-2";
         }
     }

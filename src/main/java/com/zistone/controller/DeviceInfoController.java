@@ -30,7 +30,8 @@ public class DeviceInfoController
     {
         logger.info(">>>收到新增设备请求:" + deviceInfo.toString());
         //TODO:校验参数
-        return m_deviceInfoService.InsertDevice(deviceInfo);
+        //<<<用于表示Socket发Http请求时的结束标识符
+        return m_deviceInfoService.InsertDevice(deviceInfo) + "<<<\r\n";
     }
 
     @RequestMapping(value = "/DeleteById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

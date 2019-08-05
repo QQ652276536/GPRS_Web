@@ -13,23 +13,25 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/UserInfo")
-public class UserInfoController {
-
+public class UserInfoController
+{
     Logger logger = LoggerFactory.getLogger(UserInfoController.class);
 
     @Resource
     UserInfoService m_userInfoService;
 
     @RequestMapping(value = "/Login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public UserInfo Login(@RequestBody UserInfo userInfo) {
-        logger.info("收到登录请求,参数是:" + userInfo.toString());
+    public UserInfo Login(@RequestBody UserInfo userInfo)
+    {
+        logger.info(">>>收到登录请求:" + userInfo.toString());
         //TODO:校验参数
         return m_userInfoService.Login(userInfo);
     }
 
     @RequestMapping(value = "/Register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public String Register(@RequestBody UserInfo userInfo) {
-        logger.info("收到注册请求,参数是:" + userInfo.toString());
+    public String Register(@RequestBody UserInfo userInfo)
+    {
+        logger.info(">>>收到注册请求:" + userInfo.toString());
         //TODO:校验参数
         return m_userInfoService.Register(userInfo);
     }

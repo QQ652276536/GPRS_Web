@@ -97,16 +97,10 @@ public class DeviceInfoService
      * @param deviceInfo
      * @return
      */
-    public DeviceInfo UpdateDevice(DeviceInfo deviceInfo)
+    public int UpdateDeviceByName(DeviceInfo deviceInfo)
     {
-        DeviceInfo tempDeviceInfo = new DeviceInfo();
-        tempDeviceInfo.setM_deviceName(deviceInfo.getM_deviceName());
-        tempDeviceInfo.setM_type(deviceInfo.getM_type());
-        tempDeviceInfo.setM_lat(deviceInfo.getM_lat());
-        tempDeviceInfo.setM_lot(deviceInfo.getM_lot());
-        tempDeviceInfo.setM_state(deviceInfo.getM_state());
-        tempDeviceInfo.setM_description(deviceInfo.getM_description());
-        return m_deviceInfoRepository.save(deviceInfo);
+        return m_deviceInfoRepository
+                .UpdateDeviceByName(deviceInfo.getM_deviceName(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo.getM_height());
     }
 
     /**

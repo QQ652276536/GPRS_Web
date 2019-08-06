@@ -11,7 +11,6 @@ spring:
     password: Passw0rd
     #使用Unicode编码,UTF-8编码,SSL连接,中国标准时间
     #url: jdbc:mysql://101.132.102.203:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
-    #url: jdbc:mysql://localhost:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     url: jdbc:mysql://49.234.4.245:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
   #JPA配置
   jpa:

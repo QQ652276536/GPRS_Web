@@ -30,7 +30,7 @@ public class DeviceInfoController
     {
         logger.info(">>>收到新增设备请求:" + deviceInfo.toString());
         //TODO:校验参数
-        //<<<用于表示Socket发Http请求时的结束标识符
+        //<<<用于表示Socket发Http请求:时的结束标识符
         return m_deviceInfoService.InsertDevice(deviceInfo) + "<<<\r\n";
     }
 
@@ -45,24 +45,28 @@ public class DeviceInfoController
     @RequestMapping(value = "/FindAll", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public List<DeviceInfo> FindAllDevice()
     {
+        logger.info(">>>收到查询所有设备的请求:");
         return m_deviceInfoService.FindAllDevice();
     }
 
     @RequestMapping(value = "/FindById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public DeviceInfo FindById(int id)
     {
+        logger.info(">>>收到根据设备编号查询的请求:" + id);
         return m_deviceInfoService.FindDeviceById(id);
     }
 
     @RequestMapping(value = "/FindByName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public DeviceInfo FindByName(String name)
     {
+        logger.info(">>>收到根据设备名称查询的请求:" + name);
         return m_deviceInfoService.FindDeviceByName(name);
     }
 
     @RequestMapping(value = "/FindByNameAndId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public DeviceInfo FindByNameAndId(String name, int id)
     {
+        logger.info(">>>收到根据设备编号和名称查询的请求:" + name + "," + id);
         return m_deviceInfoService.FindDeviceByNameAndId(name, id);
     }
 

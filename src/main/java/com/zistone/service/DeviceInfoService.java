@@ -73,13 +73,13 @@ public class DeviceInfoService
      */
     public String InsertDevice(DeviceInfo deviceInfo)
     {
-        DeviceInfo existDevice = m_deviceInfoRepository.FindDeviceByName(deviceInfo.getM_deviceName());
+        DeviceInfo existDevice = m_deviceInfoRepository.FindDeviceByName(deviceInfo.getM_name());
         if (existDevice == null)
         {
             DeviceInfo saveDevice = m_deviceInfoRepository.save(deviceInfo);
             return saveDevice.getM_id() + "";
         }
-        else if (deviceInfo.getM_deviceName().equals(existDevice.getM_deviceName()))
+        else if (deviceInfo.getM_name().equals(existDevice.getM_name()))
         {
             //设备添加失败,该设备名已存在
             return "-1";
@@ -100,7 +100,7 @@ public class DeviceInfoService
     public int UpdateDeviceByName(DeviceInfo deviceInfo)
     {
         return m_deviceInfoRepository
-                .UpdateDeviceByName(deviceInfo.getM_deviceName(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo.getM_height());
+                .UpdateDeviceByName(deviceInfo.getM_name(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo.getM_height());
     }
 
     /**

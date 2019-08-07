@@ -18,6 +18,13 @@ public class DeviceInfoController
     @Resource
     DeviceInfoService m_deviceInfoService;
 
+    @RequestMapping(value = "/UpdateById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public int UpdateById(@RequestBody DeviceInfo deviceInfo)
+    {
+        logger.info(">>>收到更新设备请求:");
+        return m_deviceInfoService.UpdateDeviceByName(deviceInfo);
+    }
+
     @RequestMapping(value = "/UpdateByName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public int UpdateByName(@RequestBody DeviceInfo deviceInfo)
     {
@@ -52,22 +59,15 @@ public class DeviceInfoController
     @RequestMapping(value = "/FindById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public DeviceInfo FindById(int id)
     {
-        logger.info(">>>收到根据设备编号查询的请求:" + id);
+        logger.info(">>>收到查询设备的请求:" + id);
         return m_deviceInfoService.FindDeviceById(id);
     }
 
     @RequestMapping(value = "/FindByName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public DeviceInfo FindByName(String name)
     {
-        logger.info(">>>收到根据设备名称查询的请求:" + name);
+        logger.info(">>>收到查询设备的请求:" + name);
         return m_deviceInfoService.FindDeviceByName(name);
-    }
-
-    @RequestMapping(value = "/FindByNameAndId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public DeviceInfo FindByNameAndId(String name, int id)
-    {
-        logger.info(">>>收到根据设备编号和名称查询的请求:" + name + "," + id);
-        return m_deviceInfoService.FindDeviceByNameAndId(name, id);
     }
 
 }

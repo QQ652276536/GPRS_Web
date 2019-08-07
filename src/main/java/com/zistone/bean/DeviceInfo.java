@@ -20,7 +20,7 @@ public class DeviceInfo
     @Override
     public String toString()
     {
-        return "DeviceInfo{" + "m_id=" + m_id + ", m_deviceName='" + m_deviceName + '\'' + ", m_type='" + m_type + '\'' + ", m_state=" + m_state + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_craeteTime=" + m_craeteTime + ", m_updateTime=" + m_updateTime + ", m_description='" + m_description + '\'' + '}';
+        return "DeviceInfo{" + "m_id=" + m_id + ", m_name='" + m_name + '\'' + ", m_type='" + m_type + '\'' + ", m_state=" + m_state + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_craeteTime=" + m_craeteTime + ", m_updateTime=" + m_updateTime + ", m_description='" + m_description + '\'' + '}';
     }
 
     /**
@@ -44,16 +44,16 @@ public class DeviceInfo
      * 设备名
      */
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备名'")
-    private String m_deviceName;
+    private String m_name;
 
     public String getM_deviceName()
     {
-        return m_deviceName;
+        return m_name;
     }
 
-    public void setM_deviceName(String m_deviceName)
+    public void setM_deviceName(String m_name)
     {
-        this.m_deviceName = m_deviceName;
+        this.m_name = m_name;
     }
 
     /**

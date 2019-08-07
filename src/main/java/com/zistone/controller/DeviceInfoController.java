@@ -22,7 +22,7 @@ public class DeviceInfoController
     public int UpdateById(@RequestBody DeviceInfo deviceInfo)
     {
         logger.info(">>>收到更新设备请求:");
-        return m_deviceInfoService.UpdateDeviceByName(deviceInfo);
+        return m_deviceInfoService.UpdateDeviceById(deviceInfo);
     }
 
     @RequestMapping(value = "/UpdateByName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

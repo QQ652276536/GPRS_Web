@@ -104,6 +104,19 @@ public class DeviceInfoService
     }
 
     /**
+     * 更新设备
+     *
+     * @param deviceInfo
+     * @return
+     */
+    public int UpdateDeviceById(DeviceInfo deviceInfo)
+    {
+        return m_deviceInfoRepository
+                .UpdateDeviceById(deviceInfo.getM_id(), deviceInfo.getM_lat(), deviceInfo.getM_lot(),
+                        deviceInfo.getM_height());
+    }
+
+    /**
      * 根据编号删除设备
      *
      * @param id

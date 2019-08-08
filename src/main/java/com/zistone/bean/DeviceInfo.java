@@ -13,14 +13,22 @@ import java.util.Date;
 @Table(name = "deviceinfo")
 public class DeviceInfo
 {
-    public DeviceInfo()
-    {
-    }
-
     @Override
     public String toString()
     {
-        return "DeviceInfo{" + "m_id=" + m_id + ", m_name='" + m_name + '\'' + ", m_type='" + m_type + '\'' + ", m_state=" + m_state + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_craeteTime=" + m_craeteTime + ", m_updateTime=" + m_updateTime + ", m_description='" + m_description + '\'' + '}';
+        return "DeviceInfo{" +
+                "m_id=" + m_id +
+                ", m_name='" + m_name + '\'' +
+                ", m_type='" + m_type + '\'' +
+                ", m_state=" + m_state +
+                ", m_lat=" + m_lat +
+                ", m_lot=" + m_lot +
+                ", m_height=" + m_height +
+                ", m_craeteTime=" + m_craeteTime +
+                ", m_updateTime=" + m_updateTime +
+                ", m_description='" + m_description + '\'' +
+                ", m_akCode='" + m_akCode + '\'' +
+                '}';
     }
 
     /**
@@ -184,5 +192,21 @@ public class DeviceInfo
     public void setM_description(String m_description)
     {
         this.m_description = m_description;
+    }
+
+    /**
+     * 鉴权码
+     */
+    @Column(columnDefinition = "varchar(15) default '' comment '鉴权码'")
+    private String m_akCode;
+
+    public String getM_akCode()
+    {
+        return m_akCode;
+    }
+
+    public void setM_akCode(String m_akCode)
+    {
+        this.m_akCode = m_akCode;
     }
 }

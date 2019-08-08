@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class DeviceInfoService
@@ -14,6 +15,28 @@ public class DeviceInfoService
 
     @Resource
     private DeviceInfoRepository m_deviceInfoRepository;
+
+    /**
+     * 查找鉴权码
+     *
+     * @param akCode
+     * @return
+     */
+    public String FindAKCode(String akCode)
+    {
+        if (null != akCode && !"".equals(akCode))
+        {
+            List<DeviceInfo> list = FindAllDevice();
+            for (DeviceInfo tempDeviceInfo : list)
+            {
+                if (akCode.equals(tempDeviceInfo.getM_akCode()))
+                {
+                    return "1";
+                }
+            }
+        }
+        return "0";
+    }
 
     @Transactional
     public void SaveList(List<DeviceInfo> deviceInfoList)
@@ -71,23 +94,43 @@ public class DeviceInfoService
      * @param deviceInfo
      * @return
      */
-    public String InsertDevice(DeviceInfo deviceInfo)
+    public DeviceInfo InsertDevice(DeviceInfo deviceInfo)
     {
         DeviceInfo existDevice = m_deviceInfoRepository.FindDeviceByName(deviceInfo.getM_name());
+        //暂时关闭名称验证
+        existDevice = null;
         if (existDevice == null)
         {
-            DeviceInfo saveDevice = m_deviceInfoRepository.save(deviceInfo);
-            return saveDevice.getM_id() + "";
-        }
-        else if (deviceInfo.getM_name().equals(existDevice.getM_name()))
-        {
-            //设备添加失败,该设备名已存在
-            return "-1";
+            //鉴权码
+            String akCode = "";
+            Random random = new Random();
+            for (int i = 0; i < 8; i++)
+            {
+                int num = random.nextInt(3) % 4;
+                switch (num)
+                {
+                    //随机数字
+                    case 0:
+                        akCode += random.nextInt(10);
+                        break;
+                    //随机大写字母
+                    case 1:
+                        akCode += (char) (random.nextInt(26) + 65);
+                        break;
+                    //随机小写字母
+                    case 2:
+                        akCode += (char) (random.nextInt(26) + 97);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            existDevice.setM_akCode(akCode);
+            return m_deviceInfoRepository.save(deviceInfo);
         }
         else
         {
-            //设备添加失败,未知错误
-            return "-2";
+            return null;
         }
     }
 

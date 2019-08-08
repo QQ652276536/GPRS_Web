@@ -18,17 +18,24 @@ public class DeviceInfoController
     @Resource
     DeviceInfoService m_deviceInfoService;
 
+    @RequestMapping(value = "/AKCode", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String AKCode(@RequestParam String akCode)
+    {
+        logger.info(">>>收到鉴权请求:" + akCode);
+        return m_deviceInfoService.FindAKCode(akCode);
+    }
+
     @RequestMapping(value = "/UpdateById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public int UpdateById(@RequestBody DeviceInfo deviceInfo)
     {
-        logger.info(">>>收到更新设备请求:");
+        logger.info(">>>收到更新设备请求:" + deviceInfo.toString());
         return m_deviceInfoService.UpdateDeviceById(deviceInfo);
     }
 
     @RequestMapping(value = "/UpdateByName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public int UpdateByName(@RequestBody DeviceInfo deviceInfo)
     {
-        logger.info(">>>收到更新设备请求:");
+        logger.info(">>>收到更新设备请求:" + deviceInfo.toString());
         return m_deviceInfoService.UpdateDeviceByName(deviceInfo);
     }
 

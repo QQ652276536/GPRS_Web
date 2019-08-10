@@ -2,6 +2,8 @@ package com.zistone.service;
 
 import com.zistone.bean.DeviceInfo;
 import com.zistone.repository.DeviceInfoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,6 +14,7 @@ import java.util.Random;
 @Service
 public class DeviceInfoService
 {
+    Logger logger = LoggerFactory.getLogger(DeviceInfoService.class);
 
     @Resource
     private DeviceInfoRepository m_deviceInfoRepository;
@@ -31,11 +34,11 @@ public class DeviceInfoService
             {
                 if (akCode.equals(tempDeviceInfo.getM_akCode()))
                 {
-                    return "1";
+                    return tempDeviceInfo.getM_akCode();
                 }
             }
         }
-        return "0";
+        return "";
     }
 
     @Transactional
@@ -96,9 +99,8 @@ public class DeviceInfoService
      */
     public DeviceInfo InsertDevice(DeviceInfo deviceInfo)
     {
+        //设备名由终端的设备编号组成,线上环境设备ID不重复故用作判断重复的条件
         DeviceInfo existDevice = m_deviceInfoRepository.FindDeviceByName(deviceInfo.getM_name());
-        //暂时关闭名称验证
-        existDevice = null;
         if (existDevice == null)
         {
             //鉴权码
@@ -125,11 +127,22 @@ public class DeviceInfoService
                         break;
                 }
             }
-            existDevice.setM_akCode(akCode);
-            return m_deviceInfoRepository.save(deviceInfo);
+            deviceInfo.setM_akCode(akCode);
+            DeviceInfo tempDeviceInfo = m_deviceInfoRepository.save(deviceInfo);
+            if (null != tempDeviceInfo)
+            {
+                logger.info(">>>设备" + tempDeviceInfo.getM_name() + "注册成功");
+                return tempDeviceInfo;
+            }
+            else
+            {
+                logger.info(">>>设备注册失败!!!请检查日志排查原因...");
+                return null;
+            }
         }
         else
         {
+            logger.info(">>>设备已存在!!!");
             return null;
         }
     }

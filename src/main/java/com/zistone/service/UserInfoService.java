@@ -9,7 +9,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class UserInfoService {
+public class UserInfoService
+{
 
     @Resource
     private UserInfoRepository m_userInfoRepository;
@@ -20,7 +21,8 @@ public class UserInfoService {
      * @param userInfo
      * @return
      */
-    public UserInfo Login(UserInfo userInfo) {
+    public UserInfo Login(UserInfo userInfo)
+    {
         return m_userInfoRepository.FindUserByNameAndPwd(userInfo.getM_userName(), userInfo.getM_password());
     }
 
@@ -30,36 +32,47 @@ public class UserInfoService {
      * @param userInfo
      * @return
      */
-    public String Register(UserInfo userInfo) {
+    public String Register(UserInfo userInfo)
+    {
         return InsertUser(userInfo);
     }
 
     @Transactional
-    public void SaveList(List<UserInfo> userInfoList) {
+    public void SaveList(List<UserInfo> userInfoList)
+    {
         m_userInfoRepository.saveAll(userInfoList);
     }
 
-    public UserInfo FindUserByName(String name) {
+    public UserInfo FindUserByName(String name)
+    {
         return m_userInfoRepository.FindUserByName(name);
     }
 
-    public List<UserInfo> FindAllUser() {
+    public List<UserInfo> FindAllUser()
+    {
         return m_userInfoRepository.findAll();
     }
 
-    public String InsertUser(UserInfo userInfo) {
+    public String InsertUser(UserInfo userInfo)
+    {
         UserInfo existUser = m_userInfoRepository.FindUserByName(userInfo.getM_userName());
-        if (existUser == null) {
+        if (existUser == null)
+        {
             m_userInfoRepository.save(userInfo);
             return "注册成功";
-        } else if (userInfo.getM_userName().equals(existUser.getM_userName())) {
+        }
+        else if (userInfo.getM_userName().equals(existUser.getM_userName()))
+        {
             return "注册失败,该用户名已存在";
-        } else {
+        }
+        else
+        {
             return "注册失败";
         }
     }
 
-    public UserInfo UpdateUser(UserInfo userInfo) {
+    public UserInfo UpdateUser(UserInfo userInfo)
+    {
         UserInfo tempUserInfo = new UserInfo();
         tempUserInfo.setM_userName(userInfo.getM_userName());
         tempUserInfo.setM_realName(userInfo.getM_userName());
@@ -69,13 +82,16 @@ public class UserInfoService {
         return m_userInfoRepository.save(userInfo);
     }
 
-    public void DelUserById(Integer id) {
+    public void DelUserById(Integer id)
+    {
         m_userInfoRepository.deleteById(id);
     }
 
-    public UserInfo DelUserByName(String name) {
+    public UserInfo DelUserByName(String name)
+    {
         UserInfo tempUser = m_userInfoRepository.FindUserByName(name);
-        if (tempUser != null) {
+        if (tempUser != null)
+        {
             m_userInfoRepository.delete(tempUser);
         }
         return tempUser;

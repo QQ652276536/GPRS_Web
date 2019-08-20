@@ -45,6 +45,24 @@ public class UserInfo
     }
 
     /**
+     * 用户头像
+     * 大对象类型,使用迟延加载
+     */
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "blob(256) comment '用户头像'")
+    private byte[] m_image;
+
+    public byte[] getM_image()
+    {
+        return m_image;
+    }
+
+    public void setM_image(byte[] m_image)
+    {
+        this.m_image = m_image;
+    }
+
+    /**
      * 用户名
      */
     @UserName

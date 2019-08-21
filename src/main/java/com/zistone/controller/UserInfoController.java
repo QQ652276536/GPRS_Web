@@ -36,7 +36,7 @@ public class UserInfoController
         return m_userInfoService.Insert(userInfo);
     }
 
-    @RequestMapping(value = "/Update", method = RequestMethod.POST, produces = "application/json;")
+    @RequestMapping(value = "/Update", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public UserInfo Update(@RequestBody UserInfo userInfo)
     {
         logger.info(">>>收到更新请求:" + userInfo.toString());

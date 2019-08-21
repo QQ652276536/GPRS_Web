@@ -2,6 +2,8 @@ package com.zistone.service;
 
 import com.zistone.bean.UserInfo;
 import com.zistone.repository.UserInfoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -11,6 +13,7 @@ import java.util.List;
 @Service
 public class UserInfoService
 {
+    Logger logger = LoggerFactory.getLogger(UserInfoService.class);
 
     @Resource
     private UserInfoRepository m_userInfoRepository;
@@ -24,17 +27,6 @@ public class UserInfoService
     public UserInfo Login(UserInfo userInfo)
     {
         return m_userInfoRepository.FindUserByNameAndPwd(userInfo.getM_userName(), userInfo.getM_password());
-    }
-
-    /**
-     * 注册
-     *
-     * @param userInfo
-     * @return
-     */
-    public String Register(UserInfo userInfo)
-    {
-        return InsertUser(userInfo);
     }
 
     @Transactional
@@ -53,33 +45,43 @@ public class UserInfoService
         return m_userInfoRepository.findAll();
     }
 
-    public String InsertUser(UserInfo userInfo)
+    /**
+     * 注册
+     *
+     * @param userInfo
+     * @return
+     */
+    public UserInfo Insert(UserInfo userInfo)
     {
         UserInfo existUser = m_userInfoRepository.FindUserByName(userInfo.getM_userName());
         if (existUser == null)
         {
-            m_userInfoRepository.save(userInfo);
-            return "注册成功";
+            return m_userInfoRepository.save(userInfo);
         }
-        else if (userInfo.getM_userName().equals(existUser.getM_userName()))
-        {
-            return "注册失败,该用户名已存在";
-        }
-        else
-        {
-            return "注册失败";
-        }
+        logger.error(">>>注册失败");
+        return null;
     }
 
-    public UserInfo UpdateUser(UserInfo userInfo)
+    /**
+     * 更新用户信息
+     *
+     * @param userInfo
+     * @return
+     */
+    public UserInfo Update(UserInfo userInfo)
     {
-        UserInfo tempUserInfo = new UserInfo();
-        tempUserInfo.setM_userName(userInfo.getM_userName());
-        tempUserInfo.setM_realName(userInfo.getM_userName());
-        tempUserInfo.setM_phoneNumber(userInfo.getM_phoneNumber());
-        tempUserInfo.setM_level(userInfo.getM_level());
-        tempUserInfo.setM_state(userInfo.getM_state());
-        return m_userInfoRepository.save(userInfo);
+        UserInfo existUser = m_userInfoRepository.FindUserByName(userInfo.getM_userName());
+        if (null != existUser)
+        {
+            existUser.setM_realName(userInfo.getM_realName());
+            existUser.setM_phoneNumber(userInfo.getM_phoneNumber());
+            existUser.setM_password(userInfo.getM_password());
+            existUser.setM_state(userInfo.getM_state());
+            existUser.setM_userImage(userInfo.getM_userImage());
+            return m_userInfoRepository.save(existUser);
+        }
+        logger.error(">>>更新失败");
+        return null;
     }
 
     public void DelUserById(Integer id)

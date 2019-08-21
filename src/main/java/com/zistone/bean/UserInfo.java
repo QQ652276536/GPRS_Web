@@ -23,8 +23,17 @@ public class UserInfo
     @Override
     public String toString()
     {
-        return "UserInfo{" + "m_id=" + m_id + ", m_userName='" + m_userName + '\'' + ", m_realName='" + m_realName + '\'' + ", " +
-                "m_phoneNumber='" + m_phoneNumber + '\'' + ", m_level=" + m_level + ", m_state=" + m_state + ", m_craeteTime=" + m_craeteTime + ", m_updateTime=" + m_updateTime + ", m_password='" + m_password + '\'' + '}';
+        return "UserInfo{" +
+                "m_id=" + m_id +
+                ", m_userName='" + m_userName + '\'' +
+                ", m_realName='" + m_realName + '\'' +
+                ", m_phoneNumber='" + m_phoneNumber + '\'' +
+                ", m_level=" + m_level +
+                ", m_state=" + m_state +
+                ", m_craeteTime=" + m_craeteTime +
+                ", m_updateTime=" + m_updateTime +
+                ", m_password='" + m_password + '\'' +
+                '}';
     }
 
     /**
@@ -46,20 +55,20 @@ public class UserInfo
 
     /**
      * 用户头像
-     * 大对象类型,使用迟延加载
+     * 存储的是通过Base64转换成的字符串
      */
-    @Lob @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "blob(256) comment '用户头像'")
-    private byte[] m_image;
+    @Lob
+    @Column(columnDefinition = "text comment '用户头像'")
+    private String m_userImage;
 
-    public byte[] getM_image()
+    public String getM_userImage()
     {
-        return m_image;
+        return m_userImage;
     }
 
-    public void setM_image(byte[] m_image)
+    public void setM_userImage(String m_userImage)
     {
-        this.m_image = m_image;
+        this.m_userImage = m_userImage;
     }
 
     /**

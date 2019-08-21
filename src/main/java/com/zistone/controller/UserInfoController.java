@@ -29,10 +29,18 @@ public class UserInfoController
     }
 
     @RequestMapping(value = "/Register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public String Register(@RequestBody UserInfo userInfo)
+    public UserInfo Register(@RequestBody UserInfo userInfo)
     {
         logger.info(">>>收到注册请求:" + userInfo.toString());
         //TODO:校验参数
-        return m_userInfoService.Register(userInfo);
+        return m_userInfoService.Insert(userInfo);
+    }
+
+    @RequestMapping(value = "/Update", method = RequestMethod.POST, produces = "application/json;")
+    public UserInfo Update(@RequestBody UserInfo userInfo)
+    {
+        logger.info(">>>收到更新请求:" + userInfo.toString());
+        //TODO:校验参数
+        return m_userInfoService.Update(userInfo);
     }
 }

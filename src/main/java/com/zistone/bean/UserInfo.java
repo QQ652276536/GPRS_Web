@@ -30,7 +30,7 @@ public class UserInfo
                 ", m_phoneNumber='" + m_phoneNumber + '\'' +
                 ", m_level=" + m_level +
                 ", m_state=" + m_state +
-                ", m_craeteTime=" + m_craeteTime +
+                ", m_createTime=" + m_createTime +
                 ", m_updateTime=" + m_updateTime +
                 ", m_password='" + m_password + '\'' +
                 '}';
@@ -141,7 +141,7 @@ public class UserInfo
     /**
      * 用户状态
      */
-    @Column(columnDefinition = "int default '1' comment '用户状态:1正常使用2注销3冻结'")
+    @Column(columnDefinition = "int default '1' comment '用户状态:1正常使用2冻结'")
     private int m_state;
 
     public int getM_state()
@@ -159,16 +159,16 @@ public class UserInfo
      */
     @CreatedDate
     @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '创建时间'")
-    private Date m_craeteTime;
+    private Date m_createTime;
 
-    public Date getM_craeteTime()
+    public Date getm_createTime()
     {
-        return m_craeteTime;
+        return m_createTime;
     }
 
-    public void setM_craeteTime(Date m_craeteTime)
+    public void setm_createTime(Date m_createTime)
     {
-        this.m_craeteTime = m_craeteTime;
+        this.m_createTime = m_createTime;
     }
 
     /**

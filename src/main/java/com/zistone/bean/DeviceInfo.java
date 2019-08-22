@@ -24,7 +24,7 @@ public class DeviceInfo
                 ", m_lat=" + m_lat +
                 ", m_lot=" + m_lot +
                 ", m_height=" + m_height +
-                ", m_craeteTime=" + m_craeteTime +
+                ", m_createTime=" + m_createTime +
                 ", m_updateTime=" + m_updateTime +
                 ", m_description='" + m_description + '\'' +
                 ", m_akCode='" + m_akCode + '\'' +
@@ -149,16 +149,16 @@ public class DeviceInfo
      */
     @CreatedDate
     @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '创建时间'")
-    private Date m_craeteTime;
+    private Date m_createTime;
 
-    public Date getM_craeteTime()
+    public Date getm_createTime()
     {
-        return m_craeteTime;
+        return m_createTime;
     }
 
-    public void setM_craeteTime(Date m_craeteTime)
+    public void setm_createTime(Date m_createTime)
     {
-        this.m_craeteTime = m_craeteTime;
+        this.m_createTime = m_createTime;
     }
 
     /**

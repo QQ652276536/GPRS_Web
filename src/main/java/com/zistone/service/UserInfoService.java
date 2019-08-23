@@ -76,8 +76,11 @@ public class UserInfoService
             existUser.setM_realName(userInfo.getM_realName());
             existUser.setM_phoneNumber(userInfo.getM_phoneNumber());
             existUser.setM_password(userInfo.getM_password());
-            existUser.setM_state(userInfo.getM_state());
-            existUser.setM_userImage(userInfo.getM_userImage());
+            if (null != userInfo.getM_userImage() && !"".equals(userInfo.getM_userImage()))
+            {
+                logger.info(">>>此次更新有图片");
+                existUser.setM_userImage(userInfo.getM_userImage());
+            }
             return m_userInfoRepository.save(existUser);
         }
         logger.error(">>>更新失败");

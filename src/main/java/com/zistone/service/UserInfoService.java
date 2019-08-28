@@ -35,11 +35,6 @@ public class UserInfoService
         m_userInfoRepository.saveAll(userInfoList);
     }
 
-    public UserInfo FindUserByName(String name)
-    {
-        return m_userInfoRepository.FindUserByName(name);
-    }
-
     public List<UserInfo> FindAllUser()
     {
         return m_userInfoRepository.findAll();
@@ -58,7 +53,7 @@ public class UserInfoService
         {
             return m_userInfoRepository.save(userInfo);
         }
-        logger.error(">>>注册失败");
+        logger.error(">>>注册失败,用户名已存在");
         return null;
     }
 
@@ -70,16 +65,17 @@ public class UserInfoService
      */
     public UserInfo Update(UserInfo userInfo)
     {
-        UserInfo existUser = m_userInfoRepository.FindUserByName(userInfo.getM_userName());
+        UserInfo existUser = m_userInfoRepository.FindUserById(userInfo.getM_id());
         if (null != existUser)
         {
-            existUser.setM_realName(userInfo.getM_realName());
-            existUser.setM_phoneNumber(userInfo.getM_phoneNumber());
-            existUser.setM_password(userInfo.getM_password());
             if (null != userInfo.getM_userImage() && !"".equals(userInfo.getM_userImage()))
             {
                 logger.info(">>>此次更新有图片");
                 existUser.setM_userImage(userInfo.getM_userImage());
+            }
+            if (null != userInfo.getM_password() && !"".equals(userInfo.getM_password()))
+            {
+                existUser.setM_password(userInfo.getM_password());
             }
             return m_userInfoRepository.save(existUser);
         }
@@ -90,16 +86,6 @@ public class UserInfoService
     public void DelUserById(Integer id)
     {
         m_userInfoRepository.deleteById(id);
-    }
-
-    public UserInfo DelUserByName(String name)
-    {
-        UserInfo tempUser = m_userInfoRepository.FindUserByName(name);
-        if (tempUser != null)
-        {
-            m_userInfoRepository.delete(tempUser);
-        }
-        return tempUser;
     }
 
 }

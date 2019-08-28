@@ -58,7 +58,7 @@ public class UserInfo
      * 存储的是通过Base64转换成的字符串
      */
     @Lob
-    @Column(columnDefinition = "text comment '用户头像'")
+    @Column(columnDefinition = "longtext comment '用户头像'")
     private String m_userImage;
 
     public String getM_userImage()

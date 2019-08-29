@@ -23,17 +23,9 @@ public class UserInfo
     @Override
     public String toString()
     {
-        return "UserInfo{" +
-                "m_id=" + m_id +
-                ", m_userName='" + m_userName + '\'' +
-                ", m_realName='" + m_realName + '\'' +
-                ", m_phoneNumber='" + m_phoneNumber + '\'' +
-                ", m_level=" + m_level +
-                ", m_state=" + m_state +
-                ", m_createTime=" + m_createTime +
-                ", m_updateTime=" + m_updateTime +
-                ", m_password='" + m_password + '\'' +
-                '}';
+        return "UserInfo{" + "m_id=" + m_id + ", m_userImage='" + m_userImage + '\'' + ", m_userName='" + m_userName + '\'' + ", " +
+                "m_realName='" + m_realName + '\'' + ", m_phoneNumber='" + m_phoneNumber + '\'' + ", m_level=" + m_level + ", m_state=" +
+                m_state + ", m_createTime=" + m_createTime + ", m_updateTime=" + m_updateTime + ", m_password='" + m_password + '\'' + '}';
     }
 
     /**

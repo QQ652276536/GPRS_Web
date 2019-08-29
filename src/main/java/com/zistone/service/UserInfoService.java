@@ -70,6 +70,7 @@ public class UserInfoService
         {
             if (null != userInfo.getM_userImage() && !"".equals(userInfo.getM_userImage()))
             {
+                logger.info(">>>此次更新有图片");
                 existUser.setM_userImage(userInfo.getM_userImage());
             }
             if (null != userInfo.getM_password() && !"".equals(userInfo.getM_password()))

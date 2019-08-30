@@ -4,12 +4,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+//@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan
 @SpringBootApplication
 //自动更新时间
 @EnableJpaAuditing
-public class StartApplication {
+public class StartApplication
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         SpringApplication.run(StartApplication.class, args);
     }
 

@@ -7,8 +7,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class StartApplicationTests {
+public class StartApplicationTests
+{
     @Test
-    public void MethodA() {
+    public void MethodA()
+    {
     }
 }

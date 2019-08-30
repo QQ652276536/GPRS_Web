@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+//@RestController = @Controller + @ReponseBody
 @RestController
 @RequestMapping("/UserInfo")
 public class UserInfoController

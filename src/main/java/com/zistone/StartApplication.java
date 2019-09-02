@@ -13,12 +13,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 public class StartApplication
 {
-
     public static void main(String[] args)
     {
-        ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(StartApplication.class,
-                args);
-        //装载事件
+        ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(StartApplication.class, args);
+        //加载自定义监听
         configurableApplicationContext.addApplicationListener(new FileContentListener());
         //发布事件
         configurableApplicationContext.publishEvent(new FileContentEvent(new Object()));

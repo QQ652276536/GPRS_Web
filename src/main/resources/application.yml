@@ -74,7 +74,7 @@ logging:
   file:
     max-history: 30
     max-size: 10MB
-  #级别
+  #所有程序的输出级别
   level:
     root: INFO
 

@@ -57,7 +57,6 @@ public class FileContentEvent extends ApplicationEvent
         {
             File file = new File(PATH);
             FileInputStream fileInputStream;
-            StringBuffer stringBuffer = new StringBuffer();
             InputStreamReader inputStreamReader = null;
             BufferedReader bufferedReader = null;
             //如果没有异常,这两个变量值应该是相同的
@@ -89,9 +88,10 @@ public class FileContentEvent extends ApplicationEvent
                     String lat = tempArray1[3].trim();
                     String lot = tempArray1[4].trim();
                     //TODO:其它参数不知道什么意思
-
-                    stringBuffer.append(line);
-                    String content = stringBuffer.toString();
+                    if (Double.valueOf(lat) != 0.0 && Double.valueOf(lot) != 0.0)
+                    {
+                        
+                    }
                     LINECOUNT = lineCount;
                 }
             }

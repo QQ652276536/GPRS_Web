@@ -66,7 +66,6 @@ public class FileContentEvent extends ApplicationEvent
             FileInputStream fileInputStream;
             InputStreamReader inputStreamReader = null;
             BufferedReader bufferedReader = null;
-            //如果没有异常,这两个变量值应该是相同的
             int lineCount;
             try
             {
@@ -82,8 +81,8 @@ public class FileContentEvent extends ApplicationEvent
                 if (lineCount != LINECOUNT)
                 {
                     //最新的一条数据
-                    String line = String
-                            .valueOf(Stream.of(array).filter(p -> p.equals("不可能再现的字符串")).findFirst().orElse(array[lineCount - 1]));
+                    String line = String.valueOf(Stream.of(array).filter(p -> p.equals("让过滤器的结果为false,执行返回最后一个元素")).findFirst()
+                            .orElse(array[lineCount - 1]));
                     System.out.println(">>>最新数据:" + line);
                     String[] strArray1 = line.split("L");
                     //设备名(号)
@@ -105,7 +104,7 @@ public class FileContentEvent extends ApplicationEvent
                         deviceInfo.setM_lat(lat);
                         deviceInfo.setM_lot(lot);
                         deviceInfoService.UpdateDeviceByName(deviceInfo);
-                        logger.info(">>>监听的文本文件内容有更新,将新数据" + deviceInfo + "插入数据库");
+                        logger.info(">>>监听的文本文件的内容有更新,将新数据" + deviceInfo + "更新至数据库");
                     }
                     LINECOUNT = lineCount;
                 }

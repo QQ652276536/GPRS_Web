@@ -1,7 +1,10 @@
 package com.zistone;
 
+import com.zistone.file_listener.FileContentEvent;
+import com.zistone.file_listener.FileContentListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 //@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan
@@ -13,7 +16,12 @@ public class StartApplication
 
     public static void main(String[] args)
     {
-        SpringApplication.run(StartApplication.class, args);
+        ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(StartApplication.class,
+                args);
+        //装载事件
+        configurableApplicationContext.addApplicationListener(new FileContentListener());
+        //发布事件
+        configurableApplicationContext.publishEvent(new FileContentEvent(new Object()));
     }
 
 }

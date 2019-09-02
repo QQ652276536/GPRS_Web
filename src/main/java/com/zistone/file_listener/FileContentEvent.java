@@ -2,7 +2,7 @@ package com.zistone.file_listener;
 
 import com.zistone.bean.DeviceInfo;
 import com.zistone.service.DeviceInfoService;
-import com.zistone.service.SpringUtil;
+import com.zistone.service.ServiceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEvent;
@@ -99,7 +99,7 @@ public class FileContentEvent extends ApplicationEvent
                         deviceInfo.setM_name(deviceName);
                         deviceInfo.setM_lat(lat);
                         deviceInfo.setM_lot(lot);
-                        DeviceInfoService deviceInfoService = (DeviceInfoService) SpringUtil.getBean("deviceInfoService");
+                        DeviceInfoService deviceInfoService = (DeviceInfoService) ServiceUtil.getBean("deviceInfoService");
                         deviceInfoService.UpdateDeviceByName(deviceInfo);
                         logger.info(">>>监听的文本文件的内容有更新,将新数据" + deviceInfo.toString() + "更新至数据库");
                     }

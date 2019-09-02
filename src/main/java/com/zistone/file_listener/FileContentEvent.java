@@ -16,6 +16,8 @@ public class FileContentEvent extends ApplicationEvent
 {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private static String PATH = "C:\\Users\\zistone\\Desktop\\gprs_info.txt";
+    private static int TIME = 7 * 1000 * 60;
     private static int LINECOUNT;
 
     private Timer m_timer = new Timer();
@@ -48,12 +50,12 @@ public class FileContentEvent extends ApplicationEvent
                     ReadFile();
                 }
             };
-            m_timer.schedule(timerTask, 0, 5 * 1000);
+            m_timer.schedule(timerTask, 0, TIME);
         }
 
         private void ReadFile()
         {
-            File file = new File("C:\\Users\\zistone\\Desktop\\gprs_info.txt");
+            File file = new File(PATH);
             FileInputStream fileInputStream;
             StringBuffer stringBuffer = new StringBuffer();
             InputStreamReader inputStreamReader = null;

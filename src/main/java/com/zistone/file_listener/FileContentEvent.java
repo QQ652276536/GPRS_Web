@@ -1,9 +1,13 @@
 package com.zistone.file_listener;
 
+import com.zistone.bean.DeviceInfo;
+import com.zistone.service.DeviceInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEvent;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.*;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,11 +18,11 @@ import java.util.stream.Stream;
  */
 public class FileContentEvent extends ApplicationEvent
 {
-    Logger logger = LoggerFactory.getLogger(this.getClass());
-
     private static String PATH = "C:\\Users\\zistone\\Desktop\\gprs_info.txt";
     private static int TIME = 7 * 1000 * 60;
     private static int LINECOUNT;
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private Timer m_timer = new Timer();
 
@@ -30,8 +34,11 @@ public class FileContentEvent extends ApplicationEvent
         readFileThread.start();
     }
 
+    @Component
     class ReadFileThread extends Thread
     {
+        @Resource
+        DeviceInfoService deviceInfoService;
 
         @Override
         public void start()
@@ -75,7 +82,8 @@ public class FileContentEvent extends ApplicationEvent
                 if (lineCount != LINECOUNT)
                 {
                     //最新的一条数据
-                    String line = String.valueOf(Stream.of(array).findFirst().orElse(array[lineCount - 1]));
+                    String line = String
+                            .valueOf(Stream.of(array).filter(p -> p.equals("不可能再现的字符串")).findFirst().orElse(array[lineCount - 1]));
                     System.out.println(">>>最新数据:" + line);
                     String[] strArray1 = line.split("L");
                     //设备名(号)
@@ -85,12 +93,19 @@ public class FileContentEvent extends ApplicationEvent
                     String time1 = tempArray1[1];
                     String time2 = tempArray1[2];
                     //经纬度
-                    String lat = tempArray1[3].trim();
-                    String lot = tempArray1[4].trim();
+                    String latStr = tempArray1[3].trim();
+                    double lat = Double.valueOf(latStr);
+                    String lotStr = tempArray1[4].trim();
+                    double lot = Double.valueOf(lotStr);
                     //TODO:其它参数不知道什么意思
-                    if (Double.valueOf(lat) != 0.0 && Double.valueOf(lot) != 0.0)
+                    if (lat != 0.0 && lot != 0.0)
                     {
-                        
+                        DeviceInfo deviceInfo = new DeviceInfo();
+                        deviceInfo.setM_name(deviceName);
+                        deviceInfo.setM_lat(lat);
+                        deviceInfo.setM_lot(lot);
+                        deviceInfoService.UpdateDeviceByName(deviceInfo);
+                        logger.info(">>>监听的文本文件内容有更新,将新数据" + deviceInfo + "插入数据库");
                     }
                     LINECOUNT = lineCount;
                 }

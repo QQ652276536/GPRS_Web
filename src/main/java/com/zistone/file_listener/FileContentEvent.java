@@ -12,25 +12,27 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.stream.Stream;
 
-/**
- * 事件源
- */
 public class FileContentEvent extends ApplicationEvent
 {
-    private static String PATH = "C:\\Users\\zistone\\Desktop\\gprs_info.txt";
-    private static int TIME = 7 * 1000 * 60;
     private static int LINECOUNT;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private FileData m_fileData;
     private Timer m_timer = new Timer();
 
-    public FileContentEvent(Object source)
+    public FileContentEvent(FileData fileData)
     {
-        super(source);
-        logger.info(">>>事件触发");
+        super(fileData);
+        this.m_fileData = fileData;
         ReadFileThread readFileThread = new ReadFileThread();
         readFileThread.start();
+        logger.info(">>>线程" + readFileThread.getId() + "执行");
+    }
+
+    public FileData GetFileData()
+    {
+        return m_fileData;
     }
 
     class ReadFileThread extends Thread
@@ -52,12 +54,13 @@ public class FileContentEvent extends ApplicationEvent
                     ReadFile();
                 }
             };
-            m_timer.schedule(timerTask, 0, TIME);
+            m_timer.schedule(timerTask, 0, m_fileData.getM_time());
+            logger.info(">>>定时读取文本内容的任务执行");
         }
 
         private void ReadFile()
         {
-            File file = new File(PATH);
+            File file = new File(m_fileData.getM_path());
             FileInputStream fileInputStream;
             InputStreamReader inputStreamReader = null;
             BufferedReader bufferedReader = null;
@@ -65,20 +68,20 @@ public class FileContentEvent extends ApplicationEvent
             try
             {
                 fileInputStream = new FileInputStream(file);
-                inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
+                inputStreamReader = new InputStreamReader(fileInputStream, m_fileData.getM_encode());
                 bufferedReader = new BufferedReader(inputStreamReader);
                 //过滤空行
                 Stream<String> streams = bufferedReader.lines().filter(p -> p != null && !"".equals(p) && p.contains("L"));
                 Object[] array = streams.toArray();
                 lineCount = array.length;
-                logger.info(">>>内容行数(过滤空行):" + lineCount);
+                logger.info(">>>本次内容行数(过滤空行):" + lineCount);
                 //文件内容有变动
                 if (lineCount != LINECOUNT)
                 {
                     //最新的一条数据
                     String line = String.valueOf(Stream.of(array).filter(p -> p.equals("让过滤器的结果为false,执行返回最后一个元素")).findFirst()
                             .orElse(array[lineCount - 1]));
-                    System.out.println(">>>最新数据:" + line);
+                    System.out.println(">>>有新的数据:" + line);
                     String[] strArray1 = line.split("L");
                     //设备名(号)
                     String deviceName = strArray1[0].trim();

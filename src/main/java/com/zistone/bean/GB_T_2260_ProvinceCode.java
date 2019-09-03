@@ -13,10 +13,6 @@ import javax.persistence.*;
 @Table(name = "gb_t_2260_provincecode")
 public class GB_T_2260_ProvinceCode
 {
-    public GB_T_2260_ProvinceCode()
-    {
-    }
-
     @Override
     public String toString()
     {
@@ -29,6 +25,20 @@ public class GB_T_2260_ProvinceCode
     @Id
     private int m_id;
 
+    /**
+     * 省会编码
+     */
+    @Column(nullable = false, columnDefinition = "int default '0' comment '省会编码'")
+    private int m_code;
+
+    /**
+     * 省会名称
+     *
+     * @return
+     */
+    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '省会名称'")
+    private String m_name;
+
     public int getM_id()
     {
         return m_id;
@@ -39,12 +49,6 @@ public class GB_T_2260_ProvinceCode
         this.m_id = m_id;
     }
 
-    /**
-     * 省会编码
-     */
-    @Column(nullable = false, columnDefinition = "int default '0' comment '省会编码'")
-    private int m_code;
-
     public int getM_code()
     {
         return m_code;
@@ -54,14 +58,6 @@ public class GB_T_2260_ProvinceCode
     {
         this.m_code = m_code;
     }
-
-    /**
-     * 省会名称
-     *
-     * @return
-     */
-    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '省会名称'")
-    private String m_name;
 
     public String getM_name()
     {

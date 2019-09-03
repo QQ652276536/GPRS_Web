@@ -16,19 +16,8 @@ public class DeviceInfo
     @Override
     public String toString()
     {
-        return "DeviceInfo{" +
-                "m_id=" + m_id +
-                ", m_name='" + m_name + '\'' +
-                ", m_type='" + m_type + '\'' +
-                ", m_state=" + m_state +
-                ", m_lat=" + m_lat +
-                ", m_lot=" + m_lot +
-                ", m_height=" + m_height +
-                ", m_createTime=" + m_createTime +
-                ", m_updateTime=" + m_updateTime +
-                ", m_description='" + m_description + '\'' +
-                ", m_akCode='" + m_akCode + '\'' +
-                '}';
+        return "DeviceInfo{" + "m_id=" + m_id + ", m_name='" + m_name + '\'' + ", m_type='" + m_type + '\'' + ", m_state=" + m_state + "," +
+                " m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_height=" + m_height + ", m_createTime=" + m_createTime + ", m_updateTime=" + m_updateTime + ", m_description='" + m_description + '\'' + ", m_akCode='" + m_akCode + '\'' + '}';
     }
 
     /**
@@ -37,6 +26,67 @@ public class DeviceInfo
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int m_id;
+
+    /**
+     * 设备名
+     */
+    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备名'")
+    private String m_name;
+
+    /**
+     * 设备类型
+     */
+    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备类型'")
+    public String m_type;
+
+    /**
+     * 设备状态
+     */
+    @Column(nullable = false, columnDefinition = "int default '1' comment '设备状态:0离线1在线'")
+    private int m_state;
+
+    /**
+     * 纬度
+     */
+    @Column(columnDefinition = "double default '0' comment '纬度'")
+    private double m_lat;
+
+    /**
+     * 经度
+     */
+    @Column(columnDefinition = "double default '0' comment '经度'")
+    private double m_lot;
+    /**
+     * 海拔
+     */
+    @Column(columnDefinition = "double default '0' comment '高度'")
+    private double m_height;
+
+    /**
+     * 创建时间
+     */
+    @CreatedDate
+    @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '创建时间'")
+    private Date m_createTime;
+
+    /**
+     * 修改时间
+     */
+    @LastModifiedDate
+    @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '修改时间'")
+    private Date m_updateTime;
+
+    /**
+     * 描述
+     */
+    @Column(columnDefinition = "varchar(200) default '' comment '描述'")
+    private String m_description;
+
+    /**
+     * 鉴权码
+     */
+    @Column(columnDefinition = "varchar(15) default '' comment '鉴权码'")
+    private String m_akCode;
 
     public int getM_id()
     {
@@ -48,12 +98,6 @@ public class DeviceInfo
         this.m_id = m_id;
     }
 
-    /**
-     * 设备名
-     */
-    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备名'")
-    private String m_name;
-
     public String getM_name()
     {
         return m_name;
@@ -63,12 +107,6 @@ public class DeviceInfo
     {
         this.m_name = m_name;
     }
-
-    /**
-     * 设备类型
-     */
-    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备类型'")
-    public String m_type;
 
     public String getM_type()
     {
@@ -80,12 +118,6 @@ public class DeviceInfo
         this.m_type = m_type;
     }
 
-    /**
-     * 设备状态
-     */
-    @Column(nullable = false, columnDefinition = "int default '1' comment '设备状态:0离线1在线'")
-    private int m_state;
-
     public int getM_state()
     {
         return m_state;
@@ -95,12 +127,6 @@ public class DeviceInfo
     {
         this.m_state = m_state;
     }
-
-    /**
-     * 纬度
-     */
-    @Column(columnDefinition = "double default '0' comment '纬度'")
-    private double m_lat;
 
     public double getM_lat()
     {
@@ -112,12 +138,6 @@ public class DeviceInfo
         this.m_lat = m_lat;
     }
 
-    /**
-     * 经度
-     */
-    @Column(columnDefinition = "double default '0' comment '经度'")
-    private double m_lot;
-
     public double getM_lot()
     {
         return m_lot;
@@ -127,12 +147,6 @@ public class DeviceInfo
     {
         this.m_lot = m_lot;
     }
-
-    /**
-     * 海拔
-     */
-    @Column(columnDefinition = "double default '0' comment '高度'")
-    private double m_height;
 
     public double getM_height()
     {
@@ -144,29 +158,15 @@ public class DeviceInfo
         this.m_height = m_height;
     }
 
-    /**
-     * 创建时间
-     */
-    @CreatedDate
-    @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '创建时间'")
-    private Date m_createTime;
-
-    public Date getm_createTime()
+    public Date getM_createTime()
     {
         return m_createTime;
     }
 
-    public void setm_createTime(Date m_createTime)
+    public void setM_createTime(Date m_createTime)
     {
         this.m_createTime = m_createTime;
     }
-
-    /**
-     * 修改时间
-     */
-    @LastModifiedDate
-    @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '修改时间'")
-    private Date m_updateTime;
 
     public Date getM_updateTime()
     {
@@ -178,12 +178,6 @@ public class DeviceInfo
         this.m_updateTime = m_updateTime;
     }
 
-    /**
-     * 描述
-     */
-    @Column(columnDefinition = "varchar(200) default '' comment '描述'")
-    private String m_description;
-
     public String getM_description()
     {
         return m_description;
@@ -193,12 +187,6 @@ public class DeviceInfo
     {
         this.m_description = m_description;
     }
-
-    /**
-     * 鉴权码
-     */
-    @Column(columnDefinition = "varchar(15) default '' comment '鉴权码'")
-    private String m_akCode;
 
     public String getM_akCode()
     {

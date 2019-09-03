@@ -13,15 +13,15 @@ import javax.persistence.*;
 @Table(name = "gb_t_2260_areacode")
 public class GB_T_2260_AreaCode
 {
-    public GB_T_2260_AreaCode(int m_id)
-    {
-        this.m_id = m_id;
-    }
-
     @Override
     public String toString()
     {
         return "GB_T_2260_AreaCode{" + "m_id=" + m_id + ", m_code=" + m_code + ", m_name='" + m_name + '\'' + ", m_parentCityId=" + m_parentCityId + '}';
+    }
+
+    public GB_T_2260_AreaCode(int m_id)
+    {
+        this.m_id = m_id;
     }
 
     /**
@@ -29,6 +29,26 @@ public class GB_T_2260_AreaCode
      */
     @Id
     private int m_id;
+
+    /**
+     * 区域编码
+     */
+    @Column(nullable = false, columnDefinition = "int default '0' comment '区域编码'")
+    private int m_code;
+
+    /**
+     * 区域名称
+     *
+     * @return
+     */
+    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '区域名称'")
+    private String m_name;
+
+    /**
+     * 所属市
+     */
+    @Column(nullable = false, columnDefinition = "int default '0' comment '所属市'")
+    private int m_parentCityId;
 
     public int getM_id()
     {
@@ -40,12 +60,6 @@ public class GB_T_2260_AreaCode
         this.m_id = m_id;
     }
 
-    /**
-     * 区域编码
-     */
-    @Column(nullable = false, columnDefinition = "int default '0' comment '区域编码'")
-    private int m_code;
-
     public int getM_code()
     {
         return m_code;
@@ -56,15 +70,6 @@ public class GB_T_2260_AreaCode
         this.m_code = m_code;
     }
 
-
-    /**
-     * 区域名称
-     *
-     * @return
-     */
-    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '区域名称'")
-    private String m_name;
-
     public String getM_name()
     {
         return m_name;
@@ -74,12 +79,6 @@ public class GB_T_2260_AreaCode
     {
         this.m_name = m_name;
     }
-
-    /**
-     * 所属市
-     */
-    @Column(nullable = false, columnDefinition = "int default '0' comment '所属市'")
-    private int m_parentCityId;
 
     public int getM_parentCityId()
     {

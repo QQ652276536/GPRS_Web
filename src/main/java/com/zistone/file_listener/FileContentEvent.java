@@ -35,7 +35,6 @@ public class FileContentEvent extends ApplicationEvent
 
     class ReadFileThread extends Thread
     {
-
         @Override
         public void start()
         {

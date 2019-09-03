@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-//监听实体类增删操作
+//监听实体变化
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "deviceinfo")
 public class DeviceInfo

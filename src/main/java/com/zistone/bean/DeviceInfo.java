@@ -16,16 +16,30 @@ public class DeviceInfo
     @Override
     public String toString()
     {
-        return "DeviceInfo{" + "m_id=" + m_id + ", m_name='" + m_name + '\'' + ", m_type='" + m_type + '\'' + ", m_state=" + m_state + "," +
-                " m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_height=" + m_height + ", m_createTime=" + m_createTime + ", m_updateTime=" + m_updateTime + ", m_description='" + m_description + '\'' + ", m_akCode='" + m_akCode + '\'' + '}';
+        return "DeviceInfo{" + "m_id=" + m_id + ", m_deviceId='" + m_deviceId + '\'' + ", m_sim=" + m_sim + ", m_name='" + m_name + '\''
+                + ", m_type='" + m_type + '\'' + ", m_state=" + m_state + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_height="
+                + m_height + ", m_createTime=" + m_createTime + ", m_updateTime=" + m_updateTime + ", m_comment='" + m_comment + '\''
+                + ", m_akCode='" + m_akCode + '\'' + '}';
     }
 
     /**
-     * 设备编号(由数据库生成)
+     * 自增主键(由数据库生成)
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int m_id;
+
+    /**
+     * 设备编号,设备自带
+     */
+    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备编号'")
+    private String m_deviceId;
+
+    /**
+     * SIM卡号
+     */
+    @Column(nullable = false, columnDefinition = "int default '0' comment 'SIM卡号'")
+    private int m_sim;
 
     /**
      * 设备名
@@ -77,10 +91,10 @@ public class DeviceInfo
     private Date m_updateTime;
 
     /**
-     * 描述
+     * 备注
      */
-    @Column(columnDefinition = "varchar(200) default '' comment '描述'")
-    private String m_description;
+    @Column(columnDefinition = "varchar(200) default '' comment '备注'")
+    private String m_comment;
 
     /**
      * 鉴权码
@@ -178,16 +192,6 @@ public class DeviceInfo
         this.m_updateTime = m_updateTime;
     }
 
-    public String getM_description()
-    {
-        return m_description;
-    }
-
-    public void setM_description(String m_description)
-    {
-        this.m_description = m_description;
-    }
-
     public String getM_akCode()
     {
         return m_akCode;
@@ -196,5 +200,35 @@ public class DeviceInfo
     public void setM_akCode(String m_akCode)
     {
         this.m_akCode = m_akCode;
+    }
+
+    public String getM_deviceId()
+    {
+        return m_deviceId;
+    }
+
+    public void setM_deviceId(String m_deviceId)
+    {
+        this.m_deviceId = m_deviceId;
+    }
+
+    public int getM_sim()
+    {
+        return m_sim;
+    }
+
+    public void setM_sim(int m_sim)
+    {
+        this.m_sim = m_sim;
+    }
+
+    public String getM_comment()
+    {
+        return m_comment;
+    }
+
+    public void setM_comment(String m_comment)
+    {
+        this.m_comment = m_comment;
     }
 }

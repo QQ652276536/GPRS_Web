@@ -83,8 +83,8 @@ public class FileContentEvent extends ApplicationEvent
                             .orElse(array[lineCount - 1]));
                     System.out.println(">>>有新的数据:" + line);
                     String[] strArray1 = line.split("L");
-                    //设备名(号)
-                    String deviceName = strArray1[0].trim();
+                    //设备编号
+                    String deviceId = strArray1[0].trim();
                     String[] tempArray1 = strArray1[1].split("  ");
                     //时间
                     String time1 = tempArray1[1];
@@ -98,11 +98,11 @@ public class FileContentEvent extends ApplicationEvent
                     if (lat != 0.0 && lot != 0.0)
                     {
                         DeviceInfo deviceInfo = new DeviceInfo();
-                        deviceInfo.setM_name(deviceName);
+                        deviceInfo.setM_deviceId(deviceId);
                         deviceInfo.setM_lat(lat);
                         deviceInfo.setM_lot(lot);
                         DeviceInfoService deviceInfoService = (DeviceInfoService) ServiceUtil.getBean("deviceInfoService");
-                        deviceInfoService.UpdateDeviceByName(deviceInfo);
+                        deviceInfoService.UpdateDeviceByDeviceId(deviceInfo);
                         logger.info(">>>监听的文本文件的内容有更新,将新数据" + deviceInfo.toString() + "更新至数据库");
                     }
                     LINECOUNT = lineCount;

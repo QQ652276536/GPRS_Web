@@ -38,13 +38,13 @@ public class DeviceInfo
     /**
      * SIM卡号
      */
-    @Column(nullable = false, columnDefinition = "int default '0' comment 'SIM卡号'")
+    @Column(columnDefinition = "int default '0' comment 'SIM卡号'")
     private int m_sim;
 
     /**
      * 设备名
      */
-    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备名'")
+    @Column(columnDefinition = "varchar(50) default '' comment '设备名'")
     private String m_name;
 
     /**

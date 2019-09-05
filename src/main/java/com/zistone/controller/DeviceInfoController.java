@@ -26,18 +26,11 @@ public class DeviceInfoController
         return m_deviceInfoService.FindAKCode(deviceInfo.getM_akCode()) + "}\r\n";
     }
 
-    @RequestMapping(value = "/UpdateById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public int UpdateById(@RequestBody DeviceInfo deviceInfo)
+    @RequestMapping(value = "/UpdateByDeviceId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public int UpdateByDeviceId(@RequestBody DeviceInfo deviceInfo)
     {
         logger.info(">>>收到更新设备请求:" + deviceInfo.toString());
-        return m_deviceInfoService.UpdateDeviceById(deviceInfo);
-    }
-
-    @RequestMapping(value = "/UpdateByName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public String UpdateByName(@RequestBody DeviceInfo deviceInfo)
-    {
-        logger.info(">>>收到更新设备请求:" + deviceInfo.toString());
-        return m_deviceInfoService.UpdateDeviceByName(deviceInfo) + "}\r\n";
+        return m_deviceInfoService.UpdateDeviceByDeviceId(deviceInfo);
     }
 
     @RequestMapping(value = "/Insert", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -46,14 +39,6 @@ public class DeviceInfoController
         logger.info(">>>收到新增设备请求:" + deviceInfo.toString());
         //TODO:校验参数
         return m_deviceInfoService.InsertDevice(deviceInfo);
-    }
-
-    @RequestMapping(value = "/DeleteById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public String Delete(@RequestParam int id)
-    {
-        logger.info(">>>收到删除设备请求:" + id);
-        m_deviceInfoService.DelDeviceById(id);
-        return "success";
     }
 
     @RequestMapping(value = "/FindAll", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -68,13 +53,6 @@ public class DeviceInfoController
     {
         logger.info(">>>收到查询设备的请求:" + id);
         return m_deviceInfoService.FindDeviceById(id);
-    }
-
-    @RequestMapping(value = "/FindByName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public DeviceInfo FindByName(String name)
-    {
-        logger.info(">>>收到查询设备的请求:" + name);
-        return m_deviceInfoService.FindDeviceByName(name);
     }
 
 }

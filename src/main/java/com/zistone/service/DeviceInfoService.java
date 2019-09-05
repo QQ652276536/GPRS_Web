@@ -59,29 +59,6 @@ public class DeviceInfoService
     }
 
     /**
-     * 根据名称和编号查找设备
-     *
-     * @param name
-     * @param id
-     * @return
-     */
-    public DeviceInfo FindDeviceByNameAndId(String name, int id)
-    {
-        return m_deviceInfoRepository.FindDeviceByNameAndId(name, id);
-    }
-
-    /**
-     * 根据名称查找设备
-     *
-     * @param name
-     * @return
-     */
-    public DeviceInfo FindDeviceByName(String name)
-    {
-        return m_deviceInfoRepository.FindDeviceByName(name);
-    }
-
-    /**
      * 查询所有的设备
      *
      * @return
@@ -97,10 +74,11 @@ public class DeviceInfoService
      * @param deviceInfo
      * @return
      */
+    @Transactional
     public DeviceInfo InsertDevice(DeviceInfo deviceInfo)
     {
-        //设备名由终端的设备编号组成,线上环境设备ID不重复故用作判断重复的条件
-        DeviceInfo existDevice = m_deviceInfoRepository.FindDeviceByName(deviceInfo.getM_name());
+        //线上环境设备编号不会重复,所以用作判断重复的条件
+        DeviceInfo existDevice = m_deviceInfoRepository.FindDeviceByDeviceId(deviceInfo.getM_deviceId());
         if (existDevice == null)
         {
             //鉴权码
@@ -136,7 +114,7 @@ public class DeviceInfoService
             }
             else
             {
-                logger.info(">>>设备注册失败!!!请检查日志排查原因...");
+                logger.error(">>>设备注册失败!!!请检查日志排查原因...");
                 return null;
             }
         }
@@ -153,49 +131,10 @@ public class DeviceInfoService
      * @param deviceInfo
      * @return
      */
-    public int UpdateDeviceByName(DeviceInfo deviceInfo)
+    public int UpdateDeviceByDeviceId(DeviceInfo deviceInfo)
     {
         return m_deviceInfoRepository
-                .UpdateDeviceByName(deviceInfo.getM_name(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo.getM_height());
-    }
-
-    /**
-     * 更新设备
-     *
-     * @param deviceInfo
-     * @return
-     */
-    public int UpdateDeviceById(DeviceInfo deviceInfo)
-    {
-        return m_deviceInfoRepository
-                .UpdateDeviceById(deviceInfo.getM_id(), deviceInfo.getM_lat(), deviceInfo.getM_lot(),
-                        deviceInfo.getM_height());
-    }
-
-    /**
-     * 根据编号删除设备
-     *
-     * @param id
-     */
-    public void DelDeviceById(Integer id)
-    {
-        m_deviceInfoRepository.deleteById(id);
-    }
-
-    /**
-     * 根据名称删除设备
-     *
-     * @param name
-     * @return
-     */
-    public DeviceInfo DelDeviceByName(String name)
-    {
-        DeviceInfo tempDevice = m_deviceInfoRepository.FindDeviceByName(name);
-        if (tempDevice != null)
-        {
-            m_deviceInfoRepository.delete(tempDevice);
-        }
-        return tempDevice;
+                .UpdateDeviceByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo.getM_height());
     }
 
 }

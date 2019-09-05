@@ -18,7 +18,7 @@ public class StartApplication
 
         FileData fileData = new FileData();
         fileData.setM_path("C:\\Users\\zistone\\Desktop\\gprs_info.txt");
-        fileData.setM_time(5 * 1000);
+        fileData.setM_time(5 * 1000 *60);
         fileData.setM_encode("UTF-8");
         new FileContentEvent(fileData);
     }

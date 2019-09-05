@@ -16,7 +16,7 @@ public class FileContentEvent extends ApplicationEvent
 {
     private static int LINECOUNT;
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger m_logger = LoggerFactory.getLogger(this.getClass());
 
     private FileData m_fileData;
     private Timer m_timer = new Timer();
@@ -27,7 +27,7 @@ public class FileContentEvent extends ApplicationEvent
         this.m_fileData = fileData;
         ReadFileThread readFileThread = new ReadFileThread();
         readFileThread.start();
-        logger.info(">>>线程" + readFileThread.getId() + "执行");
+        m_logger.info(">>>线程" + readFileThread.getId() + "执行");
     }
 
     public FileData GetFileData()
@@ -55,7 +55,7 @@ public class FileContentEvent extends ApplicationEvent
                 }
             };
             m_timer.schedule(timerTask, 0, m_fileData.getM_time());
-            logger.info(">>>定时读取文本内容的任务执行");
+            m_logger.info(">>>定时读取文本内容的任务执行");
         }
 
         private void ReadFile()
@@ -74,7 +74,7 @@ public class FileContentEvent extends ApplicationEvent
                 Stream<String> streams = bufferedReader.lines().filter(p -> p != null && !"".equals(p) && p.contains("L"));
                 Object[] array = streams.toArray();
                 lineCount = array.length;
-                logger.info(">>>本次内容行数(过滤空行):" + lineCount);
+                m_logger.info(">>>本次内容行数(过滤空行):" + lineCount);
                 //文件内容有变动
                 if (lineCount != LINECOUNT)
                 {
@@ -103,14 +103,14 @@ public class FileContentEvent extends ApplicationEvent
                         deviceInfo.setM_lot(lot);
                         DeviceInfoService deviceInfoService = (DeviceInfoService) ServiceUtil.getBean("deviceInfoService");
                         deviceInfoService.UpdateDeviceByDeviceId(deviceInfo);
-                        logger.info(">>>监听的文本文件的内容有更新,将新数据" + deviceInfo.toString() + "更新至数据库");
+                        m_logger.info(">>>监听的文本文件的内容有更新,将新数据" + deviceInfo.toString() + "更新至数据库");
                     }
                     LINECOUNT = lineCount;
                 }
             }
             catch (Exception e)
             {
-                logger.error(e.getMessage());
+                m_logger.error(e.getMessage());
                 e.printStackTrace();
             }
             finally

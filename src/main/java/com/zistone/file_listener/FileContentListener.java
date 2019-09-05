@@ -13,7 +13,7 @@ import java.util.Objects;
 @Transactional
 public class FileContentListener implements ApplicationListener<FileContentEvent>
 {
-    Logger logger = LoggerFactory.getLogger(FileContentListener.class);
+    private Logger m_logger = LoggerFactory.getLogger(FileContentListener.class);
 
     @Override
     public void onApplicationEvent(FileContentEvent fileContentEvent)
@@ -23,6 +23,6 @@ public class FileContentListener implements ApplicationListener<FileContentEvent
             return;
         }
         FileData fileData = fileContentEvent.GetFileData();
-        logger.info(">>>接收到监听对象:" + fileData.toString());
+        m_logger.info(">>>接收到监听对象:" + fileData.toString());
     }
 }

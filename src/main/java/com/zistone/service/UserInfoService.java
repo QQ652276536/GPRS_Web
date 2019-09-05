@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class UserInfoService
 {
-    Logger logger = LoggerFactory.getLogger(UserInfoService.class);
+    private Logger m_logger = LoggerFactory.getLogger(UserInfoService.class);
 
     @Resource
     private UserInfoRepository m_userInfoRepository;
@@ -53,7 +53,7 @@ public class UserInfoService
         {
             return m_userInfoRepository.save(userInfo);
         }
-        logger.error(">>>注册失败,用户名已存在");
+        m_logger.error(">>>注册失败,用户名已存在");
         return null;
     }
 
@@ -70,7 +70,7 @@ public class UserInfoService
         {
             if (null != userInfo.getM_userImage() && !"".equals(userInfo.getM_userImage()))
             {
-                logger.info(">>>此次更新有图片");
+                m_logger.info(">>>此次更新有图片");
                 existUser.setM_userImage(userInfo.getM_userImage());
             }
             if (null != userInfo.getM_password() && !"".equals(userInfo.getM_password()))
@@ -79,7 +79,7 @@ public class UserInfoService
             }
             return m_userInfoRepository.save(existUser);
         }
-        logger.error(">>>更新失败");
+        m_logger.error(">>>更新失败");
         return null;
     }
 

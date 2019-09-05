@@ -14,7 +14,7 @@ import java.util.Random;
 @Service
 public class DeviceInfoService
 {
-    Logger logger = LoggerFactory.getLogger(DeviceInfoService.class);
+    private Logger m_logger = LoggerFactory.getLogger(DeviceInfoService.class);
 
     @Resource
     private DeviceInfoRepository m_deviceInfoRepository;
@@ -109,18 +109,18 @@ public class DeviceInfoService
             DeviceInfo tempDeviceInfo = m_deviceInfoRepository.save(deviceInfo);
             if (null != tempDeviceInfo)
             {
-                logger.info(">>>设备" + tempDeviceInfo.getM_name() + "注册成功");
+                m_logger.info(">>>设备" + tempDeviceInfo.getM_name() + "注册成功");
                 return tempDeviceInfo;
             }
             else
             {
-                logger.error(">>>设备注册失败!!!请检查日志排查原因...");
+                m_logger.error(">>>设备注册失败!!!请检查日志排查原因...");
                 return null;
             }
         }
         else
         {
-            logger.info(">>>设备已存在!!!");
+            m_logger.info(">>>设备已存在!!!");
             return null;
         }
     }

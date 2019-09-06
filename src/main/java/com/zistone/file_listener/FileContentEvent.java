@@ -81,7 +81,7 @@ public class FileContentEvent extends ApplicationEvent
                     //最新的一条数据
                     String line = String.valueOf(Stream.of(array).filter(p -> p.equals("让过滤器的结果为false,执行返回最后一个元素")).findFirst()
                             .orElse(array[lineCount - 1]));
-                    System.out.println(">>>有新的数据:" + line);
+                    System.out.println(">>>监听的文本文件的内容有更新:" + line);
                     String[] strArray1 = line.split("L");
                     //设备编号
                     String deviceId = strArray1[0].trim();
@@ -103,13 +103,18 @@ public class FileContentEvent extends ApplicationEvent
                         deviceInfo.setM_lot(lot);
                         DeviceInfoService deviceInfoService = (DeviceInfoService) ServiceUtil.getBean("deviceInfoService");
                         deviceInfoService.UpdateDeviceByDeviceId(deviceInfo);
-                        m_logger.info(">>>监听的文本文件的内容有更新,将新数据" + deviceInfo.toString() + "更新至数据库");
+                        m_logger.info(">>>将本次数据有错误" + deviceInfo.toString() + "更新至数据库");
+                    }
+                    else
+                    {
+                        m_logger.error(">>>本次数据有错误,禁止更新至数据库");
                     }
                     LINECOUNT = lineCount;
                 }
             }
             catch (Exception e)
             {
+                m_logger.error(">>>本次数据有错误,禁止更新至数据库");
                 m_logger.error(e.getMessage());
                 e.printStackTrace();
             }

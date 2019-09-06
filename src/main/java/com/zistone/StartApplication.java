@@ -17,7 +17,7 @@ public class StartApplication
         SpringApplication.run(StartApplication.class, args);
 
         FileData fileData = new FileData();
-        fileData.setM_path("C:\\Users\\zistone\\Desktop\\gprs_info.txt");
+        fileData.setM_path("C:\\demo\\gprs_info.txt");
         fileData.setM_time(5 * 1000 *60);
         fileData.setM_encode("UTF-8");
         new FileContentEvent(fileData);

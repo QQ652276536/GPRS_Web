@@ -103,7 +103,7 @@ public class FileContentEvent extends ApplicationEvent
                         deviceInfo.setM_lot(lot);
                         DeviceInfoService deviceInfoService = (DeviceInfoService) ServiceUtil.getBean("deviceInfoService");
                         deviceInfoService.UpdateDeviceByDeviceId(deviceInfo);
-                        m_logger.info(">>>将本次数据有错误" + deviceInfo.toString() + "更新至数据库");
+                        m_logger.info(">>>将本次数据" + deviceInfo.toString() + "更新至数据库");
                     }
                     else
                     {

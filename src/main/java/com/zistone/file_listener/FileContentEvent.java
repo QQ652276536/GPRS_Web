@@ -1,15 +1,17 @@
 package com.zistone.file_listener;
 
 import com.zistone.bean.DeviceInfo;
+import com.zistone.bean.LocationInfo;
 import com.zistone.service.DeviceInfoService;
+import com.zistone.service.LocationInfoService;
 import com.zistone.service.ServiceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEvent;
 
 import java.io.*;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class FileContentEvent extends ApplicationEvent
@@ -25,6 +27,7 @@ public class FileContentEvent extends ApplicationEvent
     {
         super(fileData);
         this.m_fileData = fileData;
+        if (true) return;
         ReadFileThread readFileThread = new ReadFileThread();
         readFileThread.start();
         m_logger.info(">>>线程" + readFileThread.getId() + "执行");
@@ -33,6 +36,95 @@ public class FileContentEvent extends ApplicationEvent
     public FileData GetFileData()
     {
         return m_fileData;
+    }
+
+    public void ReadAllFile()
+    {
+        File file = new File(m_fileData.getM_path());
+        FileInputStream fileInputStream;
+        InputStreamReader inputStreamReader = null;
+        BufferedReader bufferedReader = null;
+        int lineCount;
+        try
+        {
+            fileInputStream = new FileInputStream(file);
+            inputStreamReader = new InputStreamReader(fileInputStream, m_fileData.getM_encode());
+            bufferedReader = new BufferedReader(inputStreamReader);
+            //过滤空行
+            Stream<String> streams = bufferedReader.lines().filter(p -> p != null && !"".equals(p) && p.contains(
+                    "L"));
+            String[] array = streams.toArray(String[]::new);
+            lineCount = array.length;
+            m_logger.info(">>>本次内容行数(过滤空行):" + lineCount);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            List<LocationInfo> locationInfoList = new ArrayList<>();
+            for (String line : array)
+            {
+                try
+                {
+                    String[] strArray1 = line.split("L");
+                    //设备编号
+                    String deviceId = strArray1[0].trim();
+                    String[] tempArray1 = strArray1[1].split("  ");
+                    //时间
+                    String time1 = tempArray1[1];
+                    String time2 = tempArray1[2];
+                    //经纬度
+                    String latStr = tempArray1[3].trim();
+                    double lat = Double.valueOf(latStr);
+                    String lotStr = tempArray1[4].trim();
+                    double lot = Double.valueOf(lotStr);
+                    //TODO:其它参数不知道什么意思
+                    if (lat != 0.0 && lot != 0.0)
+                    {
+                        LocationInfo locationInfo = new LocationInfo();
+                        locationInfo.setM_deviceId(deviceId);
+                        locationInfo.setM_lat(lat);
+                        locationInfo.setM_lot(lot);
+                        Date date = simpleDateFormat.parse(time1);
+                        locationInfo.setM_time(date.getTime());
+                        locationInfoList.add(locationInfo);
+                    }
+                }
+                catch (Exception e)
+                {
+                    m_logger.error(e.getMessage());
+                    e.printStackTrace();
+                    continue;
+                }
+            }
+            if (locationInfoList.size() > 0)
+            {
+                LocationInfoService locationInfoService = (LocationInfoService) ServiceUtil.getBean(
+                        "locationInfoService");
+                int count = locationInfoService.InsertList(locationInfoList);
+                m_logger.info(">>>本次内容行数(过滤空行):" + lineCount + ",新增" + count + "条数据");
+            }
+        }
+        catch (Exception e)
+        {
+            m_logger.error(">>>本次数据有错误,禁止更新至数据库");
+            m_logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if (null != bufferedReader)
+                {
+                    bufferedReader.close();
+                }
+                if (null != inputStreamReader)
+                {
+                    inputStreamReader.close();
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     class ReadFileThread extends Thread
@@ -71,7 +163,8 @@ public class FileContentEvent extends ApplicationEvent
                 inputStreamReader = new InputStreamReader(fileInputStream, m_fileData.getM_encode());
                 bufferedReader = new BufferedReader(inputStreamReader);
                 //过滤空行
-                Stream<String> streams = bufferedReader.lines().filter(p -> p != null && !"".equals(p) && p.contains("L"));
+                Stream<String> streams = bufferedReader.lines().filter(p -> p != null && !"".equals(p) && p.contains(
+                        "L"));
                 Object[] array = streams.toArray();
                 lineCount = array.length;
                 m_logger.info(">>>本次内容行数(过滤空行):" + lineCount);
@@ -79,8 +172,9 @@ public class FileContentEvent extends ApplicationEvent
                 if (lineCount != LINECOUNT)
                 {
                     //最新的一条数据
-                    String line = String.valueOf(Stream.of(array).filter(p -> p.equals("让过滤器的结果为false,执行返回最后一个元素")).findFirst()
-                            .orElse(array[lineCount - 1]));
+                    String line =
+                            String.valueOf(Stream.of(array).filter(p -> p.equals("让过滤器的结果为false,执行返回最后一个元素")).findFirst()
+                                    .orElse(array[lineCount - 1]));
                     System.out.println(">>>监听的文本文件的内容有更新:" + line);
                     String[] strArray1 = line.split("L");
                     //设备编号
@@ -101,7 +195,8 @@ public class FileContentEvent extends ApplicationEvent
                         deviceInfo.setM_deviceId(deviceId);
                         deviceInfo.setM_lat(lat);
                         deviceInfo.setM_lot(lot);
-                        DeviceInfoService deviceInfoService = (DeviceInfoService) ServiceUtil.getBean("deviceInfoService");
+                        DeviceInfoService deviceInfoService = (DeviceInfoService) ServiceUtil.getBean(
+                                "deviceInfoService");
                         deviceInfoService.UpdateDeviceByDeviceId(deviceInfo);
                         m_logger.info(">>>将本次数据" + deviceInfo.toString() + "更新至数据库");
                     }

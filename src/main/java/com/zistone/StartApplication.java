@@ -20,7 +20,9 @@ public class StartApplication
         fileData.setM_path("C:\\demo\\gprs_info.txt");
         fileData.setM_time(5 * 1000 * 60);
         fileData.setM_encode("UTF-8");
-        new FileContentEvent(fileData);
+//        new FileContentEvent(fileData);
+        fileData.setM_path("E:\\AS_Workspace\\Blowdown_APP\\app\\src\\main\\assets\\gprs_info.txt");
+        new FileContentEvent(fileData).ReadAllFile();
     }
 
 }

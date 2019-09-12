@@ -4,6 +4,8 @@ import com.zistone.bean.LocationInfo;
 import com.zistone.repository.LocationInfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

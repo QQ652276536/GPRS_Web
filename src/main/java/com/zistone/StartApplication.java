@@ -1,6 +1,5 @@
 package com.zistone;
 
-import com.zistone.file_listener.FileContentEvent;
 import com.zistone.file_listener.FileData;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +20,7 @@ public class StartApplication
         //fileData.setM_path("C:\\Users\\zistone\\Desktop\\gprs_info.txt");
         fileData.setM_time(5 * 1000 * 60);
         fileData.setM_encode("UTF-8");
-        FileContentEvent fileContentEvent = new FileContentEvent(fileData);
+        //FileContentEvent fileContentEvent = new FileContentEvent(fileData);
     }
 
 }

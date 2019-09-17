@@ -17,6 +17,7 @@ spring:
     #url: jdbc:mysql://49.234.4.245:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     #url: jdbc:mysql://127.0.0.1:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     url: jdbc:mysql://129.204.165.206:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    #url: jdbc:mysql://127.0.0.1:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
 
     #MongoDB
   application:

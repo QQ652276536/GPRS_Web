@@ -20,25 +20,14 @@ public class DeviceInfoService
     private DeviceInfoRepository m_deviceInfoRepository;
 
     /**
-     * 查找鉴权码
+     * 根据鉴权码查找设备
      *
      * @param akCode
      * @return
      */
-    public String FindAKCode(String akCode)
+    public DeviceInfo FindByAKCode(String akCode)
     {
-        if (null != akCode && !"".equals(akCode))
-        {
-            List<DeviceInfo> list = FindAllDevice();
-            for (DeviceInfo tempDeviceInfo : list)
-            {
-                if (akCode.equals(tempDeviceInfo.getM_akCode()))
-                {
-                    return tempDeviceInfo.getM_akCode();
-                }
-            }
-        }
-        return "";
+        return m_deviceInfoRepository.FindDeviceByAKCode(akCode);
     }
 
     @Transactional
@@ -128,7 +117,7 @@ public class DeviceInfoService
      * 更新设备
      *
      * @param deviceInfo
-     * @return
+     * @return 受影响的行数
      */
     public int UpdateDeviceByDeviceId(DeviceInfo deviceInfo)
     {

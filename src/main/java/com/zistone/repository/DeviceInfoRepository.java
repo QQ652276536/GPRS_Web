@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface DeviceInfoRepository extends JpaRepository<DeviceInfo, Integer>
 {
-
     @Query("select device from DeviceInfo device where device.m_deviceId = :deviceId")
     DeviceInfo FindDeviceByDeviceId(@Param("deviceId") String deviceId);
+
+    @Query("select device from DeviceInfo device where device.m_akCode = :akCode")
+    DeviceInfo FindDeviceByAKCode(@Param("akCode") String akCode);
 
     @Query("select device from DeviceInfo device where device.m_id = :id")
     DeviceInfo FindDeviceById(@Param("id") int id);

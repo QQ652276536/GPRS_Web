@@ -207,7 +207,6 @@ public class FileContentEvent extends ApplicationEvent
             }
             catch (Exception e)
             {
-                m_logger.error(">>>本次数据有错误,禁止更新至数据库");
                 m_logger.error(e.getMessage());
                 e.printStackTrace();
             }

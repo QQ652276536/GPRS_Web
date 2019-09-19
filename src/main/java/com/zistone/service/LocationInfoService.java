@@ -1,11 +1,10 @@
 package com.zistone.service;
 
 import com.zistone.bean.LocationInfo;
+import com.zistone.repository.DeviceInfoRepository;
 import com.zistone.repository.LocationInfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,28 +19,33 @@ public class LocationInfoService
     @Resource
     private LocationInfoRepository m_locationInfoRepository;
 
+    @Resource
+    private DeviceInfoRepository m_deviceInfoRepository;
+
     public List<LocationInfo> FindByDeviceId(String deviceId)
     {
         List<LocationInfo> list = m_locationInfoRepository.FindByDeviceId(deviceId);
         return list;
     }
 
-    public List<LocationInfo> FindByDeviceIdAndTime(String deviceId, long startTime, long endTime)
+    public List<LocationInfo> FindByDeviceIdAndTime(String deviceId, String startDate, String endDate)
     {
-        List<LocationInfo> list = m_locationInfoRepository.FindByDeviceIdAndTime(deviceId, startTime, endTime);
+        List<LocationInfo> list = m_locationInfoRepository.FindByDeviceIdAndTime(deviceId, startDate, endDate);
         return list;
     }
 
     @Transactional
     public LocationInfo Insert(LocationInfo locationInfo)
     {
-        return m_locationInfoRepository.insert(locationInfo);
+        //汇报位置的同时更新设备当前的位置信息
+        m_deviceInfoRepository.UpdateDeviceByDeviceId(locationInfo.getM_deviceId(), locationInfo.getM_lat(), locationInfo.getM_lot(), 0.0);
+        return m_locationInfoRepository.save(locationInfo);
     }
 
     @Transactional
     public int InsertList(List<LocationInfo> locationInfoList)
     {
-        return m_locationInfoRepository.insert(locationInfoList).size();
+        return m_locationInfoRepository.saveAll(locationInfoList).size();
     }
 
 }

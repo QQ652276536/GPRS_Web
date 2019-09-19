@@ -1,8 +1,6 @@
 package com.zistone.file_listener;
 
-import com.zistone.bean.DeviceInfo;
 import com.zistone.bean.LocationInfo;
-import com.zistone.service.DeviceInfoService;
 import com.zistone.service.LocationInfoService;
 import com.zistone.service.ServiceUtil;
 import org.slf4j.Logger;
@@ -36,9 +34,9 @@ public class FileContentEvent extends ApplicationEvent
         return m_fileData;
     }
 
-    public void ReadAllFile(String path)
+    public void ReadAllFile()
     {
-        File file = new File(path);
+        File file = new File(m_fileData.getM_path());
         FileInputStream fileInputStream;
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
@@ -77,14 +75,13 @@ public class FileContentEvent extends ApplicationEvent
                         locationInfo.setM_deviceId(deviceId);
                         locationInfo.setM_lat(lat);
                         locationInfo.setM_lot(lot);
-                        Date date = simpleDateFormat.parse(time1);
-                        locationInfo.setM_time(date.getTime());
+                        locationInfo.setM_createTime(time1);
                         locationInfoList.add(locationInfo);
                     }
                 }
                 catch (Exception e)
                 {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                     continue;
                 }
             }
@@ -135,7 +132,8 @@ public class FileContentEvent extends ApplicationEvent
                 @Override
                 public void run()
                 {
-                    ReadFile();
+                    //ReadFile();
+                    //ReadAllFile();
                 }
             };
             m_timer.schedule(timerTask, 0, m_fileData.getM_time());
@@ -181,22 +179,15 @@ public class FileContentEvent extends ApplicationEvent
                     //TODO:其它参数不知道什么意思
                     if (lat != 0.0 && lot != 0.0)
                     {
-                        DeviceInfo deviceInfo = new DeviceInfo();
-                        deviceInfo.setM_deviceId(deviceId);
-                        deviceInfo.setM_lat(lat);
-                        deviceInfo.setM_lot(lot);
-                        DeviceInfoService deviceInfoService = (DeviceInfoService) ServiceUtil.getBean("deviceInfoService");
-                        deviceInfoService.UpdateDeviceByDeviceId(deviceInfo);
-                        m_logger.info(">>>将本次数据" + deviceInfo.toString() + "更新至MySQL数据库");
                         LocationInfo locationInfo = new LocationInfo();
                         locationInfo.setM_deviceId(deviceId);
                         locationInfo.setM_lat(lat);
                         locationInfo.setM_lot(lot);
                         Date date = SIMPLEDATEFORMAT.parse(time1);
-                        locationInfo.setM_time(date.getTime());
+                        locationInfo.setM_createTime(time1);
                         LocationInfoService locationInfoService = (LocationInfoService) ServiceUtil.getBean("locationInfoService");
                         locationInfoService.Insert(locationInfo);
-                        m_logger.info(">>>将本次数据" + deviceInfo.toString() + "新增至MongoDB数据库");
+                        m_logger.info(">>>将本次数据" + locationInfo.toString() + "更新至MySQL数据库");
                     }
                     else
                     {

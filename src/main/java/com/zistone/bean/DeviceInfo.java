@@ -67,6 +67,7 @@ public class DeviceInfo
      */
     @Column(columnDefinition = "double default '0' comment '经度'")
     private double m_lot;
+
     /**
      * 海拔
      */

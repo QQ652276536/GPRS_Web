@@ -1,49 +1,58 @@
 package com.zistone.bean;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Document(collection = "locationinfo")
+import javax.persistence.*;
+
+@Entity
+//监听实体变化
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "locationinfo")
 public class LocationInfo
 {
+    @Override
+    public String toString()
+    {
+        return "LocationInfo{" + "m_id='" + m_id + '\'' + ", m_deviceId='" + m_deviceId + '\'' + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_createTime=" + m_createTime + '}';
+    }
+
     /**
      * 自增主键(由数据库生成)
      */
     @Id
-    private String m_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int m_id;
 
     /**
-     * 设备编号
+     * 设备编号,设备自带
      */
+    @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备编号'")
     private String m_deviceId;
 
     /**
      * 纬度
      */
+    @Column(columnDefinition = "double default '0' comment '纬度'")
     private double m_lat;
 
     /**
      * 经度
      */
+    @Column(columnDefinition = "double default '0' comment '经度'")
     private double m_lot;
 
     /**
-     * 定位时间(单位:秒)
+     * 创建时间(由前端上传)
      */
-    private long m_time;
+    @Column(columnDefinition = "varchar(25) default '' comment '创建时间(由前端上传)'")
+    private String m_createTime;
 
-    @Override
-    public String toString()
-    {
-        return "LocationInfo{" + "m_id='" + m_id + '\'' + ", m_deviceId='" + m_deviceId + '\'' + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_time=" + m_time + '}';
-    }
-
-    public String getM_id()
+    public int getM_id()
     {
         return m_id;
     }
 
-    public void setM_id(String m_id)
+    public void setM_id(int m_id)
     {
         this.m_id = m_id;
     }
@@ -78,13 +87,13 @@ public class LocationInfo
         this.m_lot = m_lot;
     }
 
-    public long getM_time()
+    public String getM_createTime()
     {
-        return m_time;
+        return m_createTime;
     }
 
-    public void setM_time(long m_time)
+    public void setM_createTime(String m_createTime)
     {
-        this.m_time = m_time;
+        this.m_createTime = m_createTime;
     }
 }

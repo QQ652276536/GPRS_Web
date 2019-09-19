@@ -125,4 +125,15 @@ public class DeviceInfoService
                 .UpdateDeviceByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo.getM_height());
     }
 
+    /**
+     * 更新设备
+     *
+     * @param deviceInfo
+     * @return
+     */
+    public DeviceInfo Update(DeviceInfo deviceInfo)
+    {
+        return m_deviceInfoRepository.save(deviceInfo);
+    }
+
 }

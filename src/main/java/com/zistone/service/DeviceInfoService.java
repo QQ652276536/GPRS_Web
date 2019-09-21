@@ -58,7 +58,7 @@ public class DeviceInfoService
     }
 
     /**
-     * 新增一台设备,不允许设备名重复
+     * 新增一台设备,不允许设备ID重复
      *
      * @param deviceInfo
      * @return
@@ -66,37 +66,38 @@ public class DeviceInfoService
     @Transactional
     public DeviceInfo InsertDevice(DeviceInfo deviceInfo)
     {
-        DeviceInfo result = new DeviceInfo();
-        //线上环境设备编号不会重复,所以用作判断重复的条件
-        if (m_deviceInfoRepository.FindDeviceByDeviceId(deviceInfo.getM_deviceId()) == null)
+        //鉴权码
+        String akCode = "";
+        Random random = new Random();
+        for (int i = 0; i < 8; i++)
         {
-            //鉴权码
-            String akCode = "";
-            Random random = new Random();
-            for (int i = 0; i < 8; i++)
+            int num = random.nextInt(3) % 4;
+            switch (num)
             {
-                int num = random.nextInt(3) % 4;
-                switch (num)
-                {
-                    //随机数字
-                    case 0:
-                        akCode += random.nextInt(10);
-                        break;
-                    //随机大写字母
-                    case 1:
-                        akCode += (char) (random.nextInt(26) + 65);
-                        break;
-                    //随机小写字母
-                    case 2:
-                        akCode += (char) (random.nextInt(26) + 97);
-                        break;
-                    default:
-                        break;
-                }
+                //随机数字
+                case 0:
+                    akCode += random.nextInt(10);
+                    break;
+                //随机大写字母
+                case 1:
+                    akCode += (char) (random.nextInt(26) + 65);
+                    break;
+                //随机小写字母
+                case 2:
+                    akCode += (char) (random.nextInt(26) + 97);
+                    break;
+                default:
+                    break;
             }
+        }
+        DeviceInfo queryDevice = m_deviceInfoRepository.FindDeviceByDeviceId(deviceInfo.getM_deviceId());
+        //线上环境设备编号不会重复,所以用作判断重复的条件
+        //根据设备编号查找设备,没有则新增
+        if (queryDevice == null)
+        {
             deviceInfo.setM_akCode(akCode);
-            result = m_deviceInfoRepository.save(deviceInfo);
-            if (null != result)
+            DeviceInfo tempDevice = m_deviceInfoRepository.save(deviceInfo);
+            if (null != tempDevice && tempDevice.getM_id() != 0)
             {
                 m_logger.info(">>>设备注册成功");
             }
@@ -104,12 +105,21 @@ public class DeviceInfoService
             {
                 m_logger.error(">>>设备注册失败!!!请检查服务日志排查原因...");
             }
-            return result;
+            return tempDevice;
         }
+        //有则更新鉴权码
         else
         {
-            m_logger.info(">>>设备已存在!!!");
-            return result;
+            m_logger.info(">>>设备已存在,更新该设备的鉴权码");
+            queryDevice.setM_akCode(akCode);
+            int num = m_deviceInfoRepository.UpdateAKCodeByDeviceId(queryDevice);
+            if (num == 1)
+            {
+                m_logger.info(">>>设备注册成功");
+                return queryDevice;
+            }
+            m_logger.error(">>>设备注册失败!!!请检查服务日志排查原因...");
+            return null;
         }
     }
 

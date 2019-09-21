@@ -23,6 +23,13 @@ public interface DeviceInfoRepository extends JpaRepository<DeviceInfo, Integer>
     @Modifying(clearAutomatically = true)
     @Query("update DeviceInfo device set device.m_state = 1,device.m_lat = :lat,device.m_lot = :lot,device.m_height = :height,device" +
             ".m_updateTime = CURRENT_TIMESTAMP" + " where " + "device.m_deviceId = " + ":deviceId")
-    int UpdateDeviceByDeviceId(@Param("deviceId") String deviceId, @Param("lat") double lat, @Param("lot") double lot,
-                          @Param("height") double height);
+    int UpdateDeviceByDeviceId(
+            @Param("deviceId") String deviceId, @Param("lat") double lat, @Param("lot") double lot, @Param("height") double height);
+
+    @Transactional
+    //清除底层持久化上下文
+    @Modifying(clearAutomatically = true)
+    @Query("update DeviceInfo device set device.m_state = 1,device.m_updateTime = CURRENT_TIMESTAMP where device.m_deviceId = " +
+            ":#{#deviceInfo.m_deviceId}")
+    int UpdateAKCodeByDeviceId(@Param("deviceInfo") DeviceInfo deviceInfo);
 }

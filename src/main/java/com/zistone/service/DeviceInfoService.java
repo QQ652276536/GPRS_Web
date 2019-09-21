@@ -74,17 +74,17 @@ public class DeviceInfoService
             int num = random.nextInt(3) % 4;
             switch (num)
             {
-                //随机数字
-                case 0:
-                    akCode += random.nextInt(10);
-                    break;
                 //随机大写字母
-                case 1:
+                case 0:
                     akCode += (char) (random.nextInt(26) + 65);
                     break;
                 //随机小写字母
-                case 2:
+                case 1:
                     akCode += (char) (random.nextInt(26) + 97);
+                    break;
+                //随机数字
+                case 2:
+                    akCode += random.nextInt(10);
                     break;
                 default:
                     break;

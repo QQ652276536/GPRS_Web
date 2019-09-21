@@ -95,15 +95,16 @@ public class DeviceInfoService
         //根据设备编号查找设备,没有则新增
         if (queryDevice == null)
         {
+            m_logger.info(">>>设备不存在,新增该设备");
             deviceInfo.setM_akCode(akCode);
             DeviceInfo tempDevice = m_deviceInfoRepository.save(deviceInfo);
             if (null != tempDevice && tempDevice.getM_id() != 0)
             {
-                m_logger.info(">>>设备注册成功");
+                m_logger.info(">>>设备注册成功\r\n");
             }
             else
             {
-                m_logger.error(">>>设备注册失败!!!请检查服务日志排查原因...");
+                m_logger.error(">>>设备注册失败!!!请检查服务日志排查原因...\r\n");
             }
             return tempDevice;
         }
@@ -115,10 +116,10 @@ public class DeviceInfoService
             int num = m_deviceInfoRepository.UpdateAKCodeByDeviceId(queryDevice);
             if (num == 1)
             {
-                m_logger.info(">>>设备注册成功");
+                m_logger.info(">>>设备注册成功\r\n");
                 return queryDevice;
             }
-            m_logger.error(">>>设备注册失败!!!请检查服务日志排查原因...");
+            m_logger.error(">>>设备注册失败!!!请检查服务日志排查原因...\r\n");
             return null;
         }
     }

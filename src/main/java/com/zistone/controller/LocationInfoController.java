@@ -19,7 +19,7 @@ import static java.util.TimeZone.getTimeZone;
 public class LocationInfoController
 {
     private Logger m_logger = LoggerFactory.getLogger(LocationInfoController.class);
-    private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @Resource
     LocationInfoService m_locationInfoService;
@@ -27,21 +27,21 @@ public class LocationInfoController
     @RequestMapping(value = "/FindByDeviceId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public List<LocationInfo> FindByDeviceId(@RequestParam("deviceId") String deviceId)
     {
-        m_logger.info(">>>收到查询位置" + deviceId + "所有时间的历史轨迹请求");
+        m_logger.info(">>>收到查询" + deviceId + "所有时间的历史轨迹请求");
         return m_locationInfoService.FindByDeviceId(deviceId);
     }
 
     @RequestMapping(value = "/FindByDeviceIdAndBetweenTime", method = RequestMethod.POST, produces = "application" + "/json;charset=UTF-8")
     public List<LocationInfo> FindByDeviceIdAndBetweenTime(
-            @RequestParam("deviceId") String deviceId, @RequestParam("startDate") long startDate, @RequestParam("endDate") long endDate)
+            @RequestParam("deviceId") String deviceId, @RequestParam("startTime") long startTime, @RequestParam("endTime") long endTime)
     {
         //不设置会比Android端多八个小时
         SIMPLEDATEFORMAT.setTimeZone(getTimeZone("GMT+0"));
-        Date date1 = new Date(startDate);
-        Date date2 = new Date(endDate);
+        Date date1 = new Date(startTime);
+        Date date2 = new Date(endTime);
         String startStr = SIMPLEDATEFORMAT.format(date1);
         String endStr = SIMPLEDATEFORMAT.format(date2);
-        m_logger.info(">>>收到查询位置" + deviceId + "从" + startStr + "至" + endStr + "的历史轨迹请求");
+        m_logger.info(">>>收到查询" + deviceId + "从" + startStr + "至" + endStr + "的历史轨迹请求");
         return m_locationInfoService.FindByDeviceIdAndTime(deviceId, startStr, endStr);
     }
 

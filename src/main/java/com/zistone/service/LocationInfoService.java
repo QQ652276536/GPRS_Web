@@ -38,7 +38,7 @@ public class LocationInfoService
     public LocationInfo Insert(LocationInfo locationInfo)
     {
         //汇报位置的同时更新设备当前的位置信息
-        m_deviceInfoRepository.UpdateDeviceByDeviceId(locationInfo.getM_deviceId(), locationInfo.getM_lat(), locationInfo.getM_lot(), 0.0);
+        m_deviceInfoRepository.UpdateByDeviceId(locationInfo.getM_deviceId(), locationInfo.getM_lat(), locationInfo.getM_lot(), 0.0);
         return m_locationInfoRepository.save(locationInfo);
     }
 

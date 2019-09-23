@@ -38,15 +38,14 @@ public class DeviceInfoController
     public int UpdateByDeviceId(@RequestBody DeviceInfo deviceInfo)
     {
         m_logger.info(">>>收到更新设备请求:" + deviceInfo.toString());
-        return m_deviceInfoService.UpdateDeviceByDeviceId(deviceInfo);
+        return m_deviceInfoService.UpdateByDeviceId(deviceInfo);
     }
 
-    @RequestMapping(value = "/Insert", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public DeviceInfo Insert(@RequestBody DeviceInfo deviceInfo)
+    @RequestMapping(value = "/InsertByDeviceId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public DeviceInfo InsertByDeviceId(@RequestBody DeviceInfo deviceInfo)
     {
         m_logger.info(">>>收到新增设备请求:" + deviceInfo.toString());
-        //TODO:校验参数
-        return m_deviceInfoService.InsertDevice(deviceInfo);
+        return m_deviceInfoService.InsertByDeviceId(deviceInfo);
     }
 
     @RequestMapping(value = "/FindAll", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -54,13 +53,6 @@ public class DeviceInfoController
     {
         m_logger.info(">>>收到查询所有设备的请求:");
         return m_deviceInfoService.FindAllDevice();
-    }
-
-    @RequestMapping(value = "/FindById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public DeviceInfo FindById(int id)
-    {
-        m_logger.info(">>>收到查询设备的请求:" + id);
-        return m_deviceInfoService.FindDeviceById(id);
     }
 
 }

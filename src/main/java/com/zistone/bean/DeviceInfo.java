@@ -1,6 +1,5 @@
 package com.zistone.bean;
 
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
-@DynamicUpdate
 //监听实体变化
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "deviceinfo")

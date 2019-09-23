@@ -27,7 +27,7 @@ public class DeviceInfoService
      */
     public DeviceInfo FindByAKCode(String akCode)
     {
-        return m_deviceInfoRepository.FindDeviceByAKCode(akCode);
+        return m_deviceInfoRepository.FindByAKCode(akCode);
     }
 
     @Transactional
@@ -42,9 +42,9 @@ public class DeviceInfoService
      * @param id
      * @return
      */
-    public DeviceInfo FindDeviceById(int id)
+    public DeviceInfo FindById(int id)
     {
-        return m_deviceInfoRepository.FindDeviceById(id);
+        return m_deviceInfoRepository.FindById(id);
     }
 
     /**
@@ -64,12 +64,12 @@ public class DeviceInfoService
      * @return
      */
     @Transactional
-    public DeviceInfo InsertDevice(DeviceInfo deviceInfo)
+    public DeviceInfo InsertByDeviceId(DeviceInfo deviceInfo)
     {
         //鉴权码
         String akCode = "";
         Random random = new Random();
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 6; i++)
         {
             int num = random.nextInt(3) % 4;
             switch (num)
@@ -90,7 +90,7 @@ public class DeviceInfoService
                     break;
             }
         }
-        DeviceInfo queryDevice = m_deviceInfoRepository.FindDeviceByDeviceId(deviceInfo.getM_deviceId());
+        DeviceInfo queryDevice = m_deviceInfoRepository.FindByDeviceId(deviceInfo.getM_deviceId());
         //线上环境设备编号不会重复,所以用作判断重复的条件
         //根据设备编号查找设备,没有则新增
         if (queryDevice == null)
@@ -130,10 +130,10 @@ public class DeviceInfoService
      * @param deviceInfo
      * @return 受影响的行数
      */
-    public int UpdateDeviceByDeviceId(DeviceInfo deviceInfo)
+    public int UpdateByDeviceId(DeviceInfo deviceInfo)
     {
         return m_deviceInfoRepository
-                .UpdateDeviceByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo.getM_height());
+                .UpdateByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo.getM_height());
     }
 
     /**

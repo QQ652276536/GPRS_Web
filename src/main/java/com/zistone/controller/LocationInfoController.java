@@ -42,7 +42,7 @@ public class LocationInfoController
         String startStr = SIMPLEDATEFORMAT.format(date1);
         String endStr = SIMPLEDATEFORMAT.format(date2);
         m_logger.info(">>>收到查询" + deviceId + "从" + startStr + "至" + endStr + "的历史轨迹请求");
-        return m_locationInfoService.FindByDeviceIdAndTime(deviceId, startStr, endStr);
+        return m_locationInfoService.FindByDeviceIdAndTime(deviceId, date1, date2);
     }
 
     @RequestMapping(value = "/Insert", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

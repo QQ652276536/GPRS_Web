@@ -3,6 +3,8 @@ package com.zistone.bean;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 //监听实体变化
@@ -13,7 +15,8 @@ public class LocationInfo
     @Override
     public String toString()
     {
-        return "LocationInfo{" + "m_id='" + m_id + '\'' + ", m_deviceId='" + m_deviceId + '\'' + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_createTime=" + m_createTime + '}';
+        return "LocationInfo{" + "m_id='" + m_id + '\'' + ", m_deviceId='" + m_deviceId + '\'' + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_createTime=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .format(m_createTime) + '}';
     }
 
     /**
@@ -44,8 +47,8 @@ public class LocationInfo
     /**
      * 创建时间(由前端上传)
      */
-    @Column(columnDefinition = "varchar(25) default '' comment '创建时间(由前端上传)'")
-    private String m_createTime;
+    @Column(columnDefinition = "datetime comment '创建时间(由前端上传)'")
+    private Date m_createTime;
 
     public int getM_id()
     {
@@ -87,12 +90,12 @@ public class LocationInfo
         this.m_lot = m_lot;
     }
 
-    public String getM_createTime()
+    public Date getM_createTime()
     {
         return m_createTime;
     }
 
-    public void setM_createTime(String m_createTime)
+    public void setM_createTime(Date m_createTime)
     {
         this.m_createTime = m_createTime;
     }

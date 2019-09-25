@@ -16,7 +16,7 @@ public class FileContentEvent extends ApplicationEvent
 {
     private static int LINECOUNT;
     private Logger m_logger = LoggerFactory.getLogger(this.getClass());
-    private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private FileData m_fileData;
     private Timer m_timer = new Timer();
 
@@ -50,7 +50,6 @@ public class FileContentEvent extends ApplicationEvent
             Stream<String> streams = bufferedReader.lines().filter(p -> p != null && !"".equals(p) && p.contains("L"));
             String[] array = streams.toArray(String[]::new);
             lineCount = array.length;
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             List<LocationInfo> locationInfoList = new ArrayList<>();
             for (String line : array)
             {
@@ -61,7 +60,8 @@ public class FileContentEvent extends ApplicationEvent
                     String deviceId = strArray1[0].trim();
                     String[] tempArray1 = strArray1[1].split("  ");
                     //时间
-                    String time1 = tempArray1[1];
+                    String time1 = tempArray1[1].replace("/", "-");
+                    Date date1 = SIMPLEDATEFORMAT.parse(time1);
                     String time2 = tempArray1[2];
                     //经纬度
                     String latStr = tempArray1[3].trim();
@@ -75,7 +75,7 @@ public class FileContentEvent extends ApplicationEvent
                         locationInfo.setM_deviceId(deviceId);
                         locationInfo.setM_lat(lat);
                         locationInfo.setM_lot(lot);
-                        locationInfo.setM_createTime(time1);
+                        locationInfo.setM_createTime(date1);
                         locationInfoList.add(locationInfo);
                     }
                 }
@@ -169,7 +169,8 @@ public class FileContentEvent extends ApplicationEvent
                     String deviceId = strArray1[0].trim();
                     String[] tempArray1 = strArray1[1].split("  ");
                     //时间
-                    String time1 = tempArray1[1];
+                    String time1 = tempArray1[1].replace("/", "-");
+                    Date date1 = SIMPLEDATEFORMAT.parse(time1);
                     String time2 = tempArray1[2];
                     //经纬度
                     String latStr = tempArray1[3].trim();
@@ -183,8 +184,7 @@ public class FileContentEvent extends ApplicationEvent
                         locationInfo.setM_deviceId(deviceId);
                         locationInfo.setM_lat(lat);
                         locationInfo.setM_lot(lot);
-                        Date date = SIMPLEDATEFORMAT.parse(time1);
-                        locationInfo.setM_createTime(time1);
+                        locationInfo.setM_createTime(date1);
                         LocationInfoService locationInfoService = (LocationInfoService) ServiceUtil.getBean("locationInfoService");
                         locationInfoService.Insert(locationInfo);
                         m_logger.info(">>>将本次数据" + locationInfo.toString() + "更新至MySQL数据库");

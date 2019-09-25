@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,7 +29,7 @@ public class LocationInfoService
         return list;
     }
 
-    public List<LocationInfo> FindByDeviceIdAndTime(String deviceId, String startDate, String endDate)
+    public List<LocationInfo> FindByDeviceIdAndTime(String deviceId, Date startDate, Date endDate)
     {
         List<LocationInfo> list = m_locationInfoRepository.FindByDeviceIdAndTime(deviceId, startDate, endDate);
         return list;

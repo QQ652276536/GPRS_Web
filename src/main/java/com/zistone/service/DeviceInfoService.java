@@ -108,15 +108,16 @@ public class DeviceInfoService
             }
             return tempDevice;
         }
-        //有则更新鉴权码
+        //有则更新
         else
         {
-            m_logger.info(">>>设备已存在,更新该设备的鉴权码");
-            queryDevice.setM_akCode(akCode);
-            int num = m_deviceInfoRepository.UpdateAKCodeByDeviceId(queryDevice);
+            m_logger.info(">>>设备已存在,更新该设备");
+            int num = m_deviceInfoRepository
+                    .UpdateByDeviceId(queryDevice.getM_deviceId(), queryDevice.getM_lat(), queryDevice.getM_lot(), queryDevice
+                            .getM_height());
             if (num == 1)
             {
-                m_logger.info(">>>设备注册成功\r\n");
+                m_logger.info(">>>设备更新成功\r\n");
                 return queryDevice;
             }
             m_logger.error(">>>设备注册失败!!!请检查服务日志排查原因...\r\n");

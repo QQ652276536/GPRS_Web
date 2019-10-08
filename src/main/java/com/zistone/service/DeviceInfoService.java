@@ -100,7 +100,7 @@ public class DeviceInfoService
             DeviceInfo tempDevice = m_deviceInfoRepository.save(deviceInfo);
             if (null != tempDevice && tempDevice.getM_id() != 0)
             {
-                m_logger.info(">>>设备注册成功\r\n");
+                m_logger.info(">>>设备注册成功");
             }
             else
             {
@@ -117,7 +117,7 @@ public class DeviceInfoService
                             .getM_height());
             if (num == 1)
             {
-                m_logger.info(">>>设备更新成功\r\n");
+                m_logger.info(">>>设备更新成功");
                 return queryDevice;
             }
             m_logger.error(">>>设备注册失败!!!请检查服务日志排查原因...\r\n");

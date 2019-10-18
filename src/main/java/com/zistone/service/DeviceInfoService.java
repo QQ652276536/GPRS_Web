@@ -113,12 +113,12 @@ public class DeviceInfoService
         {
             m_logger.info(">>>设备已存在,更新该设备");
             int num = m_deviceInfoRepository
-                    .UpdateByDeviceId(queryDevice.getM_deviceId(), queryDevice.getM_lat(), queryDevice.getM_lot(), queryDevice
+                    .UpdateByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo
                             .getM_height());
             if (num == 1)
             {
                 m_logger.info(">>>设备更新成功");
-                return queryDevice;
+                return deviceInfo;
             }
             m_logger.error(">>>设备注册失败!!!请检查服务日志排查原因...\r\n");
             return null;

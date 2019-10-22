@@ -36,7 +36,15 @@ public class LocationInfoServiceTest
     @Test
     public void findByDeviceId() throws ParseException
     {
-        List<LocationInfo> list = m_locationInfoService.FindByDeviceId("551030006334");
+        Calendar calendar = Calendar.getInstance();
+        String yearStr = String.valueOf(calendar.get(Calendar.YEAR));
+        String monthStr = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+        String dayStr = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        String startStr = yearStr + "-" + monthStr + "-" + "01" + " 00:00:00";
+        String endStr = yearStr + "-" + monthStr + "-" + dayStr + " 23:59:59";
+        Date startDate = SIMPLEDATEFORMAT.parse(startStr);
+        Date endDate = SIMPLEDATEFORMAT.parse(endStr);
+        List<LocationInfo> list = m_locationInfoService.FindByDeviceIdAndTime("300234067349750", startDate, endDate);
         List<String> keyList = new ArrayList<>();
         //当天日期为键,当天所有位置为值
         List<LocationInfo> locationEverDayList = new ArrayList<>();

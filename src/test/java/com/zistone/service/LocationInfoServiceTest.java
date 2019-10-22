@@ -89,6 +89,19 @@ public class LocationInfoServiceTest
                 }
             }
         }
+        Collections.sort(locationEverDayList, (o1, o2) ->
+        {
+            //降序排列
+            if (o1.getM_createTime().before(o2.getM_createTime()))
+            {
+                return 1;
+            }
+            if (o1.getM_createTime() == o2.getM_createTime())
+            {
+                return 0;
+            }
+            return -1;
+        });
         for (int i = 0; i < locationEverDayList.size(); i++)
         {
             System.out.println(locationEverDayList.get(i).toString());

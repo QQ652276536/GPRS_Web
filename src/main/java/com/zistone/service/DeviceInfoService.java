@@ -114,7 +114,7 @@ public class DeviceInfoService
             m_logger.info(">>>设备已存在,更新该设备");
             int num = m_deviceInfoRepository
                     .UpdateByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo
-                            .getM_height());
+                            .getM_height(), deviceInfo.getM_temperature(), deviceInfo.getM_electricity());
             if (num == 1)
             {
                 m_logger.info(">>>设备更新成功");
@@ -126,15 +126,16 @@ public class DeviceInfoService
     }
 
     /**
-     * 更新设备
+     * 更新设备位置信息
      *
      * @param deviceInfo
      * @return 受影响的行数
      */
-    public int UpdateByDeviceId(DeviceInfo deviceInfo)
+    public int UpdateLocationByDeviceId(DeviceInfo deviceInfo)
     {
         return m_deviceInfoRepository
-                .UpdateByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo.getM_height());
+                .UpdateLocationByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo
+                        .getM_height());
     }
 
     /**

@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class FileContentEvent extends ApplicationEvent
+public class FileContentEvent_GPRS extends ApplicationEvent
 {
     private static int LINECOUNT;
     private Logger m_logger = LoggerFactory.getLogger(this.getClass());
@@ -20,7 +20,7 @@ public class FileContentEvent extends ApplicationEvent
     private FileData m_fileData;
     private Timer m_timer = new Timer();
 
-    public FileContentEvent(FileData fileData)
+    public FileContentEvent_GPRS(FileData fileData)
     {
         super(fileData);
         this.m_fileData = fileData;

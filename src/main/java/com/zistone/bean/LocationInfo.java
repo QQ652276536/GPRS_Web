@@ -12,10 +12,12 @@ import java.util.Date;
 @Table(name = "locationinfo")
 public class LocationInfo
 {
+    private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     @Override
     public String toString()
     {
-        return "LocationInfo{" + "m_id='" + m_id + '\'' + ", m_deviceId='" + m_deviceId + '\'' + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_createTime=" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        return "LocationInfo{" + "m_id=" + m_id + ", m_deviceId='" + m_deviceId + '\'' + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", " + "m_height=" + m_height + ", m_createTime=" + SIMPLEDATEFORMAT
                 .format(m_createTime) + '}';
     }
 
@@ -43,6 +45,12 @@ public class LocationInfo
      */
     @Column(columnDefinition = "double default '0' comment '经度'")
     private double m_lot;
+
+    /**
+     * 海拔
+     */
+    @Column(columnDefinition = "int default '0' comment '海拔'")
+    private int m_height;
 
     /**
      * 创建时间(由前端上传)
@@ -88,6 +96,16 @@ public class LocationInfo
     public void setM_lot(double m_lot)
     {
         this.m_lot = m_lot;
+    }
+
+    public int getM_height()
+    {
+        return m_height;
+    }
+
+    public void setM_height(int m_height)
+    {
+        this.m_height = m_height;
     }
 
     public Date getM_createTime()

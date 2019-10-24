@@ -11,12 +11,12 @@ import java.util.Objects;
 //普通POJO实例化到SPring容器中
 @Component
 @Transactional
-public class FileContentListener implements ApplicationListener<FileContentEvent>
+public class FileContentListener_GPRS implements ApplicationListener<FileContentEvent_GPRS>
 {
-    private Logger m_logger = LoggerFactory.getLogger(FileContentListener.class);
+    private Logger m_logger = LoggerFactory.getLogger(FileContentListener_GPRS.class);
 
     @Override
-    public void onApplicationEvent(FileContentEvent fileContentEvent)
+    public void onApplicationEvent(FileContentEvent_GPRS fileContentEvent)
     {
         if (Objects.isNull(fileContentEvent))
         {

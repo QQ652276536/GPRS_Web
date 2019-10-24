@@ -34,11 +34,11 @@ public class DeviceInfoController
         return m_deviceInfoService.Update(deviceInfo);
     }
 
-    @RequestMapping(value = "/UpdateByDeviceId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public int UpdateByDeviceId(@RequestBody DeviceInfo deviceInfo)
+    @RequestMapping(value = "/UpdateLocationByDeviceId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public int UpdateLocationByDeviceId(@RequestBody DeviceInfo deviceInfo)
     {
-        m_logger.info(">>>收到更新设备请求:" + deviceInfo.toString());
-        return m_deviceInfoService.UpdateByDeviceId(deviceInfo);
+        m_logger.info(">>>收到更新设备位置信息的请求:" + deviceInfo.toString());
+        return m_deviceInfoService.UpdateLocationByDeviceId(deviceInfo);
     }
 
     @RequestMapping(value = "/InsertByDeviceId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

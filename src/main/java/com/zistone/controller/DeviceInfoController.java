@@ -37,7 +37,7 @@ public class DeviceInfoController
     @RequestMapping(value = "/UpdateLocationByDeviceId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public int UpdateLocationByDeviceId(@RequestBody DeviceInfo deviceInfo)
     {
-        m_logger.info(">>>收到更新设备位置信息的请求:" + deviceInfo.toString());
+        m_logger.info(">>>收到更新设备位置的请求:" + deviceInfo.toString());
         return m_deviceInfoService.UpdateLocationByDeviceId(deviceInfo);
     }
 

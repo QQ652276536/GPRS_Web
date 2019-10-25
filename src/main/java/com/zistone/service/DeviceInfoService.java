@@ -1,7 +1,9 @@
 package com.zistone.service;
 
 import com.zistone.bean.DeviceInfo;
+import com.zistone.bean.LocationInfo;
 import com.zistone.repository.DeviceInfoRepository;
+import com.zistone.repository.LocationInfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class DeviceInfoService
 
     @Resource
     private DeviceInfoRepository m_deviceInfoRepository;
+    @Resource
+    private LocationInfoRepository m_locationInfoRepository;
 
     /**
      * 根据鉴权码查找设备
@@ -126,19 +130,6 @@ public class DeviceInfoService
     }
 
     /**
-     * 更新设备位置信息
-     *
-     * @param deviceInfo
-     * @return 受影响的行数
-     */
-    public int UpdateLocationByDeviceId(DeviceInfo deviceInfo)
-    {
-        return m_deviceInfoRepository
-                .UpdateLocationByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo
-                        .getM_height());
-    }
-
-    /**
      * 更新设备
      *
      * @param deviceInfo
@@ -146,6 +137,14 @@ public class DeviceInfoService
      */
     public DeviceInfo Update(DeviceInfo deviceInfo)
     {
+        //更新设备表的同时要将当前位置信息插入至轨迹表
+        LocationInfo locationInfo = new LocationInfo();
+        locationInfo.setM_deviceId(deviceInfo.getM_deviceId());
+        locationInfo.setM_lat(deviceInfo.getM_lat());
+        locationInfo.setM_lot(deviceInfo.getM_lot());
+        locationInfo.setM_height(deviceInfo.getM_height());
+        locationInfo.setM_createTime(deviceInfo.getM_createTime());
+        m_locationInfoRepository.save(locationInfo);
         return m_deviceInfoRepository.save(deviceInfo);
     }
 

@@ -1,7 +1,6 @@
 package com.zistone.service;
 
 import com.zistone.bean.LocationInfo;
-import com.zistone.repository.DeviceInfoRepository;
 import com.zistone.repository.LocationInfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +19,6 @@ public class LocationInfoService
     @Resource
     private LocationInfoRepository m_locationInfoRepository;
 
-    @Resource
-    private DeviceInfoRepository m_deviceInfoRepository;
-
     public List<LocationInfo> FindByDeviceId(String deviceId)
     {
         List<LocationInfo> list = m_locationInfoRepository.FindByDeviceId(deviceId);
@@ -38,9 +34,6 @@ public class LocationInfoService
     @Transactional
     public LocationInfo Insert(LocationInfo locationInfo)
     {
-        //新增历史位置记录的同时更新设备表当前的位置信息
-        m_deviceInfoRepository.UpdateLocationByDeviceId(locationInfo.getM_deviceId(), locationInfo.getM_lat(), locationInfo.getM_lot(), locationInfo
-                .getM_height());
         return m_locationInfoRepository.save(locationInfo);
     }
 

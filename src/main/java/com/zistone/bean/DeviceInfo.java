@@ -76,8 +76,8 @@ public class DeviceInfo
     /**
      * 海拔
      */
-    @Column(columnDefinition = "double default '0' comment '高度'")
-    private double m_height;
+    @Column(columnDefinition = "int default 0 comment '高度'")
+    private int m_height;
 
     /**
      * 创建时间
@@ -177,12 +177,12 @@ public class DeviceInfo
         this.m_lot = m_lot;
     }
 
-    public double getM_height()
+    public int getM_height()
     {
         return m_height;
     }
 
-    public void setM_height(double m_height)
+    public void setM_height(int m_height)
     {
         this.m_height = m_height;
     }

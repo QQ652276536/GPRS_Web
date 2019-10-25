@@ -148,4 +148,17 @@ public class DeviceInfoService
         return m_deviceInfoRepository.save(deviceInfo);
     }
 
+    /**
+     * 更新设备位置信息
+     *
+     * @param deviceInfo
+     * @return 受影响的行数
+     */
+    public int UpdateLocationByDeviceId(DeviceInfo deviceInfo)
+    {
+        return m_deviceInfoRepository
+                .UpdateLocationByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo
+                        .getM_height());
+    }
+
 }

@@ -4,7 +4,10 @@ import com.zistone.file_listener.FileData;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+//开启定时任务的支持
+@EnableScheduling
 //@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan
 @SpringBootApplication
 //启用JPA审计(自动填充默认值)

@@ -15,7 +15,7 @@ public class StackType
     {
         while (top > 0)
         {
-            System.out.println(stackType.data[stackType.top--]);
+            System.out.println(Pop(stackType));
         }
     }
 
@@ -45,13 +45,4 @@ public class StackType
         return stackType.data[stackType.top--];
     }
 
-    public MyNodeTest Peak(StackType stackType)
-    {
-        if (stackType.top == 0)
-        {
-            System.out.println("栈为空!");
-            return null;
-        }
-        return stackType.data[stackType.top];
-    }
 }

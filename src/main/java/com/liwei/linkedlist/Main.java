@@ -6,7 +6,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        LType ltyp = new LType();
+        LinkedType ltyp = new LinkedType();
         MyNodeTest[] array = new MyNodeTest[]{
                 new MyNodeTest("L", "government", 1), new MyNodeTest("Q", "Qi", 2), new MyNodeTest("W", "Wi", 3), new MyNodeTest("E", "Ei"
                 , 4), new MyNodeTest("R", "Ri", 5)

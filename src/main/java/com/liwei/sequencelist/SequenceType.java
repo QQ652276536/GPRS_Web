@@ -2,7 +2,13 @@ package com.liwei.sequencelist;
 
 import com.liwei.MyNodeTest;
 
-public class SLType
+/**
+ * 顺序表结构,就是按顺序存储的线性表.
+ * <p>
+ * 优点:查询效率高,只要知道了首地址和每个元素所占用的存储长度,就很容易计算出元素的位置.
+ * 缺点:操作或删除效率低,需要移动数据.
+ */
+public class SequenceType
 {
     private static final int MAXLEN = 100;
     private int currentLength = 0;

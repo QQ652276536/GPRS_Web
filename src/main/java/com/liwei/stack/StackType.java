@@ -2,6 +2,9 @@ package com.liwei.stack;
 
 import com.liwei.MyNodeTest;
 
+/**
+ * 栈结构,后进先出,只有栈顶元素是可以访问的.
+ */
 public class StackType
 {
     private static final int MAXLEN = 50;

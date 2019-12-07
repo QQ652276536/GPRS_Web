@@ -1,6 +1,6 @@
-package com.liwei.linkedlist;
+package com.liwei.data_structure.linkedlist;
 
-import com.liwei.MyNodeTest;
+import com.liwei.data_structure.MyNodeTest;
 
 /**
  * 链表结构,由许多节点构成,每个节点由'数据部分'和'地址部分'组成.

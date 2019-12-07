@@ -1,6 +1,6 @@
-package com.liwei.stack;
+package com.liwei.data_structure.stack;
 
-import com.liwei.MyNodeTest;
+import com.liwei.data_structure.MyNodeTest;
 
 /**
  * 栈结构,后进先出,只有栈顶元素是可以访问的.

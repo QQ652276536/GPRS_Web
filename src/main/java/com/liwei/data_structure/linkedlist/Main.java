@@ -1,6 +1,6 @@
-package com.liwei.linkedlist;
+package com.liwei.data_structure.linkedlist;
 
-import com.liwei.MyNodeTest;
+import com.liwei.data_structure.MyNodeTest;
 
 public class Main
 {

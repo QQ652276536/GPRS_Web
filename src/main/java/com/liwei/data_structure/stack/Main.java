@@ -1,6 +1,6 @@
-package com.liwei.stack;
+package com.liwei.data_structure.stack;
 
-import com.liwei.MyNodeTest;
+import com.liwei.data_structure.MyNodeTest;
 
 public class Main
 {

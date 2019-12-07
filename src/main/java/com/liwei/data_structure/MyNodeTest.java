@@ -1,4 +1,4 @@
-package com.liwei;
+package com.liwei.data_structure;
 
 public class MyNodeTest
 {

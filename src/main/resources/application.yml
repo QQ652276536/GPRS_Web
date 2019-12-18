@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /Blowdown_Web
+    context-path: /GPRSTest_Web
   port: 8080
 
 spring:

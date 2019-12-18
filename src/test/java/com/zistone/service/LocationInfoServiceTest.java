@@ -1,7 +1,8 @@
 package com.zistone.service;
 
-import com.zistone.StartApplication;
-import com.zistone.bean.LocationInfo;
+import com.zistone.gprstest.StartApplication;
+import com.zistone.gprstest.bean.LocationInfo;
+import com.zistone.gprstest.service.LocationInfoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

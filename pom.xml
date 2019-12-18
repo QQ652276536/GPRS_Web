@@ -9,11 +9,11 @@
         <relativePath/>
     </parent>
     <groupId>com.zistone</groupId>
-    <artifactId>Blowdown_Web</artifactId>
+    <artifactId>GPRSTest_Web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Blowdown_web</name>
+    <name>GPRSTest_web</name>
     <packaging>jar</packaging>
-    <description>排污项目的服务端框架</description>
+    <description>GPRSTest的Web服务端</description>
 
     <properties>
         <java.version>1.8</java.version>

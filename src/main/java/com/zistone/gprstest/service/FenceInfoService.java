@@ -1,0 +1,31 @@
+package com.zistone.gprstest.service;
+
+import com.zistone.gprstest.bean.FenceInfo;
+import com.zistone.gprstest.repository.FenceInfoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@Service
+public class FenceInfoService
+{
+    private Logger m_logger = LoggerFactory.getLogger(FenceInfoService.class);
+
+    @Resource
+    private FenceInfoRepository m_fenceInfoRepository;
+
+    public List<FenceInfo> FindByDeviceId(String deviceId)
+    {
+        List<FenceInfo> list = m_fenceInfoRepository.FindByDeviceId(deviceId);
+        return list;
+    }
+
+    public FenceInfo InsertByDeviceId(FenceInfo fenceInfo)
+    {
+        return m_fenceInfoRepository.save(fenceInfo);
+    }
+
+}

@@ -33,4 +33,11 @@ public class FenceController
         return m_fenceInfoService.InsertByDeviceId(fenceInfo);
     }
 
+    @RequestMapping(value = "/DelById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public void DelById(@RequestParam("id") String id)
+    {
+        m_logger.info(String.format(">>>收到删除围栏%s的请求:", id));
+        m_fenceInfoService.DelById(id);
+    }
+
 }

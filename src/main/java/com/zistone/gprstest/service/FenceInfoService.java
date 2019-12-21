@@ -28,4 +28,8 @@ public class FenceInfoService
         return m_fenceInfoRepository.save(fenceInfo);
     }
 
+    public void DelById(String id)
+    {
+        m_fenceInfoRepository.deleteById(Integer.valueOf(id));
+    }
 }

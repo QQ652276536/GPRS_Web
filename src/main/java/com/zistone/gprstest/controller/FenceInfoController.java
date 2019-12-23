@@ -12,9 +12,9 @@ import java.util.List;
 //@RestController = @Controller + @ReponseBody
 @RestController
 @RequestMapping("/FenceInfo")
-public class FenceController
+public class FenceInfoController
 {
-    private Logger m_logger = LoggerFactory.getLogger(FenceController.class);
+    private Logger m_logger = LoggerFactory.getLogger(FenceInfoController.class);
 
     @Autowired
     FenceInfoService m_fenceInfoService;

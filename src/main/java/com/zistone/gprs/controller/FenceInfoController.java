@@ -22,14 +22,15 @@ public class FenceInfoController
     @RequestMapping(value = "/FindByDeviceId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public List<FenceInfo> FindByDeviceId(@RequestParam("deviceId") String deviceId)
     {
-        m_logger.info(">>>收到查询" + deviceId + "所有围栏的请求");
+        m_logger.info(String.format(">>>收到查询设备%s所有围栏的请求:", deviceId));
         return m_fenceInfoService.FindByDeviceId(deviceId);
     }
 
-    @RequestMapping(value = "/InsertByDeviceId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/InsertByDeviceId", method = RequestMethod.POST, produces = "application/json;" +
+            "charset=UTF-8")
     public FenceInfo InsertByDeviceId(@RequestBody FenceInfo fenceInfo)
     {
-        m_logger.info(">>>收到新增围栏请求:" + fenceInfo.toString());
+        m_logger.info(String.format(">>>收到新增围栏请求:%s", fenceInfo.toString()));
         return m_fenceInfoService.InsertByDeviceId(fenceInfo);
     }
 

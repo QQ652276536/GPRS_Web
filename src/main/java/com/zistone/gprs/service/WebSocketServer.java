@@ -78,7 +78,7 @@ public class WebSocketServer
     @OnMessage
     public void OnMessage(String message, Session session) throws IOException
     {
-        m_logger.info("收到来自客户端的信息:" + message);
+        m_logger.info(String.format("收到来自客户端的信息:%s", message));
         //群发信息
         for (WebSocketServer item : webSocketSet)
         {

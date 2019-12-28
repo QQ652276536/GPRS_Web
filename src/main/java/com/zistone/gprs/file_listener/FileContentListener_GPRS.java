@@ -23,6 +23,6 @@ public class FileContentListener_GPRS implements ApplicationListener<FileContent
             return;
         }
         FileData fileData = fileContentEvent.GetFileData();
-        m_logger.info(">>>接收到监听对象:" + fileData.toString());
+        m_logger.info(String.format(">>>接收到监听对象:%s", fileData.toString()));
     }
 }

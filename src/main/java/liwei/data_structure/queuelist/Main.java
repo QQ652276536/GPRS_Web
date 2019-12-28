@@ -15,10 +15,10 @@ public class Main
         {
             queueType.InQueue(queueType, array[i]);
         }
-        System.out.println(String.format("队列初始化完毕,队列长度%s:...", queueType.GetLength(queueType)));
+        System.out.println(String.format("队列初始化完毕,队列长度:%s", queueType.GetLength(queueType)));
         System.out.println("取出元素打印...");
         queueType.Print(queueType);
-        System.out.println(String.format("队列取出元素打印完毕,队列长度%s:...", queueType.GetLength(queueType)));
+        System.out.println(String.format("队列取出元素打印完毕,队列长度:%s", queueType.GetLength(queueType)));
         System.out.println("\n................................................................\n");
     }
 }

@@ -99,7 +99,7 @@ public class DeviceInfoService
         //根据设备编号查找设备,没有则新增
         if (queryDevice == null)
         {
-            m_logger.info(">>>设备不存在,新增该设备");
+            m_logger.info(String.format(">>>设备%s不存在,新增该设备...", deviceInfo.getM_deviceId()));
             deviceInfo.setM_akCode(akCode);
             DeviceInfo tempDevice = m_deviceInfoRepository.save(deviceInfo);
             if (null != tempDevice && tempDevice.getM_id() != 0)
@@ -108,24 +108,27 @@ public class DeviceInfoService
             }
             else
             {
-                m_logger.error(">>>设备注册失败!!!请检查服务日志排查原因...\r\n");
+                m_logger.error(String.format(">>>设备%s注册失败!!!请检查服务日志排查原因...\r\n", deviceInfo.getM_deviceId()));
             }
             return tempDevice;
         }
         //有则更新
         else
         {
-            m_logger.info(">>>设备已存在,更新该设备");
+            m_logger.info(String.format(">>>设备%s已存在,更新该设备...", queryDevice.getM_deviceId()));
             int num = m_deviceInfoRepository
-                    .UpdateByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo
-                            .getM_height(), deviceInfo.getM_temperature(), deviceInfo.getM_electricity());
+                    .UpdateByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(),
+                            deviceInfo
+                                    .getM_height(), deviceInfo.getM_temperature(), deviceInfo.getM_electricity());
             if (num == 1)
             {
                 m_logger.info(">>>设备更新成功");
-                return deviceInfo;
             }
-            m_logger.error(">>>设备注册失败!!!请检查服务日志排查原因...\r\n");
-            return null;
+            else
+            {
+                m_logger.error(String.format(">>>设备%s更新失败!!!请检查服务日志排查原因...\r\n", queryDevice.getM_deviceId()));
+            }
+            return deviceInfo;
         }
     }
 
@@ -157,8 +160,9 @@ public class DeviceInfoService
     public int UpdateLocationByDeviceId(DeviceInfo deviceInfo)
     {
         return m_deviceInfoRepository
-                .UpdateLocationByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(), deviceInfo
-                        .getM_height());
+                .UpdateLocationByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(),
+                        deviceInfo
+                                .getM_height());
     }
 
 }

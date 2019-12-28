@@ -25,7 +25,7 @@ public class UserInfoController
     @RequestMapping(value = "/Login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public UserInfo Login(@RequestBody UserInfo userInfo)
     {
-        m_logger.info(">>>收到登录请求:" + userInfo.toString());
+        m_logger.info(String.format(">>>收到登录请求:%s", userInfo.toString()));
         //TODO:校验参数
         return m_userInfoService.Login(userInfo);
     }
@@ -33,7 +33,7 @@ public class UserInfoController
     @RequestMapping(value = "/Register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public UserInfo Register(@RequestBody UserInfo userInfo)
     {
-        m_logger.info(">>>收到注册请求:" + userInfo.toString());
+        m_logger.info(String.format(">>>收到注册请求:", userInfo.toString()));
         //TODO:校验参数
         return m_userInfoService.Insert(userInfo);
     }
@@ -41,7 +41,7 @@ public class UserInfoController
     @RequestMapping(value = "/Update", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public UserInfo Update(@RequestBody UserInfo userInfo)
     {
-        m_logger.info(">>>收到更新请求:" + userInfo.toString());
+        m_logger.info(String.format(">>>收到更新请求:", userInfo.toString()));
         //TODO:校验参数
         return m_userInfoService.Update(userInfo);
     }

@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /GPRSTest_Web
+    context-path: /GPRS_Web
   port: 8080
 
 spring:

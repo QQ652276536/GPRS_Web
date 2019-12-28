@@ -1,34 +1,3 @@
 Manifest-Version: 1.0
-Class-Path: spring-expression-5.1.8.RELEASE.jar spring-webmvc-5.1.8.RE
- LEASE.jar spring-boot-starter-jdbc-2.1.6.RELEASE.jar spring-beans-5.1
- .8.RELEASE.jar tomcat-embed-core-9.0.21.jar jboss-logging-3.3.2.Final
- .jar spring-boot-2.1.6.RELEASE.jar spring-context-5.1.8.RELEASE.jar s
- pring-data-commons-2.1.9.RELEASE.jar spring-core-5.1.8.RELEASE.jar fa
- stjson-1.2.58.jar spring-web-5.1.8.RELEASE.jar javax.transaction-api-
- 1.3.jar spring-tx-5.1.8.RELEASE.jar jandex-2.0.5.Final.jar snakeyaml-
- 1.23.jar tomcat-embed-websocket-9.0.21.jar mysql-connector-java-8.0.1
- 6.jar byte-buddy-1.9.13.jar spring-boot-starter-data-jpa-2.1.6.RELEAS
- E.jar logback-classic-1.2.3.jar spring-aspects-5.1.8.RELEASE.jar tomc
- at-embed-el-9.0.21.jar spring-boot-starter-json-2.1.6.RELEASE.jar mon
- godb-driver-core-3.8.2.jar javax.activation-api-1.2.0.jar spring-boot
- -starter-aop-2.1.6.RELEASE.jar spring-boot-starter-logging-2.1.6.RELE
- ASE.jar spring-boot-autoconfigure-2.1.6.RELEASE.jar jackson-datatype-
- jdk8-2.9.9.jar jackson-datatype-jsr310-2.9.9.jar jackson-module-param
- eter-names-2.9.9.jar log4j-to-slf4j-2.11.2.jar jackson-core-2.9.9.jar
-  javax.annotation-api-1.3.2.jar log4j-api-2.11.2.jar spring-boot-star
- ter-2.1.6.RELEASE.jar antlr-2.7.7.jar HikariCP-3.2.0.jar spring-jcl-5
- .1.8.RELEASE.jar spring-boot-starter-tomcat-2.1.6.RELEASE.jar spring-
- aop-5.1.8.RELEASE.jar bson-3.8.2.jar jul-to-slf4j-1.7.26.jar spring-d
- ata-mongodb-2.1.9.RELEASE.jar validation-api-2.0.1.Final.jar javassis
- t-3.23.2-GA.jar jaxb-api-2.3.1.jar spring-messaging-5.1.8.RELEASE.jar
-  aspectjweaver-1.9.4.jar slf4j-api-1.7.26.jar logback-core-1.2.3.jar 
- jackson-annotations-2.9.0.jar hibernate-core-5.3.10.Final.jar spring-
- boot-starter-data-mongodb-2.1.6.RELEASE.jar jackson-databind-2.9.9.ja
- r classmate-1.4.0.jar dom4j-2.1.1.jar spring-data-jpa-2.1.9.RELEASE.j
- ar spring-websocket-5.1.8.RELEASE.jar javax.persistence-api-2.2.jar m
- ongodb-driver-3.8.2.jar spring-orm-5.1.8.RELEASE.jar hibernate-valida
- tor-6.0.17.Final.jar spring-boot-starter-web-2.1.6.RELEASE.jar hibern
- ate-commons-annotations-5.0.4.Final.jar spring-jdbc-5.1.8.RELEASE.jar
-  spring-boot-starter-websocket-2.1.6.RELEASE.jar
-Main-Class: com.zistone.gprstest.StartApplication
+Main-Class: com.zistone.gprs.StartApplication
 

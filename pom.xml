@@ -9,11 +9,11 @@
         <relativePath/>
     </parent>
     <groupId>com.zistone</groupId>
-    <artifactId>GPRSTest_Web</artifactId>
+    <artifactId>GPRS_Web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>GPRSTest_web</name>
+    <name>GPRS_web</name>
     <packaging>jar</packaging>
-    <description>GPRSTest的Web服务端</description>
+    <description>GPRS的Web服务端</description>
 
     <properties>
         <java.version>1.8</java.version>

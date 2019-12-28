@@ -17,4 +17,9 @@ public interface LocationInfoRepository extends JpaRepository<LocationInfo, Inte
             + "0 and location.m_createTime between :startDate and :endDate order by location.m_createTime desc")
     List<LocationInfo> FindByDeviceIdAndTime(
             @Param("deviceId") String deviceId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM locationinfo where m_device_id = ? and DATE_SUB(CURDATE(), INTERVAL ? DAY) <=" +
+            " date(m_create_time) and m_lat > 0 and m_lot > 0 GROUP BY DATE(m_create_time) ORDER BY m_create_time DESC")
+    List<LocationInfo> FindDescDaysLastDataByDeviceId(String deviceId, int day);
+
 }

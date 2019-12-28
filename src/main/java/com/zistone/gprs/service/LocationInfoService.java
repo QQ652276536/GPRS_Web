@@ -31,6 +31,12 @@ public class LocationInfoService
         return list;
     }
 
+    public List<LocationInfo> FindDescDaysLastDataByDeviceId(String deviceId, int days)
+    {
+        List<LocationInfo> list = m_locationInfoRepository.FindDescDaysLastDataByDeviceId(deviceId, days);
+        return list;
+    }
+
     @Transactional
     public LocationInfo Insert(LocationInfo locationInfo)
     {

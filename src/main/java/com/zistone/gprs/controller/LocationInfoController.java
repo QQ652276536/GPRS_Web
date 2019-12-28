@@ -58,4 +58,11 @@ public class LocationInfoController
         m_logger.info(">>>收到更新位置的请求:" + locationInfoList.size() + "条数据");
         return m_locationInfoService.InsertList(locationInfoList);
     }
+
+    @RequestMapping(value = "/FindDescDaysLastDataByDeviceId", method = RequestMethod.POST, produces = "application" + "/json;charset=UTF-8")
+    public List<LocationInfo> FindDescDaysLastDataByDeviceId(@RequestParam("deviceId") String deviceId, @RequestParam("days") int days)
+    {
+        m_logger.info(">>>收到查询" + deviceId + "最近" + days + "天最后位置的请求");
+        return m_locationInfoService.FindDescDaysLastDataByDeviceId(deviceId, days - 1);
+    }
 }

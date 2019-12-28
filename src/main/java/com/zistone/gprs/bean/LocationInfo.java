@@ -1,5 +1,6 @@
 package com.zistone.gprs.bean;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -55,7 +56,8 @@ public class LocationInfo
     /**
      * 创建时间(由前端上传)
      */
-    @Column(columnDefinition = "datetime comment '创建时间(由前端上传)'")
+    @CreatedDate
+    @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '创建时间'")
     private Date m_createTime;
 
     public int getM_id()

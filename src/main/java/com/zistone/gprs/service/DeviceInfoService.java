@@ -146,7 +146,6 @@ public class DeviceInfoService
         locationInfo.setM_lat(deviceInfo.getM_lat());
         locationInfo.setM_lot(deviceInfo.getM_lot());
         locationInfo.setM_height(deviceInfo.getM_height());
-        locationInfo.setM_createTime(deviceInfo.getM_updateTime());
         m_locationInfoRepository.save(locationInfo);
         return m_deviceInfoRepository.save(deviceInfo);
     }

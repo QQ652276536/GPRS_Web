@@ -87,14 +87,7 @@ spring:
     time-zone: GMT+8
 
 logging:
-  #样式
-  pattern:
-  #路径
   path: "./logs"
-  file:
-    max-history: 30
-    max-size: 10MB
-  #所有程序的输出级别
   level:
     root: INFO
 

@@ -14,7 +14,7 @@ public interface LocationInfoRepository extends JpaRepository<LocationInfo, Inte
     List<LocationInfo> FindByDeviceId(@Param("deviceId") String deviceId);
 
     @Query("select location from LocationInfo location where location.m_deviceId = :deviceId and location.m_lat > 0 and location.m_lot > "
-            + "0 and location.m_createTime between :startDate and :endDate order by location.m_createTime desc")
+            + "0 and location.m_createTime between :startDate and :endDate order by location.m_createTime asc")
     List<LocationInfo> FindByDeviceIdAndTime(
             @Param("deviceId") String deviceId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 

@@ -50,7 +50,7 @@ public class LocationInfoController
     @RequestMapping(value = "/Insert", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LocationInfo Insert(@RequestBody LocationInfo locationInfo)
     {
-        m_logger.info(String.format(">>>收到更新设备%s位置的请求:", locationInfo.getM_deviceId()));
+        m_logger.info(String.format(">>>收到新增设备%s历史位置的请求:", locationInfo.getM_deviceId()));
         return m_locationInfoService.Insert(locationInfo);
     }
 

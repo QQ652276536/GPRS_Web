@@ -19,9 +19,23 @@ public class DeviceInfo
     @Override
     public String toString()
     {
-        return "DeviceInfo{" + "m_id=" + m_id + ", m_deviceId='" + m_deviceId + '\'' + ", m_sim=" + m_sim + ", m_name='" + m_name + '\'' + ", m_type='" + m_type + '\'' + ", m_state=" + m_state + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", m_height=" + m_height + ", m_createTime=" + SIMPLEDATEFORMAT
-                .format(m_createTime) + ", m_updateTime=" + SIMPLEDATEFORMAT
-                .format(m_updateTime) + ", m_comment='" + m_comment + '\'' + ", m_akCode='" + m_akCode + '\'' + ", m_temperature=" + m_temperature + ", m_electricity=" + m_electricity + '}';
+        return "DeviceInfo{" +
+                "id=" + id +
+                ", deviceId='" + deviceId + '\'' +
+                ", sim='" + sim + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", state=" + state +
+                ", lat=" + lat +
+                ", lot=" + lot +
+                ", height=" + height +
+                ", createTime=" + SIMPLEDATEFORMAT.format(createTime) +
+                ", updateTime=" + SIMPLEDATEFORMAT.format(updateTime) +
+                ", comment='" + comment + '\'' +
+                ", akCode='" + akCode + '\'' +
+                ", temperature=" + temperature +
+                ", electricity=" + electricity +
+                '}';
     }
 
     /**
@@ -29,241 +43,241 @@ public class DeviceInfo
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int m_id;
+    private int id;
 
     /**
      * 设备编号,设备自带
      */
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备编号'")
-    private String m_deviceId;
+    private String deviceId;
 
     /**
      * SIM卡号
      */
     @Column(columnDefinition = "varchar(50) default '' comment 'SIM卡号'")
-    private String m_sim;
+    private String sim;
 
     /**
      * 设备名
      */
     @Column(columnDefinition = "varchar(50) default '' comment '设备名'")
-    private String m_name;
+    private String name;
 
     /**
      * 设备类型
      */
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备类型'")
-    public String m_type;
+    public String type;
 
     /**
      * 设备状态
      */
     @Column(nullable = false, columnDefinition = "int default '1' comment '设备状态:0离线1在线'")
-    private int m_state;
+    private int state;
 
     /**
      * 纬度
      */
     @Column(columnDefinition = "double default '0' comment '纬度'")
-    private double m_lat;
+    private double lat;
 
     /**
      * 经度
      */
     @Column(columnDefinition = "double default '0' comment '经度'")
-    private double m_lot;
+    private double lot;
 
     /**
      * 海拔
      */
     @Column(columnDefinition = "int default 0 comment '高度'")
-    private int m_height;
+    private int height;
 
     /**
      * 创建时间
      */
     @CreatedDate
     @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '创建时间'")
-    private Date m_createTime;
+    private Date createTime;
 
     /**
      * 修改时间
      */
     @LastModifiedDate
     @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '修改时间'")
-    private Date m_updateTime;
+    private Date updateTime;
 
     /**
      * 备注
      */
     @Column(columnDefinition = "varchar(200) default '' comment '备注'")
-    private String m_comment;
+    private String comment;
 
     /**
      * 鉴权码
      */
     @Column(columnDefinition = "varchar(15) default '' comment '鉴权码'")
-    private String m_akCode;
+    private String akCode;
 
     /**
      * 温度
      */
     @Column(columnDefinition = "int default '0' comment '温度'")
-    private int m_temperature;
+    private int temperature;
 
     /**
      * 剩余电量
      */
     @Column(columnDefinition = "int default '0' comment '剩余电量'")
-    private int m_electricity;
+    private int electricity;
 
-    public int getM_id()
+    public int getId()
     {
-        return m_id;
+        return id;
     }
 
-    public void setM_id(int m_id)
+    public void setId(int id)
     {
-        this.m_id = m_id;
+        this.id = id;
     }
 
-    public String getM_name()
+    public String getDeviceId()
     {
-        return m_name;
+        return deviceId;
     }
 
-    public void setM_name(String m_name)
+    public void setDeviceId(String deviceId)
     {
-        this.m_name = m_name;
+        this.deviceId = deviceId;
     }
 
-    public String getM_type()
+    public String getSim()
     {
-        return m_type;
+        return sim;
     }
 
-    public void setM_type(String m_type)
+    public void setSim(String sim)
     {
-        this.m_type = m_type;
+        this.sim = sim;
     }
 
-    public int getM_state()
+    public String getName()
     {
-        return m_state;
+        return name;
     }
 
-    public void setM_state(int m_state)
+    public void setName(String name)
     {
-        this.m_state = m_state;
+        this.name = name;
     }
 
-    public double getM_lat()
+    public String getType()
     {
-        return m_lat;
+        return type;
     }
 
-    public void setM_lat(double m_lat)
+    public void setType(String type)
     {
-        this.m_lat = m_lat;
+        this.type = type;
     }
 
-    public double getM_lot()
+    public int getState()
     {
-        return m_lot;
+        return state;
     }
 
-    public void setM_lot(double m_lot)
+    public void setState(int state)
     {
-        this.m_lot = m_lot;
+        this.state = state;
     }
 
-    public int getM_height()
+    public double getLat()
     {
-        return m_height;
+        return lat;
     }
 
-    public void setM_height(int m_height)
+    public void setLat(double lat)
     {
-        this.m_height = m_height;
+        this.lat = lat;
     }
 
-    public Date getM_createTime()
+    public double getLot()
     {
-        return m_createTime;
+        return lot;
     }
 
-    public void setM_createTime(Date m_createTime)
+    public void setLot(double lot)
     {
-        this.m_createTime = m_createTime;
+        this.lot = lot;
     }
 
-    public Date getM_updateTime()
+    public int getHeight()
     {
-        return m_updateTime;
+        return height;
     }
 
-    public void setM_updateTime(Date m_updateTime)
+    public void setHeight(int height)
     {
-        this.m_updateTime = m_updateTime;
+        this.height = height;
     }
 
-    public String getM_akCode()
+    public Date getCreateTime()
     {
-        return m_akCode;
+        return createTime;
     }
 
-    public void setM_akCode(String m_akCode)
+    public void setCreateTime(Date createTime)
     {
-        this.m_akCode = m_akCode;
+        this.createTime = createTime;
     }
 
-    public String getM_deviceId()
+    public Date getUpdateTime()
     {
-        return m_deviceId;
+        return updateTime;
     }
 
-    public void setM_deviceId(String m_deviceId)
+    public void setUpdateTime(Date updateTime)
     {
-        this.m_deviceId = m_deviceId;
+        this.updateTime = updateTime;
     }
 
-    public String getM_sim()
+    public String getComment()
     {
-        return m_sim;
+        return comment;
     }
 
-    public void setM_sim(String m_sim)
+    public void setComment(String comment)
     {
-        this.m_sim = m_sim;
+        this.comment = comment;
     }
 
-    public String getM_comment()
+    public String getAkCode()
     {
-        return m_comment;
+        return akCode;
     }
 
-    public void setM_comment(String m_comment)
+    public void setAkCode(String akCode)
     {
-        this.m_comment = m_comment;
+        this.akCode = akCode;
     }
 
-    public int getM_temperature()
+    public int getTemperature()
     {
-        return m_temperature;
+        return temperature;
     }
 
-    public void setM_temperature(int m_temperature)
+    public void setTemperature(int temperature)
     {
-        this.m_temperature = m_temperature;
+        this.temperature = temperature;
     }
 
-    public int getM_electricity()
+    public int getElectricity()
     {
-        return m_electricity;
+        return electricity;
     }
 
-    public void setM_electricity(int m_electricity)
+    public void setElectricity(int electricity)
     {
-        this.m_electricity = m_electricity;
+        this.electricity = electricity;
     }
 }

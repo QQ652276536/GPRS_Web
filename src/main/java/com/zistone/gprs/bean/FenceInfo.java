@@ -18,8 +18,16 @@ public class FenceInfo
     @Override
     public String toString()
     {
-        return "FenceInfo{" + "m_id=" + m_id + ", m_deviceId='" + m_deviceId + '\'' + ", m_name='" + m_name + '\'' + ", m_address='" + m_address + '\'' + ", m_setTime=" + SIMPLEDATEFORMAT
-                .format(m_setTime) + ", m_radius=" + m_radius + ", m_lat=" + m_lat + ", m_lot=" + m_lot + '}';
+        return "FenceInfo{" +
+                "id=" + id +
+                ", deviceId='" + deviceId + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", setTime=" + SIMPLEDATEFORMAT.format(setTime) +
+                ", radius=" + radius +
+                ", lat=" + lat +
+                ", lot=" + lot +
+                '}';
     }
 
     /**
@@ -27,128 +35,128 @@ public class FenceInfo
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int m_id;
+    private int id;
 
     /**
      * 设备编号
      */
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备编号'")
-    private String m_deviceId;
+    private String deviceId;
 
     /**
      * 围栏名称
      */
     @Column(columnDefinition = "varchar(50) default '' comment '围栏名称'")
-    private String m_name;
+    private String name;
 
     /**
      * 地址
      */
     @Column(columnDefinition = "varchar(50) default '' comment '地址'")
-    private String m_address;
+    private String address;
 
     /**
      * 设置时间
      */
     @CreatedDate
     @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '设置时间'")
-    private Date m_setTime;
+    private Date setTime;
 
     /**
      * 半径
      */
     @Column(columnDefinition = "int default 1000 comment '半径'")
-    private double m_radius;
+    private double radius;
 
     /**
      * 纬度
      */
     @Column(columnDefinition = "double default '0' comment '纬度'")
-    private double m_lat;
+    private double lat;
 
     /**
      * 经度
      */
     @Column(columnDefinition = "double default '0' comment '经度'")
-    private double m_lot;
+    private double lot;
 
-    public int getM_id()
+    public int getId()
     {
-        return m_id;
+        return id;
     }
 
-    public void setM_id(int m_id)
+    public void setId(int id)
     {
-        this.m_id = m_id;
+        this.id = id;
     }
 
-    public String getM_deviceId()
+    public String getDeviceId()
     {
-        return m_deviceId;
+        return deviceId;
     }
 
-    public void setM_deviceId(String m_deviceId)
+    public void setDeviceId(String deviceId)
     {
-        this.m_deviceId = m_deviceId;
+        this.deviceId = deviceId;
     }
 
-    public String getM_name()
+    public String getName()
     {
-        return m_name;
+        return name;
     }
 
-    public void setM_name(String m_name)
+    public void setName(String name)
     {
-        this.m_name = m_name;
+        this.name = name;
     }
 
-    public String getM_address()
+    public String getAddress()
     {
-        return m_address;
+        return address;
     }
 
-    public void setM_address(String m_address)
+    public void setAddress(String address)
     {
-        this.m_address = m_address;
+        this.address = address;
     }
 
-    public Date getM_setTime()
+    public Date getSetTime()
     {
-        return m_setTime;
+        return setTime;
     }
 
-    public void setM_setTime(Date m_setTime)
+    public void setSetTime(Date setTime)
     {
-        this.m_setTime = m_setTime;
+        this.setTime = setTime;
     }
 
-    public double getM_radius()
+    public double getRadius()
     {
-        return m_radius;
+        return radius;
     }
 
-    public void setM_radius(double m_radius)
+    public void setRadius(double radius)
     {
-        this.m_radius = m_radius;
+        this.radius = radius;
     }
 
-    public double getM_lat()
+    public double getLat()
     {
-        return m_lat;
+        return lat;
     }
 
-    public void setM_lat(double m_lat)
+    public void setLat(double lat)
     {
-        this.m_lat = m_lat;
+        this.lat = lat;
     }
 
-    public double getM_lot()
+    public double getLot()
     {
-        return m_lot;
+        return lot;
     }
 
-    public void setM_lot(double m_lot)
+    public void setLot(double lot)
     {
-        this.m_lot = m_lot;
+        this.lot = lot;
     }
 }

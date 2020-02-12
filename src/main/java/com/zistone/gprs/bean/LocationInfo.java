@@ -18,8 +18,14 @@ public class LocationInfo
     @Override
     public String toString()
     {
-        return "LocationInfo{" + "m_id=" + m_id + ", m_deviceId='" + m_deviceId + '\'' + ", m_lat=" + m_lat + ", m_lot=" + m_lot + ", " + "m_height=" + m_height + ", m_createTime=" + SIMPLEDATEFORMAT
-                .format(m_createTime) + '}';
+        return "LocationInfo{" +
+                "id=" + id +
+                ", deviceId='" + deviceId + '\'' +
+                ", lat=" + lat +
+                ", lot=" + lot +
+                ", height=" + height +
+                ", createTime=" + SIMPLEDATEFORMAT.format(createTime) +
+                '}';
     }
 
     /**
@@ -27,96 +33,96 @@ public class LocationInfo
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int m_id;
+    private int id;
 
     /**
      * 设备编号,设备自带
      */
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '设备编号'")
-    private String m_deviceId;
+    private String deviceId;
 
     /**
      * 纬度
      */
     @Column(columnDefinition = "double default '0' comment '纬度'")
-    private double m_lat;
+    private double lat;
 
     /**
      * 经度
      */
     @Column(columnDefinition = "double default '0' comment '经度'")
-    private double m_lot;
+    private double lot;
 
     /**
      * 海拔
      */
     @Column(columnDefinition = "int default '0' comment '海拔'")
-    private int m_height;
+    private int height;
 
     /**
      * 创建时间(由前端上传)
      */
     @CreatedDate
     @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '创建时间'")
-    private Date m_createTime;
+    private Date createTime;
 
-    public int getM_id()
+    public int getId()
     {
-        return m_id;
+        return id;
     }
 
-    public void setM_id(int m_id)
+    public void setId(int id)
     {
-        this.m_id = m_id;
+        this.id = id;
     }
 
-    public String getM_deviceId()
+    public String getDeviceId()
     {
-        return m_deviceId;
+        return deviceId;
     }
 
-    public void setM_deviceId(String m_deviceId)
+    public void setDeviceId(String deviceId)
     {
-        this.m_deviceId = m_deviceId;
+        this.deviceId = deviceId;
     }
 
-    public double getM_lat()
+    public double getLat()
     {
-        return m_lat;
+        return lat;
     }
 
-    public void setM_lat(double m_lat)
+    public void setLat(double lat)
     {
-        this.m_lat = m_lat;
+        this.lat = lat;
     }
 
-    public double getM_lot()
+    public double getLot()
     {
-        return m_lot;
+        return lot;
     }
 
-    public void setM_lot(double m_lot)
+    public void setLot(double lot)
     {
-        this.m_lot = m_lot;
+        this.lot = lot;
     }
 
-    public int getM_height()
+    public int getHeight()
     {
-        return m_height;
+        return height;
     }
 
-    public void setM_height(int m_height)
+    public void setHeight(int height)
     {
-        this.m_height = m_height;
+        this.height = height;
     }
 
-    public Date getM_createTime()
+    public Date getCreateTime()
     {
-        return m_createTime;
+        return createTime;
     }
 
-    public void setM_createTime(Date m_createTime)
+    public void setCreateTime(Date createTime)
     {
-        this.m_createTime = m_createTime;
+        this.createTime = createTime;
     }
 }

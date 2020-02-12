@@ -1,13 +1,11 @@
 package com.zistone.gprs.bean;
 
-import com.zistone.gprs.validator.PhoneNumber;
-import com.zistone.gprs.validator.RealName;
-import com.zistone.gprs.validator.UserName;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -16,11 +14,23 @@ import java.util.Date;
 @Table(name = "userinfo")
 public class UserInfo
 {
+    private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     @Override
     public String toString()
     {
-        return "UserInfo{" + "m_id=" + m_id + ", m_userName='" + m_userName + '\'' + ", " + "m_realName='" + m_realName + '\'' + ", " +
-                "m_phoneNumber='" + m_phoneNumber + '\'' + ", m_level=" + m_level + ", m_state=" + m_state + ", m_createTime=" + m_createTime + ", m_updateTime=" + m_updateTime + ", m_password='" + m_password + '\'' + '}';
+        return "UserInfo{" +
+                "id=" + id +
+                ", userImage='" + userImage + '\'' +
+                ", userName='" + userName + '\'' +
+                ", realName='" + realName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", level=" + level +
+                ", state=" + state +
+                ", createTime=" + SIMPLEDATEFORMAT.format(createTime) +
+                ", updateTime=" + SIMPLEDATEFORMAT.format(updateTime) +
+                ", password='" + password + '\'' +
+                '}';
     }
 
     /**
@@ -28,7 +38,7 @@ public class UserInfo
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int m_id;
+    private int id;
 
     /**
      * 用户头像
@@ -36,159 +46,155 @@ public class UserInfo
      */
     @Lob
     @Column(columnDefinition = "longtext comment '用户头像'")
-    private String m_userImage;
+    private String userImage;
 
     /**
      * 用户名
      */
-    @UserName
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '用户名'")
-    private String m_userName;
+    private String userName;
 
     /**
      * 用户实名
      */
-    @RealName
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '用户实名'")
-    private String m_realName;
+    private String realName;
 
     /**
      * 注册手机号
      */
-    @PhoneNumber
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '注册手机号'")
-    private String m_phoneNumber;
+    private String phoneNumber;
 
     /**
      * 用户权限
      */
     @Column(nullable = false, columnDefinition = "int default '1' comment '用户权限:1普通用户2管理员3超级管理员'")
-    private int m_level;
+    private int level;
 
     /**
      * 用户状态
      */
     @Column(columnDefinition = "int default '1' comment '用户状态:1正常使用2冻结'")
-    private int m_state;
+    private int state;
 
     /**
      * 创建时间
      */
     @CreatedDate
     @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '创建时间'")
-    private Date m_createTime;
+    private Date createTime;
 
     /**
      * 修改时间
      */
     @LastModifiedDate
     @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '修改时间'")
-    private Date m_updateTime;
+    private Date updateTime;
 
     /**
      * 密码
      */
-    //TODO:应该使用加密
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '登录密码'")
-    private String m_password;
+    private String password;
 
-    public int getM_id()
+    public int getId()
     {
-        return m_id;
+        return id;
     }
 
-    public void setM_id(int m_id)
+    public void setId(int id)
     {
-        this.m_id = m_id;
+        this.id = id;
     }
 
-    public String getM_userImage()
+    public String getUserImage()
     {
-        return m_userImage;
+        return userImage;
     }
 
-    public void setM_userImage(String m_userImage)
+    public void setUserImage(String userImage)
     {
-        this.m_userImage = m_userImage;
+        this.userImage = userImage;
     }
 
-    public String getM_userName()
+    public String getUserName()
     {
-        return m_userName;
+        return userName;
     }
 
-    public void setM_userName(String m_userName)
+    public void setUserName(String userName)
     {
-        this.m_userName = m_userName;
+        this.userName = userName;
     }
 
-    public String getM_realName()
+    public String getRealName()
     {
-        return m_realName;
+        return realName;
     }
 
-    public void setM_realName(String m_realName)
+    public void setRealName(String realName)
     {
-        this.m_realName = m_realName;
+        this.realName = realName;
     }
 
-    public String getM_phoneNumber()
+    public String getPhoneNumber()
     {
-        return m_phoneNumber;
+        return phoneNumber;
     }
 
-    public void setM_phoneNumber(String m_phoneNumber)
+    public void setPhoneNumber(String phoneNumber)
     {
-        this.m_phoneNumber = m_phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 
-    public int getM_level()
+    public int getLevel()
     {
-        return m_level;
+        return level;
     }
 
-    public void setM_level(int m_level)
+    public void setLevel(int level)
     {
-        this.m_level = m_level;
+        this.level = level;
     }
 
-    public int getM_state()
+    public int getState()
     {
-        return m_state;
+        return state;
     }
 
-    public void setM_state(int m_state)
+    public void setState(int state)
     {
-        this.m_state = m_state;
+        this.state = state;
     }
 
-    public Date getM_createTime()
+    public Date getCreateTime()
     {
-        return m_createTime;
+        return createTime;
     }
 
-    public void setM_createTime(Date m_createTime)
+    public void setCreateTime(Date createTime)
     {
-        this.m_createTime = m_createTime;
+        this.createTime = createTime;
     }
 
-    public Date getM_updateTime()
+    public Date getUpdateTime()
     {
-        return m_updateTime;
+        return updateTime;
     }
 
-    public void setM_updateTime(Date m_updateTime)
+    public void setUpdateTime(Date updateTime)
     {
-        this.m_updateTime = m_updateTime;
+        this.updateTime = updateTime;
     }
 
-    public String getM_password()
+    public String getPassword()
     {
-        return m_password;
+        return password;
     }
 
-    public void setM_password(String m_password)
+    public void setPassword(String password)
     {
-        this.m_password = m_password;
+        this.password = password;
     }
 }

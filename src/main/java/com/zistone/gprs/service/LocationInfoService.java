@@ -33,8 +33,7 @@ public class LocationInfoService
 
     public List<LocationInfo> FindDescDaysLastDataByDeviceId(String deviceId, int days)
     {
-        List<LocationInfo> list = _locationInfoRepository.FindDescDaysLastDataByDeviceId(deviceId, days);
-        return list;
+        return _locationInfoRepository.FindDescDaysLastDataByDeviceId(deviceId, days);
     }
 
     @Transactional

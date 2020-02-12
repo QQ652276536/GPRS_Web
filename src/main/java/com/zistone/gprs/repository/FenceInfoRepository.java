@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface FenceInfoRepository extends JpaRepository<FenceInfo, Integer>
 {
-    @Query("select fenceinfo from FenceInfo fenceinfo where fenceinfo.m_deviceId = :deviceId")
+    @Query("select fenceinfo from FenceInfo fenceinfo where fenceinfo.deviceId = :deviceId")
     List<FenceInfo> FindByDeviceId(@Param("deviceId") String deviceId);
-
 }

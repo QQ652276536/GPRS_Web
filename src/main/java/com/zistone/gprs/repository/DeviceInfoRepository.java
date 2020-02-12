@@ -9,28 +9,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface DeviceInfoRepository extends JpaRepository<DeviceInfo, Integer>
 {
-    @Query("select device from DeviceInfo device where device.m_deviceId = :deviceId")
+    @Query("select device from DeviceInfo device where device.deviceId = :deviceId")
     DeviceInfo FindByDeviceId(@Param("deviceId") String deviceId);
 
-    @Query("select device from DeviceInfo device where device.m_akCode = :akCode")
+    @Query("select device from DeviceInfo device where device.akCode = :akCode")
     DeviceInfo FindByAKCode(@Param("akCode") String akCode);
 
-    @Query("select device from DeviceInfo device where device.m_id = :id")
+    @Query("select device from DeviceInfo device where device.id = :id")
     DeviceInfo FindById(@Param("id") int id);
 
     @Transactional
     //清除底层持久化上下文
     @Modifying(clearAutomatically = true)
-    @Query("update DeviceInfo device set device.m_state = 1,device.m_lat = :lat,device.m_lot = :lot,device.m_height = :height,device" +
-            ".m_updateTime = CURRENT_TIMESTAMP" + " where " + "device.m_deviceId = " + ":deviceId")
+    @Query("update DeviceInfo device set device.state = 1,device.lat = :lat,device.lot = :lot,device.height = :height,device" +
+            ".updateTime = CURRENT_TIMESTAMP" + " where " + "device.deviceId = " + ":deviceId")
     int UpdateLocationByDeviceId(
             @Param("deviceId") String deviceId, @Param("lat") double lat, @Param("lot") double lot, @Param("height") int height);
 
     @Transactional
     //清除底层持久化上下文
     @Modifying(clearAutomatically = true)
-    @Query("update DeviceInfo device set device.m_state = 1,device.m_lat = :lat,device.m_lot = :lot,device.m_height = :height,device" +
-            ".m_temperature = :temperature,device.m_electricity = :electricity,device.m_updateTime = CURRENT_TIMESTAMP" + " where device" + ".m_deviceId = :deviceId")
+    @Query("update DeviceInfo device set device.state = 1,device.lat = :lat,device.lot = :lot,device.height = :height,device" +
+            ".temperature = :temperature,device.electricity = :electricity,device.updateTime = CURRENT_TIMESTAMP" + " where device" + ".deviceId = :deviceId")
     int UpdateByDeviceId(
             @Param("deviceId") String deviceId,
             @Param("lat") double lat,
@@ -40,6 +40,6 @@ public interface DeviceInfoRepository extends JpaRepository<DeviceInfo, Integer>
     @Transactional
     //清除底层持久化上下文
     @Modifying(clearAutomatically = true)
-    @Query("update DeviceInfo device set device.m_updateTime = CURRENT_TIMESTAMP where device.m_deviceId = " + ":#{#deviceInfo.m_deviceId}")
+    @Query("update DeviceInfo device set device.updateTime = CURRENT_TIMESTAMP where device.deviceId = " + ":#{#deviceInfo.deviceId}")
     int UpdateAKCodeByDeviceId(@Param("deviceInfo") DeviceInfo deviceInfo);
 }

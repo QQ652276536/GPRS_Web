@@ -12,13 +12,11 @@ import java.util.Date;
 //监听实体变化
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "userinfo")
-public class UserInfo
-{
+public class UserInfo {
     private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "UserInfo{" +
                 "id=" + id +
                 ", userImage='" + userImage + '\'' +
@@ -27,8 +25,8 @@ public class UserInfo
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", level=" + level +
                 ", state=" + state +
-                ", createTime=" + SIMPLEDATEFORMAT.format(createTime) +
-                ", updateTime=" + SIMPLEDATEFORMAT.format(updateTime) +
+                ", createTime=" + (createTime != null ? SIMPLEDATEFORMAT.format(createTime) : null) +
+                ", updateTime=" + (updateTime != null ? SIMPLEDATEFORMAT.format(updateTime) : null) +
                 ", password='" + password + '\'' +
                 '}';
     }
@@ -98,103 +96,83 @@ public class UserInfo
     @Column(nullable = false, columnDefinition = "varchar(50) default '' comment '登录密码'")
     private String password;
 
-    public int getId()
-    {
+    public int getId() {
         return id;
     }
 
-    public void setId(int id)
-    {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getUserImage()
-    {
+    public String getUserImage() {
         return userImage;
     }
 
-    public void setUserImage(String userImage)
-    {
+    public void setUserImage(String userImage) {
         this.userImage = userImage;
     }
 
-    public String getUserName()
-    {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName)
-    {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public String getRealName()
-    {
+    public String getRealName() {
         return realName;
     }
 
-    public void setRealName(String realName)
-    {
+    public void setRealName(String realName) {
         this.realName = realName;
     }
 
-    public String getPhoneNumber()
-    {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber)
-    {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getLevel()
-    {
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(int level)
-    {
+    public void setLevel(int level) {
         this.level = level;
     }
 
-    public int getState()
-    {
+    public int getState() {
         return state;
     }
 
-    public void setState(int state)
-    {
+    public void setState(int state) {
         this.state = state;
     }
 
-    public Date getCreateTime()
-    {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime)
-    {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime()
-    {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime)
-    {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         this.password = password;
     }
 

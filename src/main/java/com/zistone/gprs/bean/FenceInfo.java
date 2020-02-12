@@ -11,19 +11,17 @@ import java.util.Date;
 //监听实体变化
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "fenceinfo")
-public class FenceInfo
-{
+public class FenceInfo {
     private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "FenceInfo{" +
                 "id=" + id +
                 ", deviceId='" + deviceId + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
-                ", setTime=" + SIMPLEDATEFORMAT.format(setTime) +
+                ", setTime=" + (setTime != null ? SIMPLEDATEFORMAT.format(setTime) : null) +
                 ", radius=" + radius +
                 ", lat=" + lat +
                 ", lot=" + lot +
@@ -80,83 +78,67 @@ public class FenceInfo
     @Column(columnDefinition = "double default '0' comment '经度'")
     private double lot;
 
-    public int getId()
-    {
+    public int getId() {
         return id;
     }
 
-    public void setId(int id)
-    {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getDeviceId()
-    {
+    public String getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(String deviceId)
-    {
+    public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getAddress()
-    {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address)
-    {
+    public void setAddress(String address) {
         this.address = address;
     }
 
-    public Date getSetTime()
-    {
+    public Date getSetTime() {
         return setTime;
     }
 
-    public void setSetTime(Date setTime)
-    {
+    public void setSetTime(Date setTime) {
         this.setTime = setTime;
     }
 
-    public double getRadius()
-    {
+    public double getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius)
-    {
+    public void setRadius(double radius) {
         this.radius = radius;
     }
 
-    public double getLat()
-    {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(double lat)
-    {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public double getLot()
-    {
+    public double getLot() {
         return lot;
     }
 
-    public void setLot(double lot)
-    {
+    public void setLot(double lot) {
         this.lot = lot;
     }
 

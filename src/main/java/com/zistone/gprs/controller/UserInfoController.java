@@ -26,7 +26,6 @@ public class UserInfoController
     public UserInfo Login(@RequestBody UserInfo userInfo)
     {
         _logger.info(String.format(">>>收到登录请求:%s", userInfo.toString()));
-        //TODO:校验参数
         return _userInfoService.Login(userInfo);
     }
 
@@ -34,7 +33,6 @@ public class UserInfoController
     public UserInfo Register(@RequestBody UserInfo userInfo)
     {
         _logger.info(String.format(">>>收到注册请求:", userInfo.toString()));
-        //TODO:校验参数
         return _userInfoService.Insert(userInfo);
     }
 
@@ -42,7 +40,6 @@ public class UserInfoController
     public UserInfo Update(@RequestBody UserInfo userInfo)
     {
         _logger.info(String.format(">>>收到更新请求:", userInfo.toString()));
-        //TODO:校验参数
         return _userInfoService.Update(userInfo);
     }
 

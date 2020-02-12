@@ -51,7 +51,7 @@ public class LocationInfoServiceTest
         List<LocationInfo> locationEverDayList = new ArrayList<>();
         for (LocationInfo locationInfo : list)
         {
-            String timeStr = SIMPLEDATEFORMAT.format(locationInfo.get_createTime());
+            String timeStr = SIMPLEDATEFORMAT.format(locationInfo.getCreateTime());
             timeStr = timeStr.split(" ")[0];
             keyList.add(timeStr);
         }
@@ -61,7 +61,7 @@ public class LocationInfoServiceTest
             List<LocationInfo> tempList = new ArrayList<>();
             for (LocationInfo locationInfo : list)
             {
-                String timeStr = SIMPLEDATEFORMAT.format(locationInfo.get_createTime());
+                String timeStr = SIMPLEDATEFORMAT.format(locationInfo.getCreateTime());
                 timeStr = timeStr.split(" ")[0];
                 if (tempStr.equals(timeStr))
                 {
@@ -77,13 +77,13 @@ public class LocationInfoServiceTest
             //当天所有位置的新增时间
             for (LocationInfo tempLocationInfo : locationInfos)
             {
-                dates.add(tempLocationInfo.get_createTime());
+                dates.add(tempLocationInfo.getCreateTime());
             }
             //当天最后一条记录的新增时间
             Date lastTime = Collections.max(dates);
             for (LocationInfo tempLocationInfo : locationInfos)
             {
-                if (lastTime == tempLocationInfo.get_createTime())
+                if (lastTime == tempLocationInfo.getCreateTime())
                 {
                     locationEverDayList.add(tempLocationInfo);
                     break;
@@ -93,11 +93,11 @@ public class LocationInfoServiceTest
         Collections.sort(locationEverDayList, (o1, o2) ->
         {
             //降序排列
-            if (o1.get_createTime().before(o2.get_createTime()))
+            if (o1.getCreateTime().before(o2.getCreateTime()))
             {
                 return 1;
             }
-            if (o1.get_createTime() == o2.get_createTime())
+            if (o1.getCreateTime() == o2.getCreateTime())
             {
                 return 0;
             }

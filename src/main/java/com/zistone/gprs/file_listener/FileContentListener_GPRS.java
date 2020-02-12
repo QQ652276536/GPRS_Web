@@ -13,7 +13,7 @@ import java.util.Objects;
 @Transactional
 public class FileContentListener_GPRS implements ApplicationListener<FileContentEvent_GPRS>
 {
-    private Logger m_logger = LoggerFactory.getLogger(FileContentListener_GPRS.class);
+    private Logger _logger = LoggerFactory.getLogger(FileContentListener_GPRS.class);
 
     @Override
     public void onApplicationEvent(FileContentEvent_GPRS fileContentEvent)
@@ -23,6 +23,7 @@ public class FileContentListener_GPRS implements ApplicationListener<FileContent
             return;
         }
         FileData fileData = fileContentEvent.GetFileData();
-        m_logger.info(String.format(">>>接收到监听对象:%s", fileData.toString()));
+        _logger.info(String.format(">>>接收到监听对象:%s", fileData.toString()));
     }
+
 }

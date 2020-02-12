@@ -15,24 +15,24 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class WebSocketServer
 {
     public static CopyOnWriteArraySet<WebSocketServer> webSocketSet = new CopyOnWriteArraySet<>();
-    private Logger m_logger = LoggerFactory.getLogger(WebSocketServer.class);
-    private Session m_session;
+    private Logger _logger = LoggerFactory.getLogger(WebSocketServer.class);
+    private Session _session;
     //当前在线连接数
-    private static int m_connectCount = 0;
+    private static int _connectCount = 0;
 
     public static synchronized int getConnectCount()
     {
-        return m_connectCount;
+        return _connectCount;
     }
 
     public static synchronized void addConnectCount()
     {
-        m_connectCount++;
+        _connectCount++;
     }
 
     public static synchronized void subConnectCount()
     {
-        m_connectCount--;
+        _connectCount--;
     }
 
     /**
@@ -43,17 +43,17 @@ public class WebSocketServer
     @OnOpen
     public void Open(Session session)
     {
-        m_session = session;
+        _session = session;
         webSocketSet.add(this);
         addConnectCount();
-        m_logger.info(String.format("有新连接加入,当前在线人数为:%s", getConnectCount()));
+        _logger.info(String.format("有新连接加入,当前在线人数为:%s", getConnectCount()));
         try
         {
             SendMessage("连接成功...!!!");
         }
         catch (IOException e)
         {
-            m_logger.error("WebSocket IO异常");
+            _logger.error("WebSocket IO异常");
             e.printStackTrace();
         }
     }
@@ -66,7 +66,7 @@ public class WebSocketServer
     {
         webSocketSet.remove(this);
         subConnectCount();
-        m_logger.info(String.format("有一个连接关闭,当前在线人数:", getConnectCount()));
+        _logger.info(String.format("有一个连接关闭,当前在线人数:", getConnectCount()));
     }
 
     /**
@@ -78,7 +78,7 @@ public class WebSocketServer
     @OnMessage
     public void OnMessage(String message, Session session) throws IOException
     {
-        m_logger.info(String.format("收到来自客户端的信息:%s", message));
+        _logger.info(String.format("收到来自客户端的信息:%s", message));
         //群发信息
         for (WebSocketServer item : webSocketSet)
         {
@@ -95,12 +95,13 @@ public class WebSocketServer
     @OnError
     public void OnError(Session session, Throwable throwable)
     {
-        m_logger.info(String.format("%s连接时发生错误!", session.getId()));
+        _logger.info(String.format("%s连接时发生错误!", session.getId()));
         throwable.printStackTrace();
     }
 
     public void SendMessage(String message) throws IOException
     {
-        m_session.getBasicRemote().sendText(message);
+        _session.getBasicRemote().sendText(message);
     }
+
 }

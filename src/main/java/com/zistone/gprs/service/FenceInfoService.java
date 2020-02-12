@@ -12,24 +12,25 @@ import java.util.List;
 @Service
 public class FenceInfoService
 {
-    private Logger m_logger = LoggerFactory.getLogger(FenceInfoService.class);
+    private Logger _logger = LoggerFactory.getLogger(FenceInfoService.class);
 
     @Resource
-    private FenceInfoRepository m_fenceInfoRepository;
+    private FenceInfoRepository _fenceInfoRepository;
 
     public List<FenceInfo> FindByDeviceId(String deviceId)
     {
-        List<FenceInfo> list = m_fenceInfoRepository.FindByDeviceId(deviceId);
+        List<FenceInfo> list = _fenceInfoRepository.FindByDeviceId(deviceId);
         return list;
     }
 
     public FenceInfo InsertByDeviceId(FenceInfo fenceInfo)
     {
-        return m_fenceInfoRepository.save(fenceInfo);
+        return _fenceInfoRepository.save(fenceInfo);
     }
 
     public void DelById(String id)
     {
-        m_fenceInfoRepository.deleteById(Integer.valueOf(id));
+        _fenceInfoRepository.deleteById(Integer.valueOf(id));
     }
+
 }

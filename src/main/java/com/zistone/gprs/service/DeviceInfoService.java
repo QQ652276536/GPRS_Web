@@ -16,12 +16,12 @@ import java.util.Random;
 @Service
 public class DeviceInfoService
 {
-    private Logger m_logger = LoggerFactory.getLogger(DeviceInfoService.class);
+    private Logger _logger = LoggerFactory.getLogger(DeviceInfoService.class);
 
     @Resource
-    private DeviceInfoRepository m_deviceInfoRepository;
+    private DeviceInfoRepository _deviceInfoRepository;
     @Resource
-    private LocationInfoRepository m_locationInfoRepository;
+    private LocationInfoRepository _locationInfoRepository;
 
     /**
      * 根据鉴权码查找设备
@@ -31,13 +31,13 @@ public class DeviceInfoService
      */
     public DeviceInfo FindByAKCode(String akCode)
     {
-        return m_deviceInfoRepository.FindByAKCode(akCode);
+        return _deviceInfoRepository.FindByAKCode(akCode);
     }
 
     @Transactional
     public void SaveList(List<DeviceInfo> deviceInfoList)
     {
-        m_deviceInfoRepository.saveAll(deviceInfoList);
+        _deviceInfoRepository.saveAll(deviceInfoList);
     }
 
     /**
@@ -48,7 +48,7 @@ public class DeviceInfoService
      */
     public DeviceInfo FindById(int id)
     {
-        return m_deviceInfoRepository.FindById(id);
+        return _deviceInfoRepository.FindById(id);
     }
 
     /**
@@ -58,7 +58,7 @@ public class DeviceInfoService
      */
     public List<DeviceInfo> FindAllDevice()
     {
-        return m_deviceInfoRepository.findAll();
+        return _deviceInfoRepository.findAll();
     }
 
     /**
@@ -94,39 +94,39 @@ public class DeviceInfoService
                     break;
             }
         }
-        DeviceInfo queryDevice = m_deviceInfoRepository.FindByDeviceId(deviceInfo.getM_deviceId());
+        DeviceInfo queryDevice = _deviceInfoRepository.FindByDeviceId(deviceInfo.getDeviceId());
         //线上环境设备编号不会重复,所以用作判断重复的条件
         //根据设备编号查找设备,没有则新增
         if (queryDevice == null)
         {
-            m_logger.info(String.format(">>>设备%s不存在,新增该设备...", deviceInfo.getM_deviceId()));
-            deviceInfo.setM_akCode(akCode);
-            DeviceInfo tempDevice = m_deviceInfoRepository.save(deviceInfo);
-            if (null != tempDevice && tempDevice.getM_id() != 0)
+            _logger.info(String.format(">>>设备%s不存在,新增该设备...", deviceInfo.getDeviceId()));
+            deviceInfo.setAkCode(akCode);
+            DeviceInfo tempDevice = _deviceInfoRepository.save(deviceInfo);
+            if (null != tempDevice && tempDevice.getId() != 0)
             {
-                m_logger.info(">>>设备注册成功");
+                _logger.info(">>>设备注册成功");
             }
             else
             {
-                m_logger.error(String.format(">>>设备%s注册失败!!!请检查服务日志排查原因...\r\n", deviceInfo.getM_deviceId()));
+                _logger.error(String.format(">>>设备%s注册失败!!!请检查服务日志排查原因...\r\n", deviceInfo.getDeviceId()));
             }
             return tempDevice;
         }
         //有则更新
         else
         {
-            m_logger.info(String.format(">>>设备%s已存在,更新该设备...", queryDevice.getM_deviceId()));
-            int num = m_deviceInfoRepository
-                    .UpdateByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(),
+            _logger.info(String.format(">>>设备%s已存在,更新该设备...", queryDevice.getDeviceId()));
+            int num = _deviceInfoRepository
+                    .UpdateByDeviceId(deviceInfo.getDeviceId(), deviceInfo.getLat(), deviceInfo.getLot(),
                             deviceInfo
-                                    .getM_height(), deviceInfo.getM_temperature(), deviceInfo.getM_electricity());
+                                    .getHeight(), deviceInfo.getTemperature(), deviceInfo.getElectricity());
             if (num == 1)
             {
-                m_logger.info(">>>设备更新成功");
+                _logger.info(">>>设备更新成功");
             }
             else
             {
-                m_logger.error(String.format(">>>设备%s更新失败!!!请检查服务日志排查原因...\r\n", queryDevice.getM_deviceId()));
+                _logger.error(String.format(">>>设备%s更新失败!!!请检查服务日志排查原因...\r\n", queryDevice.getDeviceId()));
             }
             return deviceInfo;
         }
@@ -142,12 +142,12 @@ public class DeviceInfoService
     {
         //更新设备表的同时要将当前位置信息插入至轨迹表
         LocationInfo locationInfo = new LocationInfo();
-        locationInfo.setM_deviceId(deviceInfo.getM_deviceId());
-        locationInfo.setM_lat(deviceInfo.getM_lat());
-        locationInfo.setM_lot(deviceInfo.getM_lot());
-        locationInfo.setM_height(deviceInfo.getM_height());
-        m_locationInfoRepository.save(locationInfo);
-        return m_deviceInfoRepository.save(deviceInfo);
+        locationInfo.setDeviceId(deviceInfo.getDeviceId());
+        locationInfo.setLat(deviceInfo.getLat());
+        locationInfo.setLot(deviceInfo.getLot());
+        locationInfo.setHeight(deviceInfo.getHeight());
+        _locationInfoRepository.save(locationInfo);
+        return _deviceInfoRepository.save(deviceInfo);
     }
 
     /**
@@ -158,10 +158,10 @@ public class DeviceInfoService
      */
     public int UpdateLocationByDeviceId(DeviceInfo deviceInfo)
     {
-        return m_deviceInfoRepository
-                .UpdateLocationByDeviceId(deviceInfo.getM_deviceId(), deviceInfo.getM_lat(), deviceInfo.getM_lot(),
+        return _deviceInfoRepository
+                .UpdateLocationByDeviceId(deviceInfo.getDeviceId(), deviceInfo.getLat(), deviceInfo.getLot(),
                         deviceInfo
-                                .getM_height());
+                                .getHeight());
     }
 
 }

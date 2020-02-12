@@ -159,4 +159,5 @@ public class FenceInfo
     {
         this.lot = lot;
     }
+
 }

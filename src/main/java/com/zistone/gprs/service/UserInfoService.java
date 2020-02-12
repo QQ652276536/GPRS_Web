@@ -13,10 +13,10 @@ import java.util.List;
 @Service
 public class UserInfoService
 {
-    private Logger m_logger = LoggerFactory.getLogger(UserInfoService.class);
+    private Logger _logger = LoggerFactory.getLogger(UserInfoService.class);
 
     @Resource
-    private UserInfoRepository m_userInfoRepository;
+    private UserInfoRepository _userInfoRepository;
 
     /**
      * 登录
@@ -26,18 +26,18 @@ public class UserInfoService
      */
     public UserInfo Login(UserInfo userInfo)
     {
-        return m_userInfoRepository.FindUserByNameAndPwd(userInfo.getM_userName(), userInfo.getM_password());
+        return _userInfoRepository.FindUserByNameAndPwd(userInfo.getUserName(), userInfo.getPassword());
     }
 
     @Transactional
     public void SaveList(List<UserInfo> userInfoList)
     {
-        m_userInfoRepository.saveAll(userInfoList);
+        _userInfoRepository.saveAll(userInfoList);
     }
 
     public List<UserInfo> FindAllUser()
     {
-        return m_userInfoRepository.findAll();
+        return _userInfoRepository.findAll();
     }
 
     /**
@@ -48,12 +48,12 @@ public class UserInfoService
      */
     public UserInfo Insert(UserInfo userInfo)
     {
-        UserInfo existUser = m_userInfoRepository.FindUserByName(userInfo.getM_userName());
+        UserInfo existUser = _userInfoRepository.FindUserByName(userInfo.getUserName());
         if (existUser == null)
         {
-            return m_userInfoRepository.save(userInfo);
+            return _userInfoRepository.save(userInfo);
         }
-        m_logger.error(">>>注册失败,用户名已存在\r\n");
+        _logger.error(">>>注册失败,用户名已存在\r\n");
         return null;
     }
 
@@ -65,27 +65,27 @@ public class UserInfoService
      */
     public UserInfo Update(UserInfo userInfo)
     {
-        UserInfo existUser = m_userInfoRepository.FindUserById(userInfo.getM_id());
+        UserInfo existUser = _userInfoRepository.FindUserById(userInfo.getId());
         if (null != existUser)
         {
-            if (null != userInfo.getM_userImage() && !"".equals(userInfo.getM_userImage()))
+            if (null != userInfo.getUserImage() && !"".equals(userInfo.getUserImage()))
             {
-                m_logger.info(">>>此次用户信息更新有图片");
-                existUser.setM_userImage(userInfo.getM_userImage());
+                _logger.info(">>>此次用户信息更新有图片");
+                existUser.setUserImage(userInfo.getUserImage());
             }
-            if (null != userInfo.getM_password() && !"".equals(userInfo.getM_password()))
+            if (null != userInfo.getPassword() && !"".equals(userInfo.getPassword()))
             {
-                existUser.setM_password(userInfo.getM_password());
+                existUser.setPassword(userInfo.getPassword());
             }
-            return m_userInfoRepository.save(existUser);
+            return _userInfoRepository.save(existUser);
         }
-        m_logger.error(">>>用户信息更新失败\r\n");
+        _logger.error(">>>用户信息更新失败\r\n");
         return null;
     }
 
     public void DelUserById(Integer id)
     {
-        m_userInfoRepository.deleteById(id);
+        _userInfoRepository.deleteById(id);
     }
 
 }

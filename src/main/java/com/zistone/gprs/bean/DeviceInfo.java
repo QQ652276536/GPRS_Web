@@ -280,4 +280,5 @@ public class DeviceInfo
     {
         this.electricity = electricity;
     }
+
 }

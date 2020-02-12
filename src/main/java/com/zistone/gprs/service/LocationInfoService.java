@@ -14,39 +14,39 @@ import java.util.List;
 @Service
 public class LocationInfoService
 {
-    private Logger m_logger = LoggerFactory.getLogger(LocationInfoService.class);
+    private Logger _logger = LoggerFactory.getLogger(LocationInfoService.class);
 
     @Resource
-    private LocationInfoRepository m_locationInfoRepository;
+    private LocationInfoRepository _locationInfoRepository;
 
     public List<LocationInfo> FindByDeviceId(String deviceId)
     {
-        List<LocationInfo> list = m_locationInfoRepository.FindByDeviceId(deviceId);
+        List<LocationInfo> list = _locationInfoRepository.FindByDeviceId(deviceId);
         return list;
     }
 
     public List<LocationInfo> FindByDeviceIdAndTime(String deviceId, Date startDate, Date endDate)
     {
-        List<LocationInfo> list = m_locationInfoRepository.FindByDeviceIdAndTime(deviceId, startDate, endDate);
+        List<LocationInfo> list = _locationInfoRepository.FindByDeviceIdAndTime(deviceId, startDate, endDate);
         return list;
     }
 
     public List<LocationInfo> FindDescDaysLastDataByDeviceId(String deviceId, int days)
     {
-        List<LocationInfo> list = m_locationInfoRepository.FindDescDaysLastDataByDeviceId(deviceId, days);
+        List<LocationInfo> list = _locationInfoRepository.FindDescDaysLastDataByDeviceId(deviceId, days);
         return list;
     }
 
     @Transactional
     public LocationInfo Insert(LocationInfo locationInfo)
     {
-        return m_locationInfoRepository.save(locationInfo);
+        return _locationInfoRepository.save(locationInfo);
     }
 
     @Transactional
     public int InsertList(List<LocationInfo> locationInfoList)
     {
-        return m_locationInfoRepository.saveAll(locationInfoList).size();
+        return _locationInfoRepository.saveAll(locationInfoList).size();
     }
 
 }

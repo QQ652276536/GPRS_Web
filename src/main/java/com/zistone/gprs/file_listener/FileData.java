@@ -1,55 +1,63 @@
 package com.zistone.gprs.file_listener;
 
+import java.util.Date;
+
 public class FileData
 {
     @Override
     public String toString()
     {
-        return "FileData{" + "m_path='" + m_path + '\'' + ", m_encode='" + m_encode + '\'' + ", m_time=" + m_time + '}';
+        return "FileData{" +
+                "path='" + path + '\'' +
+                ", encode='" + encode + '\'' +
+                ", content='" + content + '\'' +
+                ", timeLength=" + timeLength +
+                '}';
     }
 
-    private String m_path;
-    private String m_encode;
-    private String m_content;
-    private int m_time;
+    private String path;
+    private String encode;
+    private String content;
+    private long timeLength;
 
-    public String getM_path()
+    public String getPath()
     {
-        return m_path;
+        return path;
     }
 
-    public void setM_path(String m_path)
+    public void setPath(String path)
     {
-        this.m_path = m_path;
+        this.path = path;
     }
 
-    public String getM_encode()
+    public String getEncode()
     {
-        return m_encode;
+        return encode;
     }
 
-    public void setM_encode(String m_encode)
+    public void setEncode(String encode)
     {
-        this.m_encode = m_encode;
+        this.encode = encode;
     }
 
-    public String getM_content()
+    public String getContent()
     {
-        return m_content;
+        return content;
     }
 
-    public void setM_content(String m_content)
+    public void setContent(String content)
     {
-        this.m_content = m_content;
+        this.content = content;
     }
 
-    public int getM_time()
+    public long getTimeLength()
     {
-        return m_time;
+        return timeLength;
     }
 
-    public void setM_time(int m_time)
+    public void setTimeLength(long timeLength)
     {
-        this.m_time = m_time;
+        this.timeLength = timeLength;
     }
+
 }

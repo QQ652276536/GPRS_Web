@@ -68,4 +68,5 @@ public class GB_T_2260_ProvinceCode
     {
         this.name = name;
     }
+
 }

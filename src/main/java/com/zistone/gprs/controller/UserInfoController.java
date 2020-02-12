@@ -17,32 +17,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/UserInfo")
 public class UserInfoController
 {
-    private Logger m_logger = LoggerFactory.getLogger(UserInfoController.class);
+    private Logger _logger = LoggerFactory.getLogger(UserInfoController.class);
 
     @Autowired
-    UserInfoService m_userInfoService;
+    UserInfoService _userInfoService;
 
     @RequestMapping(value = "/Login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public UserInfo Login(@RequestBody UserInfo userInfo)
     {
-        m_logger.info(String.format(">>>收到登录请求:%s", userInfo.toString()));
+        _logger.info(String.format(">>>收到登录请求:%s", userInfo.toString()));
         //TODO:校验参数
-        return m_userInfoService.Login(userInfo);
+        return _userInfoService.Login(userInfo);
     }
 
     @RequestMapping(value = "/Register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public UserInfo Register(@RequestBody UserInfo userInfo)
     {
-        m_logger.info(String.format(">>>收到注册请求:", userInfo.toString()));
+        _logger.info(String.format(">>>收到注册请求:", userInfo.toString()));
         //TODO:校验参数
-        return m_userInfoService.Insert(userInfo);
+        return _userInfoService.Insert(userInfo);
     }
 
     @RequestMapping(value = "/Update", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public UserInfo Update(@RequestBody UserInfo userInfo)
     {
-        m_logger.info(String.format(">>>收到更新请求:", userInfo.toString()));
+        _logger.info(String.format(">>>收到更新请求:", userInfo.toString()));
         //TODO:校验参数
-        return m_userInfoService.Update(userInfo);
+        return _userInfoService.Update(userInfo);
     }
+
 }

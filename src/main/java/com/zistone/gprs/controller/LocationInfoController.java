@@ -18,17 +18,17 @@ import static java.util.TimeZone.getTimeZone;
 @RequestMapping("/LocationInfo")
 public class LocationInfoController
 {
-    private Logger m_logger = LoggerFactory.getLogger(LocationInfoController.class);
+    private Logger _logger = LoggerFactory.getLogger(LocationInfoController.class);
     private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @Autowired
-    LocationInfoService m_locationInfoService;
+    LocationInfoService _locationInfoService;
 
     @RequestMapping(value = "/FindByDeviceId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public List<LocationInfo> FindByDeviceId(@RequestParam("deviceId") String deviceId)
     {
-        m_logger.info(String.format(">>>收到查询设备%s所有时间的历史轨迹请求:", deviceId));
-        return m_locationInfoService.FindByDeviceId(deviceId);
+        _logger.info(String.format(">>>收到查询设备%s所有时间的历史轨迹请求:", deviceId));
+        return _locationInfoService.FindByDeviceId(deviceId);
     }
 
     @RequestMapping(value = "/FindByDeviceIdAndBetweenTime", method = RequestMethod.POST, produces = "application" +
@@ -43,22 +43,22 @@ public class LocationInfoController
         Date date2 = new Date(endTime);
         String startStr = SIMPLEDATEFORMAT.format(date1);
         String endStr = SIMPLEDATEFORMAT.format(date2);
-        m_logger.info(String.format(">>>收到查询设备%s从%s至%s的历史轨迹请求:", deviceId, startStr, endStr));
-        return m_locationInfoService.FindByDeviceIdAndTime(deviceId, date1, date2);
+        _logger.info(String.format(">>>收到查询设备%s从%s至%s的历史轨迹请求:", deviceId, startStr, endStr));
+        return _locationInfoService.FindByDeviceIdAndTime(deviceId, date1, date2);
     }
 
     @RequestMapping(value = "/Insert", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LocationInfo Insert(@RequestBody LocationInfo locationInfo)
     {
-        m_logger.info(String.format(">>>收到新增设备%s历史位置的请求:", locationInfo.getM_deviceId()));
-        return m_locationInfoService.Insert(locationInfo);
+        _logger.info(String.format(">>>收到新增设备%s历史位置的请求:", locationInfo.getDeviceId()));
+        return _locationInfoService.Insert(locationInfo);
     }
 
     @RequestMapping(value = "/InsertList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public int InsertList(@RequestBody List<LocationInfo> locationInfoList)
     {
-        m_logger.info(String.format(">>>收到批量更新位置的请求:%s条数据", locationInfoList.size()));
-        return m_locationInfoService.InsertList(locationInfoList);
+        _logger.info(String.format(">>>收到批量更新位置的请求:%s条数据", locationInfoList.size()));
+        return _locationInfoService.InsertList(locationInfoList);
     }
 
     @RequestMapping(value = "/FindDescDaysLastDataByDeviceId", method = RequestMethod.POST, produces =
@@ -66,7 +66,8 @@ public class LocationInfoController
     public List<LocationInfo> FindDescDaysLastDataByDeviceId(@RequestParam("deviceId") String deviceId,
                                                              @RequestParam("days") int days)
     {
-        m_logger.info(String.format(">>>收到查询设备%s最近%s天最后位置的请求:", deviceId, days));
-        return m_locationInfoService.FindDescDaysLastDataByDeviceId(deviceId, days - 1);
+        _logger.info(String.format(">>>收到查询设备%s最近%s天最后位置的请求:", deviceId, days));
+        return _locationInfoService.FindDescDaysLastDataByDeviceId(deviceId, days - 1);
     }
+
 }

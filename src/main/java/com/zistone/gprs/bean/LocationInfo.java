@@ -125,4 +125,5 @@ public class LocationInfo
     {
         this.createTime = createTime;
     }
+
 }

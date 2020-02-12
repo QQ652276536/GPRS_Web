@@ -89,4 +89,5 @@ public class GB_T_2260_CityCode
     {
         this.parentProvinceId = parentProvinceId;
     }
+
 }

@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class LocationInfoServiceTest
 {
     @Autowired
-    private LocationInfoService m_locationInfoService;
+    private LocationInfoService _locationInfoService;
 
     private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static final SimpleDateFormat SIMPLEDATEFORMAT2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -45,13 +45,13 @@ public class LocationInfoServiceTest
         String endStr = yearStr + "-" + monthStr + "-" + dayStr + " 23:59:59";
         Date startDate = SIMPLEDATEFORMAT.parse(startStr);
         Date endDate = SIMPLEDATEFORMAT.parse(endStr);
-        List<LocationInfo> list = m_locationInfoService.FindByDeviceIdAndTime("300234067349750", startDate, endDate);
+        List<LocationInfo> list = _locationInfoService.FindByDeviceIdAndTime("300234067349750", startDate, endDate);
         List<String> keyList = new ArrayList<>();
         //当天日期为键,当天所有位置为值
         List<LocationInfo> locationEverDayList = new ArrayList<>();
         for (LocationInfo locationInfo : list)
         {
-            String timeStr = SIMPLEDATEFORMAT.format(locationInfo.getM_createTime());
+            String timeStr = SIMPLEDATEFORMAT.format(locationInfo.get_createTime());
             timeStr = timeStr.split(" ")[0];
             keyList.add(timeStr);
         }
@@ -61,7 +61,7 @@ public class LocationInfoServiceTest
             List<LocationInfo> tempList = new ArrayList<>();
             for (LocationInfo locationInfo : list)
             {
-                String timeStr = SIMPLEDATEFORMAT.format(locationInfo.getM_createTime());
+                String timeStr = SIMPLEDATEFORMAT.format(locationInfo.get_createTime());
                 timeStr = timeStr.split(" ")[0];
                 if (tempStr.equals(timeStr))
                 {
@@ -77,13 +77,13 @@ public class LocationInfoServiceTest
             //当天所有位置的新增时间
             for (LocationInfo tempLocationInfo : locationInfos)
             {
-                dates.add(tempLocationInfo.getM_createTime());
+                dates.add(tempLocationInfo.get_createTime());
             }
             //当天最后一条记录的新增时间
             Date lastTime = Collections.max(dates);
             for (LocationInfo tempLocationInfo : locationInfos)
             {
-                if (lastTime == tempLocationInfo.getM_createTime())
+                if (lastTime == tempLocationInfo.get_createTime())
                 {
                     locationEverDayList.add(tempLocationInfo);
                     break;
@@ -93,11 +93,11 @@ public class LocationInfoServiceTest
         Collections.sort(locationEverDayList, (o1, o2) ->
         {
             //降序排列
-            if (o1.getM_createTime().before(o2.getM_createTime()))
+            if (o1.get_createTime().before(o2.get_createTime()))
             {
                 return 1;
             }
-            if (o1.getM_createTime() == o2.getM_createTime())
+            if (o1.get_createTime() == o2.get_createTime())
             {
                 return 0;
             }

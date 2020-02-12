@@ -15,28 +15,28 @@ import java.util.stream.Stream;
 public class FileContentEvent_GPRS extends ApplicationEvent
 {
     private static int LINECOUNT;
-    private Logger m_logger = LoggerFactory.getLogger(this.getClass());
+    private Logger _logger = LoggerFactory.getLogger(this.getClass());
     private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private FileData m_fileData;
-    private Timer m_timer = new Timer();
+    private FileData _fileData;
+    private Timer _timer = new Timer();
 
     public FileContentEvent_GPRS(FileData fileData)
     {
         super(fileData);
-        this.m_fileData = fileData;
+        this._fileData = fileData;
         ReadFileThread readFileThread = new ReadFileThread();
         readFileThread.start();
-        m_logger.info(String.format(">>>线程%s执行...", readFileThread.getId()));
+        _logger.info(String.format(">>>线程%s执行...", readFileThread.getId()));
     }
 
     public FileData GetFileData()
     {
-        return m_fileData;
+        return _fileData;
     }
 
     public void ReadAllFile()
     {
-        File file = new File(m_fileData.getM_path());
+        File file = new File(_fileData.getPath());
         FileInputStream fileInputStream;
         InputStreamReader inputStreamReader = null;
         BufferedReader bufferedReader = null;
@@ -72,10 +72,10 @@ public class FileContentEvent_GPRS extends ApplicationEvent
                     if (lat != 0.0 && lot != 0.0)
                     {
                         LocationInfo locationInfo = new LocationInfo();
-                        locationInfo.setM_deviceId(deviceId);
-                        locationInfo.setM_lat(lat);
-                        locationInfo.setM_lot(lot);
-                        locationInfo.setM_createTime(date1);
+                        locationInfo.setDeviceId(deviceId);
+                        locationInfo.setLat(lat);
+                        locationInfo.setLot(lot);
+                        locationInfo.setCreateTime(date1);
                         locationInfoList.add(locationInfo);
                     }
                 }
@@ -137,13 +137,13 @@ public class FileContentEvent_GPRS extends ApplicationEvent
                     //ReadAllFile();
                 }
             };
-            m_timer.schedule(timerTask, 0, m_fileData.getM_time());
-            m_logger.info(">>>定时读取文本内容的任务执行");
+            _timer.schedule(timerTask, 0, _fileData.getTimeLength());
+            _logger.info(">>>定时读取文本内容的任务执行");
         }
 
         private void ReadFile()
         {
-            File file = new File(m_fileData.getM_path());
+            File file = new File(_fileData.getPath());
             FileInputStream fileInputStream;
             InputStreamReader inputStreamReader = null;
             BufferedReader bufferedReader = null;
@@ -151,14 +151,14 @@ public class FileContentEvent_GPRS extends ApplicationEvent
             try
             {
                 fileInputStream = new FileInputStream(file);
-                inputStreamReader = new InputStreamReader(fileInputStream, m_fileData.getM_encode());
+                inputStreamReader = new InputStreamReader(fileInputStream, _fileData.getEncode());
                 bufferedReader = new BufferedReader(inputStreamReader);
                 //过滤空行
                 Stream<String> streams = bufferedReader.lines().filter(p -> p != null && !"".equals(p) && p.contains(
                         "L"));
                 Object[] array = streams.toArray();
                 lineCount = array.length;
-                m_logger.info(String.format(">>>本次共读取(过滤了空行):%s", lineCount));
+                _logger.info(String.format(">>>本次共读取(过滤了空行):%s", lineCount));
                 //文件内容有变动
                 if (lineCount != LINECOUNT)
                 {
@@ -184,25 +184,25 @@ public class FileContentEvent_GPRS extends ApplicationEvent
                     if (lat != 0.0 && lot != 0.0)
                     {
                         LocationInfo locationInfo = new LocationInfo();
-                        locationInfo.setM_deviceId(deviceId);
-                        locationInfo.setM_lat(lat);
-                        locationInfo.setM_lot(lot);
-                        locationInfo.setM_createTime(date1);
+                        locationInfo.setDeviceId(deviceId);
+                        locationInfo.setLat(lat);
+                        locationInfo.setLot(lot);
+                        locationInfo.setCreateTime(date1);
                         LocationInfoService locationInfoService = (LocationInfoService) ServiceUtil.getBean(
                                 "locationInfoService");
                         locationInfoService.Insert(locationInfo);
-                        m_logger.info(String.format(">>>将本次数据%s更新至MySQL数据库...",locationInfo.toString()));
+                        _logger.info(String.format(">>>将本次数据%s更新至MySQL数据库...",locationInfo.toString()));
                     }
                     else
                     {
-                        m_logger.error(">>>本次数据有错误,禁止更新至数据库");
+                        _logger.error(">>>本次数据有错误,禁止更新至数据库");
                     }
                     LINECOUNT = lineCount;
                 }
             }
             catch (Exception e)
             {
-                m_logger.error(e.getMessage());
+                _logger.error(e.getMessage());
                 e.printStackTrace();
             }
             finally

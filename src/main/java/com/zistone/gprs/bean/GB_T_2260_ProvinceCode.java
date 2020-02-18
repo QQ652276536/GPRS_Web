@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 //监听实体类增删操作
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "gbt2260provincecode")
+@Table(name = "gb_t_2260_provincecode")
 public class GB_T_2260_ProvinceCode
 {
     @Override

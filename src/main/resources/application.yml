@@ -19,9 +19,9 @@ spring:
     #腾讯云
     #url: jdbc:mysql://49.234.4.245:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     #本地
-    #url: jdbc:mysql://127.0.0.1:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     #公司腾讯云
-    url: jdbc:mysql://129.204.165.206:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    #url: jdbc:mysql://129.204.165.206:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
 
     #MongoDB
   application:
@@ -84,11 +84,6 @@ spring:
   #    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000;druid.stat.logSlowSql=true
   #    #合并多个DruidDataSource的监控数据
   #    useGlobalDataSourceStat: true
-
-  #时间戳统一转换
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
 
 logging:
   path: "./logs"

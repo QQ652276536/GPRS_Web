@@ -28,7 +28,7 @@ public class DeviceInfoController
     @RequestMapping(value = "/FindByAKCode", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public DeviceInfo FindByAKCode(@RequestBody String jsonData)
     {
-        DeviceInfo deviceInfo = JsonStrToObject(jsonData);
+        DeviceInfo deviceInfo = JSON.parseObject(jsonData, DeviceInfo.class);
         String akCode = deviceInfo.getAkCode();
         _logger.info(String.format(">>>收到设备%s的鉴权请求:%s", deviceInfo.getDeviceId(), akCode));
         return _deviceInfoService.FindByAKCode(akCode);
@@ -37,7 +37,7 @@ public class DeviceInfoController
     @RequestMapping(value = "/Update", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public DeviceInfo Update(@RequestBody String jsonData)
     {
-        DeviceInfo deviceInfo = JsonStrToObject(jsonData);
+        DeviceInfo deviceInfo = JSON.parseObject(jsonData, DeviceInfo.class);
         _logger.info(String.format(">>>收到更新设备的请求:%s", deviceInfo.toString()));
         return _deviceInfoService.Update(deviceInfo);
     }
@@ -63,11 +63,6 @@ public class DeviceInfoController
     {
         _logger.info(">>>收到查询所有设备的请求:");
         return _deviceInfoService.FindAllDevice();
-    }
-
-    private DeviceInfo JsonStrToObject(String jsonStr)
-    {
-        return JSON.parseObject(jsonStr, DeviceInfo.class);
     }
 
 }

@@ -4,25 +4,24 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 //监听实体变化
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "locationinfo")
-public class LocationInfo {
-    private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+public class LocationInfo
+{
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "LocationInfo{" +
                 "id=" + id +
                 ", deviceId='" + deviceId + '\'' +
                 ", lat=" + lat +
                 ", lot=" + lot +
                 ", height=" + height +
-                ", createTime=" + (createTime != null ? SIMPLEDATEFORMAT.format(createTime) : null) +
+                ", createTime=" + createTime +
                 '}';
     }
 
@@ -64,51 +63,63 @@ public class LocationInfo {
     @Column(columnDefinition = "datetime default CURRENT_TIMESTAMP comment '创建时间'")
     private Date createTime;
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public String getDeviceId() {
+    public String getDeviceId()
+    {
         return deviceId;
     }
 
-    public void setDeviceId(String deviceId) {
+    public void setDeviceId(String deviceId)
+    {
         this.deviceId = deviceId;
     }
 
-    public double getLat() {
+    public double getLat()
+    {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(double lat)
+    {
         this.lat = lat;
     }
 
-    public double getLot() {
+    public double getLot()
+    {
         return lot;
     }
 
-    public void setLot(double lot) {
+    public void setLot(double lot)
+    {
         this.lot = lot;
     }
 
-    public int getHeight() {
+    public int getHeight()
+    {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(int height)
+    {
         this.height = height;
     }
 
-    public Date getCreateTime() {
+    public Date getCreateTime()
+    {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Date createTime)
+    {
         this.createTime = createTime;
     }
 

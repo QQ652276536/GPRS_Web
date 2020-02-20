@@ -5,18 +5,17 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 //监听实体变化
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "deviceinfo")
-public class DeviceInfo {
-    private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+public class DeviceInfo
+{
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "DeviceInfo{" +
                 "id=" + id +
                 ", deviceId='" + deviceId + '\'' +
@@ -27,8 +26,8 @@ public class DeviceInfo {
                 ", lat=" + lat +
                 ", lot=" + lot +
                 ", height=" + height +
-                ", createTime=" + (createTime != null ? SIMPLEDATEFORMAT.format(createTime) : null) +
-                ", updateTime=" + (updateTime != null ? SIMPLEDATEFORMAT.format(updateTime) : null) +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
                 ", comment='" + comment + '\'' +
                 ", akCode='" + akCode + '\'' +
                 ", temperature=" + temperature +
@@ -129,123 +128,153 @@ public class DeviceInfo {
     @Column(columnDefinition = "int default '0' comment '剩余电量'")
     private int electricity;
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public String getDeviceId() {
+    public String getDeviceId()
+    {
         return deviceId;
     }
 
-    public void setDeviceId(String deviceId) {
+    public void setDeviceId(String deviceId)
+    {
         this.deviceId = deviceId;
     }
 
-    public String getSim() {
+    public String getSim()
+    {
         return sim;
     }
 
-    public void setSim(String sim) {
+    public void setSim(String sim)
+    {
         this.sim = sim;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getType() {
+    public String getType()
+    {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(String type)
+    {
         this.type = type;
     }
 
-    public int getState() {
+    public int getState()
+    {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(int state)
+    {
         this.state = state;
     }
 
-    public double getLat() {
+    public double getLat()
+    {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(double lat)
+    {
         this.lat = lat;
     }
 
-    public double getLot() {
+    public double getLot()
+    {
         return lot;
     }
 
-    public void setLot(double lot) {
+    public void setLot(double lot)
+    {
         this.lot = lot;
     }
 
-    public int getHeight() {
+    public int getHeight()
+    {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(int height)
+    {
         this.height = height;
     }
 
-    public Date getCreateTime() {
+    public Date getCreateTime()
+    {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Date createTime)
+    {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public Date getUpdateTime()
+    {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Date updateTime)
+    {
         this.updateTime = updateTime;
     }
 
-    public String getComment() {
+    public String getComment()
+    {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment(String comment)
+    {
         this.comment = comment;
     }
 
-    public String getAkCode() {
+    public String getAkCode()
+    {
         return akCode;
     }
 
-    public void setAkCode(String akCode) {
+    public void setAkCode(String akCode)
+    {
         this.akCode = akCode;
     }
 
-    public int getTemperature() {
+    public int getTemperature()
+    {
         return temperature;
     }
 
-    public void setTemperature(int temperature) {
+    public void setTemperature(int temperature)
+    {
         this.temperature = temperature;
     }
 
-    public int getElectricity() {
+    public int getElectricity()
+    {
         return electricity;
     }
 
-    public void setElectricity(int electricity) {
+    public void setElectricity(int electricity)
+    {
         this.electricity = electricity;
     }
 

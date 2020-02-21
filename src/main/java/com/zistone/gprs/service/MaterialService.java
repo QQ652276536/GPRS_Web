@@ -24,11 +24,25 @@ public class MaterialService
      */
     public Material Update(Material material)
     {
-        return _materialRepository.save(material);
+        Material temp = _materialRepository.FindByDeviceAddress(material.getDeviceAddress());
+        //该设备已经绑定过物料
+        if (temp != null)
+        {
+            temp.setMaterialName(material.getMaterialName());
+            temp.setDepotRow(material.getDepotRow());
+            temp.setDepotColumn(material.getDepotColumn());
+            temp.setDeviceName(material.getDeviceName());
+            return _materialRepository.save(temp);
+        }
+        else
+        {
+            return _materialRepository.save(material);
+        }
     }
 
     /**
      * 根据设备地址查找物料
+     *
      * @param deviceAddress
      * @return
      */

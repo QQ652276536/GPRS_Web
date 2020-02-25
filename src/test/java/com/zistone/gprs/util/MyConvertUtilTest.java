@@ -76,6 +76,8 @@ public class MyConvertUtilTest
                         "740D0A582D5265616C2D49703A2031302E31302E302E310D0A582D52696F2D5365713A2031" +
                         "333032316330613A3031366530306637623332623A3063653961300D0A582D53672D49702D" +
                         "436861696E3A2031302E32382E322E31392C392E31392E3136312E36370D0A0D0A"));
+        System.out
+                .println("16进制Str转普通Str:\n" + MyConvertUtil.HexStrToStr("22540605"));
         System.out.println("____________________________________________________________________");
     }
 
@@ -83,6 +85,7 @@ public class MyConvertUtilTest
     public void strToHexStr()
     {
         System.out.println("普通Str转16进制Str:" + MyConvertUtil.StrToHexStr("rD9TcH"));
+        System.out.println("普通Str转16进制Str:" + MyConvertUtil.StrToHexStr("GMT"));
         System.out.println("____________________________________________________________________");
     }
 
@@ -149,6 +152,32 @@ public class MyConvertUtilTest
     {
         System.out.println("Unicode编码的中文转16进制的Str:" + MyConvertUtil.DeUnicode("李小伟"));
         System.out.println("Unicode编码的中文转16进制的Str:" + MyConvertUtil.DeUnicode("LiWei"));
+        System.out.println("____________________________________________________________________");
+    }
+
+    @Test
+    public void GBKToUnicode()
+    {
+        System.out.println("GBK转Unicode:" + MyConvertUtil.GBKToUnicode("B2E2CAD4"));
+        System.out.println("____________________________________________________________________");
+    }
+
+    @Test
+    public void unicodeToGBK()
+    {
+        System.out.println("Unicode转GBK:" + MyConvertUtil.UnicodeToGBK("测试"));
+        System.out.println("____________________________________________________________________");
+    }
+
+    @Test
+    public void hexStrSplit()
+    {
+        String[] strArray = MyConvertUtil.HexStrSplit("0200123C0F000000C800003201DAFE8506E1BBAC006F00005E0D0BD668");
+        System.out.println("不带空格不带0x的16进制str转array:");
+        for (String str : strArray)
+        {
+            System.out.println(str);
+        }
         System.out.println("____________________________________________________________________");
     }
 }

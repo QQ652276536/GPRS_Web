@@ -39,7 +39,7 @@ public class UserInfo
 
     /**
      * 用户头像
-     * 存储的是通过Base64转换成的字符串
+     * 存储的是通过Base64转换成的str
      */
     @Lob
     @Column(columnDefinition = "longtext comment '用户头像'")

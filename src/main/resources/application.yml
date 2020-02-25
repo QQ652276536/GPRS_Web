@@ -67,7 +67,7 @@ spring:
   #    timeBetweenEvictionRunsMillis: 60000
   #    #配置一个连接在池中最小生存的时间，单位是毫秒
   #    minEvictableIdleTimeMillis: 300000
-  #    #验证连接是否有效。此参数必须设置为非空字符串，下面三项设置成true才能生效
+  #    #验证连接是否有效。此参数必须设置为非空str，下面三项设置成true才能生效
   #    validationQuery: SELECT 1
   #    #指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除
   #    testWhileIdle: true

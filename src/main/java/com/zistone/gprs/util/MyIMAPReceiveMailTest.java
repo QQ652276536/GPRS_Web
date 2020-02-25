@@ -339,7 +339,7 @@ public class MyIMAPReceiveMailTest
      * 获得邮件文本内容
      *
      * @param part    邮件体
-     * @param content 存储邮件文本内容的字符串
+     * @param content 存储邮件文本内容的str
      * @throws MessagingException
      * @throws IOException
      */

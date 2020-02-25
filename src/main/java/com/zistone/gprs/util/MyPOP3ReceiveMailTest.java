@@ -30,8 +30,7 @@ public class MyPOP3ReceiveMailTest
         //创建Session实例对象
         Session session = Session.getInstance(props);
         Store store = session.getStore("pop3");
-        //store.connect("qq652276536@163.com", "123456a");
-        store.connect("zstwx9xx@163.com", "zistone123456");
+        store.connect("zstwx9xx@163.com", "123456a");
 
         //获得收件箱
         Folder folder = store.getFolder("INBOX");
@@ -326,7 +325,7 @@ public class MyPOP3ReceiveMailTest
      * 获得邮件文本内容
      *
      * @param part    邮件体
-     * @param content 存储邮件文本内容的字符串
+     * @param content 存储邮件文本内容的str
      * @throws MessagingException
      * @throws IOException
      */

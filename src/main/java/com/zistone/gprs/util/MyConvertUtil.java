@@ -1,6 +1,8 @@
 package com.zistone.gprs.util;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 字符转换工具类
@@ -48,9 +50,35 @@ public class MyConvertUtil
     }
 
     /**
-     * 不带空格的16进制字符串插入指定字符
+     * 不带空格不带0x的16进制str转array
      *
-     * @param hexStr    不带空格不带0x的16进制字符串,比如810300
+     * @param hexStr
+     * @return
+     */
+    public static String[] HexStrSplit(String hexStr)
+    {
+        int strLength = hexStr.length();
+        List<String> list = new ArrayList<>();
+        String str = "";
+        for (int i = 0; i < strLength; i++)
+        {
+            if (i % 2 == 0)
+            {
+                str = String.valueOf(hexStr.charAt(i));
+            }
+            else
+            {
+                str += String.valueOf(hexStr.charAt(i));
+                list.add(str);
+            }
+        }
+        return list.toArray(new String[0]);
+    }
+
+    /**
+     * 不带空格不带0x的16进制str插入指定字符
+     *
+     * @param hexStr    比如810300
      * @param character 指定字符
      * @return
      */
@@ -83,14 +111,14 @@ public class MyConvertUtil
      * 生成校验码
      * 将收到的消息还原转义后去除标识和校验位,然后按位异或得到的结果就是校验码
      *
-     * @param hexStr 带空格不带0x的16进制字符串,比如81 03 00
+     * @param hexStr 带空格不带0x的16进制str,比如81 03 00
      * @return 不足2位前面补零
      */
     public static String CreateCheckCode(String hexStr) throws Exception
     {
         if (!hexStr.contains(" ") || hexStr.contains("0x") || hexStr.contains("0X"))
         {
-            throw new Exception("参数必须为带空格不带0x的16进制字符串");
+            throw new Exception("参数必须为带空格不带0x的16进制str");
         }
         int binaryNum = 0;
         String[] strArray = hexStr.split(" ");
@@ -366,9 +394,13 @@ public class MyConvertUtil
         for (int i = str.length(); i < 4; i++)
         {
             if (i == str.length())
+            {
                 hexStr = "0";
+            }
             else
+            {
                 hexStr = hexStr + "0";
+            }
         }
         return hexStr + str;
     }
@@ -433,6 +465,56 @@ public class MyConvertUtil
             }
         }
         return hexStr;
+    }
+
+    /**
+     * GBK转Unicode
+     *
+     * @param str
+     * @return
+     */
+    public static String GBKToUnicode(String str)
+    {
+        byte[] bytes = new byte[str.length() / 2];
+        for (int i = 0, j = 0; i < str.length(); i += 2, j++)
+        {
+            bytes[j] = Integer.decode("0x" + str.substring(i, i + 2)).byteValue();
+        }
+        try
+        {
+            return new String(bytes, "GBK");
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+            return str;
+        }
+    }
+
+    /**
+     * Unicode转GBK
+     *
+     * @param str
+     * @return
+     */
+    public static String UnicodeToGBK(String str)
+    {
+        byte[] tmp;
+        String result = "";
+        try
+        {
+            tmp = str.getBytes("GBK");
+            for (int i = 0; i < tmp.length; i++)
+            {
+                int value = tmp[i] + 256;
+                result += "0x" + Integer.toHexString(value) + ",";
+            }
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        return result.toUpperCase();
     }
 
 }

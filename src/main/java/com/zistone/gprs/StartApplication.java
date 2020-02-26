@@ -3,6 +3,7 @@ package com.zistone.gprs;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.zistone.gprs.service.EmailService_YX;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -11,7 +12,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
+import javax.mail.MessagingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +30,22 @@ public class StartApplication
     public static void main(String[] args)
     {
         SpringApplication.run(StartApplication.class, args);
+    }
 
-        
+    /**
+     * 配置定时任务,用于读取163邮箱的铱星网关发来的邮件
+     */
+    @Scheduled(fixedRate = 10 * 60 * 1000)
+    public void FixedRate_EmailService_YX()
+    {
+        try
+        {
+            new EmailService_YX();
+        }
+        catch (MessagingException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /**

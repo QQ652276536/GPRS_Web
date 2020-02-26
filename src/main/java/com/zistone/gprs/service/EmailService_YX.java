@@ -5,7 +5,6 @@ import com.zistone.gprs.repository.LocationInfoRepository;
 import com.zistone.gprs.util.MyIMAPReceiveMailUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.mail.Flags;
@@ -15,7 +14,6 @@ import javax.mail.internet.MimeMessage;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class EmailService_YX
 {
     @Resource
@@ -51,7 +49,7 @@ public class EmailService_YX
                         MimeMessage msg = (MimeMessage) messages[i];
                         boolean isReadFlag = MyIMAPReceiveMailUtil.IsSeen(msg);
                         //只解析铱星网关发过来的未读邮件
-                        if (/*!isReadFlag && */MyIMAPReceiveMailUtil.GetFrom(msg).equals("<sbdservice@sbd.iridium.com>"))
+                        if (!isReadFlag && MyIMAPReceiveMailUtil.GetFrom(msg).equals("<sbdservice@sbd.iridium.com>"))
                         {
                             //设为已读
                             msg.setFlag(Flags.Flag.SEEN, true);

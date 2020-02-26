@@ -16,112 +16,65 @@ import java.util.Properties;
 /**
  * 使用IMAP协议接收邮件
  */
-public class MyIMAPReceiveMailTest
+public class MyIMAPReceiveMailUtil
 {
-    /**
-     * 接收邮件
-     */
-    public static void Receive() throws Exception
+    private static IMAPListener _imapListener;
+    private static IMAPFolder _imapFolder;
+    private static IMAPStore _imapStore;
+
+    public interface IMAPListener
     {
+        void ParseMessage(Message[] messages);
+    }
+
+    public static Message[] Init(String name, String pwd, IMAPListener imapListener) throws MessagingException
+    {
+        _imapListener = imapListener;
         //准备连接服务器的会话信息
         Properties props = new Properties();
         props.setProperty("mail.store.protocol", "imap");
         props.setProperty("mail.imap.host", "imap.163.com");
         props.setProperty("mail.imap.port", "143");
         props.setProperty("mail.smtp.auth", "true");
-
         //创建Session实例对象
         Session session = Session.getInstance(props);
-        IMAPStore imapStore = (IMAPStore) session.getStore("imap");
-        imapStore.connect("zstwx9xx@163.com", "123456a");
-
+        _imapStore = (IMAPStore) session.getStore("imap");
+        _imapStore.connect(name, pwd);
         //获得收件箱
-        IMAPFolder imapFolder = (IMAPFolder) imapStore.getFolder("INBOX");
+        _imapFolder = (IMAPFolder) _imapStore.getFolder("INBOX");
         //打开收件箱
-        /**
-         * Folder.READ_ONLY:只读权限
-         * Folder.READ_WRITE:可读可写（可以修改邮件的状态）
-         */
-        imapFolder.open(Folder.READ_WRITE);
-
+        //Folder.READ_ONLY:只读权限
+        //Folder.READ_WRITE:可读可写（可以修改邮件的状态）
+        _imapFolder.open(Folder.READ_WRITE);
         //邮件总数
-        int totalCount = imapFolder.getMessageCount();
+        int totalCount = _imapFolder.getMessageCount();
         //新邮件
-        int newCount = imapFolder.getNewMessageCount();
+        int newCount = _imapFolder.getNewMessageCount();
         //未读邮件数
-        int unReadCount = imapFolder.getUnreadMessageCount();
+        int unReadCount = _imapFolder.getUnreadMessageCount();
         //删除邮件数
-        int delCount = imapFolder.getDeletedMessageCount();
+        int delCount = _imapFolder.getDeletedMessageCount();
+        System.out.println("-----------------开始读取邮件列表-----------------");
         System.out.println("邮件总数:" + totalCount);
         System.out.println("新邮件:" + newCount);
         System.out.println("未读邮件数:" + unReadCount);
         System.out.println("删除邮件数:" + delCount + "\n");
-        //        //得到收件箱中的所有邮件,并解析
-        //        Message[] messages = imapFolder.getMessages();
-        //得到收件箱中的所有未读邮件,并解析
-        Message[] messages = imapFolder.getMessages(totalCount - unReadCount + 1, totalCount);
-        ParseMessage(messages);
-
-        //释放资源
-        imapFolder.close(true);
-        imapStore.close();
+        //解析所有邮件
+        Message[] messages = _imapFolder.getMessages();
+        //解析未读邮件
+        //Message[] messages = imapFolder.getMessages(totalCount - unReadCount + 1, totalCount);
+        return messages;
     }
 
     /**
-     * 解析邮件
-     *
-     * @param messages 要解析的邮件列表
+     * 接收邮件
      */
-    public static void ParseMessage(Message... messages)
+    public static void Receive(Message... messages) throws Exception
     {
-        if (messages == null || messages.length < 1)
-        {
-            System.out.println("没有要解析的邮件!");
-        }
-        //遍历所有邮件
-        for (int i = 0, count = messages.length; i < count; i++)
-        {
-            try
-            {
-                MimeMessage msg = (MimeMessage) messages[i];
-                boolean isReadFlag = IsSeen(msg);
-                //设置已读标志
-                msg.setFlag(Flags.Flag.SEEN, true);
-                //只解析未读的铱星网关发过来的邮件
-                if (!isReadFlag && GetFrom(msg).equals("<sbdservice@sbd.iridium.com>"))
-                {
-                    System.out.println("------------------解析第" + msg.getMessageNumber() + "封铱星的邮件------------------");
-                    System.out.println("主题:" + GetSubject(msg));
-                    System.out.println("发件人:" + GetFrom(msg));
-                    System.out.println("收件人:" + GetReceiveAddress(msg, null));
-                    System.out.println("发送时间:" + GetSentDate(msg, null));
-                    System.out.println("是否已读:" + isReadFlag);
-                    System.out.println("邮件优先级:" + GetPriority(msg));
-                    System.out.println("是否需要回执:" + IsReplySign(msg));
-                    System.out.println("邮件大小:" + msg.getSize() + "B");
-                    //是否包含附件
-                    boolean flag = IsContainAttachment(msg);
-                    System.out.println("是否包含附件:" + flag);
-                    if (flag)
-                    {
-                        //保存附件
-                        SaveAttachment(msg, String.format("C:\\Users\\zistone\\Desktop\\YX_Email\\", msg.getSubject()));
-                    }
-                    StringBuffer content = new StringBuffer();
-                    GetMailTextContent(msg, content);
-                    System.out.println("邮件正文:" + (content.length() > 500 ? content.substring(0, 500) + "..." : content));
-                    System.out.println("-----------------第" + msg.getMessageNumber() + "封铱星的邮件解析结束-----------------\n");
-                }
-                else
-                {
-                    System.out.println("该邮件不是铱星网关的,设为已读但不解析!");
-                }
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
+        _imapListener.ParseMessage(messages);
+        //释放资源
+        _imapFolder.close(true);
+        _imapStore.close();
     }
 
     /**
@@ -166,10 +119,11 @@ public class MyIMAPReceiveMailTest
     }
 
     /**
-     * 根据收件人类型，获取邮件收件人、抄送和密送地址。如果收件人类型为空，则获得所有的收件人
-     * <p>Message.RecipientType.TO  收件人</p>
-     * <p>Message.RecipientType.CC  抄送</p>
-     * <p>Message.RecipientType.BCC 密送</p>
+     * 根据收件人类型获取邮件收件人、抄送和密送地址.如果收件人类型为空,则获得所有的收件人
+     * <p>
+     * Message.RecipientType.TO  收件人
+     * Message.RecipientType.CC  抄送
+     * Message.RecipientType.BCC 密送
      *
      * @param msg  邮件内容
      * @param type 收件人类型
@@ -179,7 +133,7 @@ public class MyIMAPReceiveMailTest
     public static String GetReceiveAddress(MimeMessage msg, Message.RecipientType type) throws MessagingException
     {
         StringBuffer receiveAddress = new StringBuffer();
-        Address[] addresss = null;
+        Address[] addresss;
         if (type == null)
         {
             addresss = msg.getAllRecipients();
@@ -205,13 +159,13 @@ public class MyIMAPReceiveMailTest
     /**
      * 获得邮件发送时间
      *
-     * @param msg 邮件内容
+     * @param mimeMessage 邮件内容
      * @return yyyy年mm月dd日 星期X HH:mm
      * @throws MessagingException
      */
-    public static String GetSentDate(MimeMessage msg, String pattern) throws MessagingException
+    public static String GetSentDate(MimeMessage mimeMessage, String pattern) throws MessagingException
     {
-        Date receivedDate = msg.getSentDate();
+        Date receivedDate = mimeMessage.getSentDate();
         if (receivedDate == null)
         {
             return "";
@@ -219,6 +173,7 @@ public class MyIMAPReceiveMailTest
         if (pattern == null || "".equals(pattern))
         {
             pattern = "yyyy年MM月dd日 E HH:mm ";
+            //pattern = "yyyy-MM-dd HH:mm:ss";
         }
         return new SimpleDateFormat(pattern).format(receivedDate);
     }
@@ -345,7 +300,7 @@ public class MyIMAPReceiveMailTest
      */
     public static void GetMailTextContent(Part part, StringBuffer content) throws MessagingException, IOException
     {
-        //如果是文本类型的附件，通过getContent方法可以取到文本内容，但这不是我们需要的结果，所以在这里要做判断
+        //如果是文本类型的附件,通过getContent方法可以取到文本内容,但这不是我们需要的结果,所以在这里要做判断
         boolean isContainTextAttach = part.getContentType().indexOf("name") > 0;
         if (part.isMimeType("text/*") && !isContainTextAttach)
         {
@@ -426,29 +381,41 @@ public class MyIMAPReceiveMailTest
     /**
      * 读取输入流中的数据保存至指定目录
      *
-     * @param is       输入流
-     * @param fileName 文件名
-     * @param destDir  文件存储目录
+     * @param inputStream 输入流
+     * @param fileName    文件名
+     * @param destDir     文件存储目录
      * @throws FileNotFoundException
      * @throws IOException
      */
-    private static void SaveFile(InputStream is, String destDir, String fileName) throws FileNotFoundException, IOException
+    private static void SaveFile(InputStream inputStream, String destDir, String fileName) throws FileNotFoundException, IOException
     {
         if (fileName == null || fileName.equals(""))
         {
             System.err.println("要写入的文件名不能为空!");
             return;
         }
-        BufferedInputStream bis = new BufferedInputStream(is);
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(new File(destDir + fileName)));
-        int len;
-        while ((len = bis.read()) != -1)
+        File file1 = new File(destDir);
+        //文件夹不存在则新建
+        if (!file1.exists())
         {
-            bos.write(len);
-            bos.flush();
+            file1.mkdir();
         }
-        bos.close();
-        bis.close();
+        //文件存在则不再保存
+        File file2 = new File(destDir + fileName);
+        if (file2.exists())
+        {
+            return;
+        }
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file2));
+        int len;
+        while ((len = bufferedInputStream.read()) != -1)
+        {
+            bufferedOutputStream.write(len);
+            bufferedOutputStream.flush();
+        }
+        bufferedOutputStream.close();
+        bufferedInputStream.close();
     }
 
     /**

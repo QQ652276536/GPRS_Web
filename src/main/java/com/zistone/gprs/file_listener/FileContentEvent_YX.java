@@ -30,14 +30,13 @@ public class FileContentEvent_YX
 
     public FileContentEvent_YX()
     {
-        ReadFileThread readFileThread = new ReadFileThread();
-        //readFileThread.start();
-        _logger.info(">>>线程" + readFileThread.getId() + "执行");
-
-        ReadFromEamilFile("C:\\Users\\zistone\\Desktop\\YX_Email\\300234067349750_001276.sbd");
+//        ReadFileThread readFileThread = new ReadFileThread();
+//        readFileThread.start();
+//        _logger.info(">>>线程" + readFileThread.getId() + "执行");
+//        ReadFromEamilFile("C:\\Users\\zistone\\Desktop\\YX_Email\\300234067349750_001389.sbd");
     }
 
-    private void ReadFromEamilFile(String path)
+    public void ReadFromEamilFile(String path)
     {
         File file = new File(path);
         InputStream inputStream = null;
@@ -55,20 +54,26 @@ public class FileContentEvent_YX
                 hexStr += MyConvertUtil.ByteArrayToHexStr(bytes);
                 str += MyConvertUtil.HexStrToStr(hexStr);
             }
-            System.out.println(">>>文件内容(HX):" + hexStr);
-            String strss = MyConvertUtil.HexStrAddCharacter(hexStr, ",");
-            String[] strArray = strss.split(",");
-            //纬度,例如:167D12
-            String lat1Str = String.valueOf(Integer.parseInt(strArray[13], 16));
+
+            _logger.debug(String.format(">>>文件内容(HX):" + hexStr));
+            String[] strArray = MyConvertUtil.HexStrSplit(hexStr);
+            //消息ID
+            String idStr = strArray[0] + strArray[1];
+            //消息流水
+            String hexMessageFlow = strArray[2] + strArray[3];
+            //纬度,例如:0157F0DD
+            String lat1Str = String.valueOf(Integer.parseInt(strArray[12], 16));
             String lat2Str = String.valueOf(Integer.parseInt(strArray[13], 16));
             String lat3Str = String.valueOf(Integer.parseInt(strArray[14], 16));
-            double latNumXxx = Double.valueOf(lat1Str + lat2Str + lat3Str) / 1000000;
-            //经度,例如:71DFBB
-            String lot1Str = String.valueOf(Integer.parseInt(strArray[15], 16));
-            String lot2Str = String.valueOf(Integer.parseInt(strArray[16], 16));
-            String lot3Str = String.valueOf(Integer.parseInt(strArray[17], 16));
-            double lotNumXxx = Double.valueOf(lot1Str + lot2Str + lot3Str) / 1000000;
-
+            String lat4Str = String.valueOf(Integer.parseInt(strArray[15], 16));
+            double latNumXxx = Double.valueOf(lat1Str + lat2Str + lat3Str + lat4Str) / 1000000;
+            //经度,例如:06CAA2A3
+            String lot1Str = String.valueOf(Integer.parseInt(strArray[16], 16));
+            String lot2Str = String.valueOf(Integer.parseInt(strArray[17], 16));
+            String lot3Str = String.valueOf(Integer.parseInt(strArray[18], 16));
+            String lot4Str = String.valueOf(Integer.parseInt(strArray[19], 16));
+            double lotNumXxx = Double.valueOf(lot1Str + lot2Str + lot3Str + lot4Str) / 1000000;
+            _logger.debug(String.format(">>>消息ID:%s消息流水:%s纬度:%s经度:%s", idStr, hexMessageFlow, latNumXxx, lotNumXxx));
             if (1 > 0)
             {
                 return;
@@ -158,7 +163,7 @@ public class FileContentEvent_YX
             _logger.info(">>>定时读取文本内容的任务执行");
         }
 
-        private void ReadFile(String path)
+        public void ReadFile(String path)
         {
             File file = new File(path);
             FileInputStream fileInputStream;

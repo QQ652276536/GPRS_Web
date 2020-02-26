@@ -3,7 +3,6 @@ package com.zistone.gprs;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.zistone.gprs.file_listener.FileData;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -23,16 +22,13 @@ import java.util.List;
 @SpringBootApplication
 //启用JPA审计(自动填充默认值)
 @EnableJpaAuditing
-public class StartApplication {
-    public static void main(String[] args) {
+public class StartApplication
+{
+    public static void main(String[] args)
+    {
         SpringApplication.run(StartApplication.class, args);
 
-        FileData fileData = new FileData();
-        fileData.setPath("C:\\demo\\gprs_info.txt");
-        //fileData.setPath("C:\\Users\\zistone\\Desktop\\gprs_info.txt");
-        fileData.setTimeLength(5 * 1000 * 60);
-        fileData.setEncode("UTF-8");
-        //FileContentEvent fileContentEvent = new FileContentEvent(fileData);
+        
     }
 
     /**
@@ -43,7 +39,8 @@ public class StartApplication {
      * @return
      */
     @Bean
-    public HttpMessageConverters fastjsonHttpMessageConverters() {
+    public HttpMessageConverters fastjsonHttpMessageConverters()
+    {
         List<HttpMessageConverter<?>> converters = new ArrayList<>();
         //定义一个convert转换消息的对象
         FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
@@ -54,7 +51,8 @@ public class StartApplication {
         fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
         fastJsonConfig.setCharset(Charset.forName("UTF-8"));
         //处理中文乱码
-        List<MediaType> mediaTypeList = new ArrayList<MediaType>() {{
+        List<MediaType> mediaTypeList = new ArrayList<MediaType>()
+        {{
             add(MediaType.APPLICATION_JSON_UTF8);
         }};
         //在convert中添加配置信息

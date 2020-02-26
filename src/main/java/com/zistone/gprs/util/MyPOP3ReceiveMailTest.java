@@ -15,7 +15,6 @@ import java.util.Properties;
  */
 public class MyPOP3ReceiveMailTest
 {
-
     /**
      * 接收邮件
      */

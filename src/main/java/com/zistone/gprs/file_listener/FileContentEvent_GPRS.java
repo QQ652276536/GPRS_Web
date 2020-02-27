@@ -2,7 +2,7 @@ package com.zistone.gprs.file_listener;
 
 import com.zistone.gprs.bean.LocationInfo;
 import com.zistone.gprs.service.LocationInfoService;
-import com.zistone.gprs.service.ServiceUtil;
+import com.zistone.gprs.util.ServiceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEvent;
@@ -87,8 +87,9 @@ public class FileContentEvent_GPRS extends ApplicationEvent
             }
             if (locationInfoList.size() > 0)
             {
-                LocationInfoService locationInfoService = (LocationInfoService) ServiceUtil.getBean(
-                        "locationInfoService");
+                //获取Spring管理的Service
+                LocationInfoService locationInfoService = ServiceUtil.GetBean(
+                        "locationInfoService", LocationInfoService.class);
                 int count = locationInfoService.InsertList(locationInfoList);
                 System.out.println(">>>本次共读取(过滤了空行):" + lineCount + "条数据,新增" + count + "条正确数据");
             }
@@ -165,7 +166,7 @@ public class FileContentEvent_GPRS extends ApplicationEvent
                     //最新的一条数据
                     String line =
                             String.valueOf(Stream.of(array).filter(p -> p.equals("让过滤器的结果为false,执行返回最后一个元素")).findFirst()
-                            .orElse(array[lineCount - 1]));
+                                    .orElse(array[lineCount - 1]));
                     System.out.println(">>>监听的文本文件的内容有更新:" + line);
                     String[] strArray1 = line.split("L");
                     //设备编号
@@ -188,10 +189,11 @@ public class FileContentEvent_GPRS extends ApplicationEvent
                         locationInfo.setLat(lat);
                         locationInfo.setLot(lot);
                         locationInfo.setCreateTime(date1);
-                        LocationInfoService locationInfoService = (LocationInfoService) ServiceUtil.getBean(
-                                "locationInfoService");
+                        //获取Spring管理的Service
+                        LocationInfoService locationInfoService = ServiceUtil.GetBean(
+                                "locationInfoService", LocationInfoService.class);
                         locationInfoService.Insert(locationInfo);
-                        _logger.info(String.format(">>>将本次数据%s更新至MySQL数据库...",locationInfo.toString()));
+                        _logger.info(String.format(">>>将本次数据%s更新至MySQL数据库...", locationInfo.toString()));
                     }
                     else
                     {

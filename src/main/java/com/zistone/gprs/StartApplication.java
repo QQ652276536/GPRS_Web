@@ -3,7 +3,7 @@ package com.zistone.gprs;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.zistone.gprs.service.EmailService_YX;
+import com.zistone.gprs.service.EmailTask_YX;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -14,7 +14,6 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import javax.mail.MessagingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +39,9 @@ public class StartApplication
     {
         try
         {
-            new EmailService_YX();
+            new EmailTask_YX();
         }
-        catch (MessagingException e)
+        catch (Exception e)
         {
             e.printStackTrace();
         }

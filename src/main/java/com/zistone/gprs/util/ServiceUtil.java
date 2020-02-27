@@ -1,4 +1,4 @@
-package com.zistone.gprs.service;
+package com.zistone.gprs.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -6,8 +6,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * 普通类调用Spring bean对象：
- * 说明：此类需要放到同包或者子包下才能被扫描
+ * 普通类调用Spring Bean对象的工具类
+ * 说明:此类需要放到同包或者子包下才能被扫描
  */
 @Component
 public class ServiceUtil implements ApplicationContextAware
@@ -28,7 +28,7 @@ public class ServiceUtil implements ApplicationContextAware
         return applicationContext;
     }
 
-    public static Object getBean(String name)
+    public static Object GetBean(String name)
     {
         return getApplicationContext().getBean(name);
     }

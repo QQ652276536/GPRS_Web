@@ -65,7 +65,7 @@ public class EmailTask_YX
                             if (flag)
                             {
                                 //保存附件
-                                MyIMAPReceiveMailUtil.SaveAttachment(msg, String.format("C:\\Users\\zistone\\Desktop\\YX_Email\\", msg.getSubject()));
+                                MyIMAPReceiveMailUtil.SaveAttachment(msg, String.format("..\\YX_Email\\", msg.getSubject()));
                             }
                             StringBuffer content = new StringBuffer();
                             MyIMAPReceiveMailUtil.GetMailTextContent(msg, content);
@@ -88,7 +88,7 @@ public class EmailTask_YX
                                 locationInfo.setLot(Double.valueOf(lotStr));
                                 _locationInfoList.add(locationInfo);
                             }
-                            _logger.info(String.format(">>>邮件正文:\n", (content.length() > 500 ? content.substring(0, 500) + "..." : content)));
+                            _logger.info(String.format(">>>邮件正文:\n%s", (content.length() > 500 ? content.substring(0, 500) + "..." : content)));
                         }
                         else
                         {

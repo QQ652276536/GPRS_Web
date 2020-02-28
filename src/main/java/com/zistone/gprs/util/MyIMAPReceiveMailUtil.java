@@ -61,7 +61,7 @@ public class MyIMAPReceiveMailUtil
         System.out.println("删除邮件数:" + delCount + "\n");
         //解析所有邮件
         //Message[] messages = _imapFolder.getMessages();
-        //解析未读邮件
+        //只解析未读邮件
         Message[] messages = _imapFolder.getMessages(totalCount - unReadCount + 1, totalCount);
         return messages;
     }

@@ -1,11 +1,11 @@
-package liwei.algorithm;
+package liwei.calculate;
 
-public class Exhaustion
+public class JiTuTongLong
 {
     public static void main(String[] args)
     {
-        new Exhaustion().Exhaustion();
-        System.out.println(String.format("12个月后共有%s只兔子.", new Exhaustion().Fibonacci(4)));
+        new JiTuTongLong().Exhaustion();
+        System.out.println(String.format("12个月后共有%s只兔子.", new JiTuTongLong().Fibonacci(4)));
     }
 
     public int Fibonacci(int n)

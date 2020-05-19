@@ -28,8 +28,6 @@ public class DownloadController {
         //待下载文件名
         String fileName = "update.zip";
         File file = new File(fileName);
-
-
         if (Objects.nonNull(file)) {
             Resource resource = null;
             String contentType = null;
@@ -59,8 +57,6 @@ public class DownloadController {
         //待下载文件名
         String fileName = "update_info.txt";
         File file = new File(fileName);
-
-
         if (Objects.nonNull(file)) {
             Resource resource = null;
             String contentType = null;
@@ -74,7 +70,6 @@ public class DownloadController {
             if (Objects.isNull(contentType)) {
                 contentType = "text/plain";
             }
-
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")

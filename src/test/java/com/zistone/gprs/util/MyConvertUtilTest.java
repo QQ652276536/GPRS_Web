@@ -23,7 +23,7 @@ public class MyConvertUtilTest
     @Test
     public void createCheckCode() throws Exception
     {
-        String str = MyConvertUtil.HexStrAddCharacter("8103001305510300633419980200000009040009000000000029040000003C", " ");
+        String str = MyConvertUtil.StrAddCharacter("8103001305510300633419980200000009040009000000000029040000003C", " ");
         System.out.println("生成的检验码为:" + MyConvertUtil.CreateCheckCode(str));
         System.out.println("____________________________________________________________________");
     }
@@ -152,20 +152,6 @@ public class MyConvertUtilTest
     {
         System.out.println("Unicode编码的中文转16进制的Str:" + MyConvertUtil.DeUnicode("李小伟"));
         System.out.println("Unicode编码的中文转16进制的Str:" + MyConvertUtil.DeUnicode("LiWei"));
-        System.out.println("____________________________________________________________________");
-    }
-
-    @Test
-    public void GBKToUnicode()
-    {
-        System.out.println("GBK转Unicode:" + MyConvertUtil.GBKToUnicode("B2E2CAD4"));
-        System.out.println("____________________________________________________________________");
-    }
-
-    @Test
-    public void unicodeToGBK()
-    {
-        System.out.println("Unicode转GBK:" + MyConvertUtil.UnicodeToGBK("测试"));
         System.out.println("____________________________________________________________________");
     }
 

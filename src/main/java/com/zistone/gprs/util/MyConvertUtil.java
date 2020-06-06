@@ -176,6 +176,32 @@ public class MyConvertUtil {
 
     /**
      * 生成校验码
+     *
+     * @param src
+     * @return
+     * @throws NullPointerException
+     */
+    public static int CalculateCRC_Zistone_LP108(byte[] src) throws NullPointerException {
+        if (src == null) {
+            throw new NullPointerException("src");
+        }
+        int crc = 0;
+        for (byte ch : src) {
+            // 0x80 = 128
+            for (int i = 0x80; i != 0; i /= 2) {
+                crc *= 2;
+                // 0x10000 = 65536
+                if ((crc & 0x10000) != 0)
+                    crc ^= 0x11021; // 0x11021 = 69665
+                if ((ch & i) != 0)
+                    crc ^= 0x1021; // 0x1021 = 4129
+            }
+        }
+        return crc;
+    }
+
+    /**
+     * 生成校验码
      * CRC-16/CCITT_FALSE方式生成校验码
      *
      * @param bytes
@@ -228,7 +254,11 @@ public class MyConvertUtil {
             stringBuffer = stringBuffer.append(charArray[value % 16]);
             value = value / 16;
         }
-        return stringBuffer.reverse().toString();
+        String result = stringBuffer.reverse().toString();
+        if (result.length() < 2) {
+            result = "0" + result;
+        }
+        return result;
     }
 
     /**
@@ -266,12 +296,12 @@ public class MyConvertUtil {
         StringBuilder stringBuilder = new StringBuilder(bytes.length * 2);
         //将字节数组中每个字节拆解成2位16进制整数
         for (int i = 0; i < bytes.length; i++) {
-            stringBuilder.append("0x");
+//            stringBuilder.append("0x");
             stringBuilder.append(HEXSTRING.charAt((bytes[i] & 0xf0) >> 4));
             stringBuilder.append(HEXSTRING.charAt((bytes[i] & 0x0f) >> 0));
             //去掉末尾的逗号
             if (i != bytes.length - 1) {
-                stringBuilder.append(",");
+//                stringBuilder.append(",");
             }
         }
         return stringBuilder.toString();

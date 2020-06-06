@@ -6,37 +6,55 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class MyConvertUtilTest
-{
+public class MyConvertUtilTest {
     @Test
-    public void createDifferent4Random()
-    {
+    public void createDifferent4Random() {
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void hexStrAddCharacter()
-    {
+    public void hexStrAddCharacter() {
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void createCheckCode() throws Exception
-    {
-        String str = MyConvertUtil.StrAddCharacter("8103001305510300633419980200000009040009000000000029040000003C", " ");
-        System.out.println("生成的检验码为:" + MyConvertUtil.CreateCheckCode(str));
+    public void createCheckCode() throws Exception {
+        byte[] data1 = MyConvertUtil.HexStrToByteArray("3F11020000217265736F7572636500000000000000005C28020100D0D5002039130101B55501014D5D0101DD5D01016D5E0101FD5E010100000000000000000000000000000000E1110101D113010100000000C112010147A40101D7130101F1590101FB590101055A0101EF3E010151AB01010F5A0101195A0101235A01012D5A0101375A0101415A01014B5A0101555A01015F5A0101695A0101735A010157D301017D5A0101875A01013BD30101915A01019B5A0101A55A0101AF5A0101B95A0101C35A0101CD5A0101D75A0101DFF80CD01EF0A4FF004800476F5A0201D0D500200020704710B505F0BBFD002010BD7047704700004D504F53005500000000000000100101041001016B65726E656C00000000000000000000000000000000000000000000000000004731434B32303136303930313030310000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000072B600BF00BF00BF00BF30BF00BF00BF00BF00BF62B67047EFF3108072B6704780F31088704762B6704772B67047EFF3148040F0010080F3148870470AAB009911F0010F0CBF02B001B0694609B4084604F05EFD09BC079981F30388EFF3148141EA000181F31488069941F0010143F8041C01BC43F8080CA3F10800BDE80E50854601BD1EF0040F0CBFEFF308800AE001468A6932F8023C");
+        System.out.println(MyConvertUtil.IntToHexStr(MyConvertUtil.CalculateCRC_Zistone_LP108(data1)));
+        System.out.println("____________________________________________________________________");
+        String bitStr1 = "11111111";
+        String bitStr2 = "00000000";
+        String bitStr3 = "10000100";
+        String bitStr4 = "01111110";
+        String bitStr5 = "00111100";
+        String bitStr6 = "00011000";
+        String bitStr7 = "00010000";
+        String bitStr8 = "10000100";
+        String bitStr9 = "00010010";
+        String bitStr10 = "00010100";
+        String bitStr11 = "01000000";
+        System.out.println(bitStr1 + "\t二进制Str转十进制Int:" + Integer.parseInt(bitStr1, 2) + "\t\t" + "十进制Int转十六进制Int:" + Integer.toHexString(Integer.parseInt(bitStr1, 2)));
+        System.out.println(bitStr2 + "\t二进制Str转十进制Int:" + Integer.parseInt(bitStr2, 2) + "\t\t" + "十进制Int转十六进制Int:" + Integer.toHexString(Integer.parseInt(bitStr2, 2)));
+        System.out.println(bitStr3 + "\t二进制Str转十进制Int:" + Integer.parseInt(bitStr3, 2) + "\t\t" + "十进制Int转十六进制Int:" + Integer.toHexString(Integer.parseInt(bitStr3, 2)));
+        System.out.println(bitStr4 + "\t二进制Str转十进制Int:" + Integer.parseInt(bitStr4, 2) + "\t\t" + "十进制Int转十六进制Int:" + Integer.toHexString(Integer.parseInt(bitStr4, 2)));
+        System.out.println(bitStr5 + "\t二进制Str转十进制Int:" + Integer.parseInt(bitStr5, 2) + "\t\t" + "十进制Int转十六进制Int:" + Integer.toHexString(Integer.parseInt(bitStr5, 2)));
+        System.out.println(bitStr6 + "\t二进制Str转十进制Int:" + Integer.parseInt(bitStr6, 2) + "\t\t" + "十进制Int转十六进制Int:" + Integer.toHexString(Integer.parseInt(bitStr6, 2)));
+        System.out.println(bitStr7 + "\t二进制Str转十进制Int:" + Integer.parseInt(bitStr7, 2) + "\t\t" + "十进制Int转十六进制Int:" + Integer.toHexString(Integer.parseInt(bitStr7, 2)));
+        System.out.println(bitStr8 + "\t二进制Str转十进制Int:" + Integer.parseInt(bitStr8, 2) + "\t\t" + "十进制Int转十六进制Int" + ":" + Integer.toHexString(Integer.parseInt(bitStr8, 2)));
+        System.out.println(bitStr9 + "\t二进制Str转十进制Int:" + Integer.parseInt(bitStr9, 2) + "\t\t" + "十进制Int转十六进制Int" + ":" + Integer.toHexString(Integer.parseInt(bitStr9, 2)));
+        System.out.println(bitStr10 + "\t二进制Str转十进制Int:" + Integer.parseInt(bitStr10, 2) + "\t\t" + "十进制Int转十六进制Int" + ":" + Integer.toHexString(Integer.parseInt(bitStr10, 2)));
+        System.out.println(bitStr11 + "\t二进制Str转十进制Int:" + Integer.parseInt(bitStr11, 2) + "\t\t" + "十进制Int转十六进制Int" + ":" + Integer.toHexString(Integer.parseInt(bitStr11, 2)));
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void strArrayToStr()
-    {
+    public void strArrayToStr() {
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void intToHexStr()
-    {
+    public void intToHexStr() {
+        System.out.println(MyConvertUtil.IntToHexStr(10));
         String dayOfYear = String.valueOf(LocalDate.now().getDayOfYear());
         String hour = String.valueOf(LocalTime.now().getHour());
         String minute = String.valueOf(LocalTime.now().getMinute());
@@ -45,12 +63,10 @@ public class MyConvertUtilTest
         int timeNum = Integer.valueOf(timeStr);
         String timeHexStr = MyConvertUtil.IntToHexStr(timeNum);
         //补齐4位
-        if (timeHexStr.length() < 8)
-        {
+        if (timeHexStr.length() < 8) {
             int i = 8 - timeHexStr.length();
             StringBuffer stringBuffer = new StringBuffer(timeHexStr);
-            for (; i > 0; i--)
-            {
+            for (; i > 0; i--) {
                 stringBuffer.insert(0, "0");
             }
             timeHexStr = stringBuffer.toString();
@@ -60,8 +76,7 @@ public class MyConvertUtilTest
     }
 
     @Test
-    public void hexStrToStr() throws UnsupportedEncodingException
-    {
+    public void hexStrToStr() throws UnsupportedEncodingException {
         System.out
                 .println("16进制Str转普通Str:\n" + MyConvertUtil.HexStrToStr("47455420687474703A2F2F3132392E3230342E3136352E3230363A" +
                         "353030302F20485454502F312E310D0A4163636570743A20746578742F68746D6C2C617070" +
@@ -82,86 +97,78 @@ public class MyConvertUtilTest
     }
 
     @Test
-    public void strToHexStr()
-    {
+    public void strToHexStr() {
         System.out.println("普通Str转16进制Str:" + MyConvertUtil.StrToHexStr("rD9TcH"));
-        System.out.println("普通Str转16进制Str:" + MyConvertUtil.StrToHexStr("GMT"));
+        System.out.println("普通Str转16进制Str:" + MyConvertUtil.StrToHexStr("kernel.bin"));
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void binaryStrToByte()
-    {
+    public void binaryStrToByte() {
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void longToByteArray8()
-    {
+    public void longToByteArray8() {
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void byteArray4ToLong()
-    {
+    public void byteArray4ToLong() {
         System.out.println((double) MyConvertUtil.ByteArray4ToLong(new byte[]{(byte) 6, (byte) -18, (byte) -9, (byte) -15}) / 1000000);
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void byteArray4ToInt()
-    {
+    public void byteArray4ToInt() {
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void byteArray2ToInt()
-    {
+    public void byteArray2ToInt() {
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void byteArray1ToInt()
-    {
+    public void byteArray1ToInt() {
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void hexStrToByteArray()
-    {
+    public void hexStrToByteArray() {
+        String hexStr = MyConvertUtil.StrToHexStr("resource");
+        byte[] bytes = MyConvertUtil.HexStrToByteArray(hexStr);
+        for (byte b : bytes) {
+            System.out.println(b);
+        }
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void byteArrayToHexStr()
-    {
+    public void byteArrayToHexStr() {
         System.out.println(MyConvertUtil.ByteArrayToHexStr(new byte[]{(byte) 2, (byte) 97, (byte) 51, (byte) 52}));
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void enUnicode()
-    {
+    public void enUnicode() {
         System.out.println("16进制的Str转成Unicode编码的中文:" + MyConvertUtil.EnUnicode("674E5C0F4F1F"));
         System.out.println("16进制的Str转成Unicode编码的中文:" + MyConvertUtil.EnUnicode("004C0069005700650069"));
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void deUnicode()
-    {
+    public void deUnicode() {
         System.out.println("Unicode编码的中文转16进制的Str:" + MyConvertUtil.DeUnicode("李小伟"));
         System.out.println("Unicode编码的中文转16进制的Str:" + MyConvertUtil.DeUnicode("LiWei"));
         System.out.println("____________________________________________________________________");
     }
 
     @Test
-    public void hexStrSplit()
-    {
+    public void hexStrSplit() {
         String[] strArray = MyConvertUtil.HexStrSplit("0200123C0F000000C800003201DAFE8506E1BBAC006F00005E0D0BD668");
         System.out.println("不带空格不带0x的16进制str转array:");
-        for (String str : strArray)
-        {
+        for (String str : strArray) {
             System.out.println(str);
         }
         System.out.println("____________________________________________________________________");

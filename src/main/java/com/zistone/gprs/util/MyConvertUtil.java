@@ -14,6 +14,102 @@ public class MyConvertUtil {
     public static final String HEXSTRING = "0123456789ABCDEF";
 
     /**
+     * 隔指定位置插入字符
+     *
+     * @param input
+     * @param interval
+     * @param character
+     * @return
+     */
+    public static String StrAddCharacter(String input, int interval, String character) {
+        //字符串长度
+        int length = input.length();
+        //需要添加字符的数量
+        int count = 0;
+        if (length <= interval) {
+            count = 0;
+        } else {
+            count = length % interval > 0 ? length / interval : input.length() / interval - 1;
+        }
+        //插入空格
+        if (count > 0) {
+            for (int i = 0; i < count; i++) {
+                input = input.substring(0, (i + 1) * interval + i) + character + input.substring((i + 1) * interval + i, length + i);
+            }
+        }
+        //输入的字符串小于指定位，不需要添加字符
+        else {
+        }
+        return input;
+    }
+
+    /**
+     * Str前/后面补零
+     *
+     * @param str
+     * @param strLength
+     * @return
+     */
+    public static String AddZeroForNum(String str, int strLength, boolean isLeft) {
+        int strLen = str.length();
+        if (strLen < strLength) {
+            while (strLen < strLength) {
+                StringBuffer sb = new StringBuffer();
+                //左补零
+                if (isLeft) {
+                    sb.append("0").append(str);
+                }
+                //右补零
+                else {
+                    sb.append(str).append("0");
+                }
+                str = sb.toString();
+                strLen = str.length();
+            }
+        }
+        return str;
+    }
+
+    /**
+     * Str[]排序
+     *
+     * @param array
+     * @param asc
+     * @return
+     */
+    public static String SortStringArray(String[] array, boolean asc) {
+        //从小到大
+        if (asc) {
+            for (int i = 0; i < array.length; i++) {
+                for (int j = 0; j < array.length; j++) {
+                    if (Integer.parseInt(array[i], 16) < Integer.parseInt(array[j], 16)) {
+                        String temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
+                    }
+                }
+            }
+        }
+        //从大到小
+        else {
+            for (int i = 0; i < array.length; i++) {
+                for (int j = 0; j < array.length; j++) {
+                    if (Integer.parseInt(array[i], 16) > Integer.parseInt(array[j], 16)) {
+                        String temp = array[i];
+                        array[i] = array[j];
+                        array[j] = temp;
+                    }
+                }
+            }
+        }
+        String result = "";
+        for (String tempStr : array) {
+            result += tempStr;
+        }
+        return result;
+    }
+
+    /**
      * 反转byte[]
      *
      * @param byteArray
@@ -175,7 +271,7 @@ public class MyConvertUtil {
     }
 
     /**
-     * 生成校验码
+     * 生成校验码,只用于Zistone的LP108项目
      *
      * @param src
      * @return

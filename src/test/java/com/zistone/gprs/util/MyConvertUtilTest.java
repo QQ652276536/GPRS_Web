@@ -9,16 +9,43 @@ import java.time.LocalTime;
 public class MyConvertUtilTest {
     @Test
     public void createDifferent4Random() {
+        System.out.println(MyConvertUtil.StrAddCharacter("ABCDEFGHIJKLMN",2,"|"));
+        String result = MyConvertUtil.SortStringArray(new String[]{"02","28","5c"},false);
+        System.out.println(result);
         System.out.println("____________________________________________________________________");
     }
 
     @Test
     public void hexStrAddCharacter() {
+        byte[] temps = MyConvertUtil.HexStrToByteArray("3F07000000017A9D");
+        for (byte b : temps) {
+            System.out.println("-----" + b);
+        }
         System.out.println("____________________________________________________________________");
     }
 
     @Test
     public void createCheckCode() throws Exception {
+        byte[] srcBytes1 = new byte[]{2, 4, 1, 2, 3, 5, 6};
+        byte[] srcBytes2 = new byte[]{10, 15, 50};
+        byte[] destBytes = new byte[srcBytes1.length + srcBytes2.length];
+        System.arraycopy(srcBytes1, 0, destBytes, 0, srcBytes1.length);
+        System.arraycopy(srcBytes2, 0, destBytes, srcBytes1.length, srcBytes2.length);
+        for (byte b : destBytes) {
+            System.out.println("-----" + b);
+        }
+        //固件名字，将高字节放在前面
+        String blockName = MyConvertUtil.StrToHexStr("kernel.bin");
+        //左对齐后面补空格，空格替换为零
+        blockName = String.format("%-32s", blockName).replace(' ', '0');
+        System.out.println(blockName);
+        System.out.println("____________________________________________________________________");
+        System.out.println(String.format("%06d", 12));
+        System.out.println("____________________________________________________________________");
+        String str = String.format("%-4s", "928");
+        System.out.println(str);
+        System.out.println(str.replace(' ', '0'));
+        System.out.println("____________________________________________________________________");
         byte[] data1 = MyConvertUtil.HexStrToByteArray("3F11020000217265736F7572636500000000000000005C28020100D0D5002039130101B55501014D5D0101DD5D01016D5E0101FD5E010100000000000000000000000000000000E1110101D113010100000000C112010147A40101D7130101F1590101FB590101055A0101EF3E010151AB01010F5A0101195A0101235A01012D5A0101375A0101415A01014B5A0101555A01015F5A0101695A0101735A010157D301017D5A0101875A01013BD30101915A01019B5A0101A55A0101AF5A0101B95A0101C35A0101CD5A0101D75A0101DFF80CD01EF0A4FF004800476F5A0201D0D500200020704710B505F0BBFD002010BD7047704700004D504F53005500000000000000100101041001016B65726E656C00000000000000000000000000000000000000000000000000004731434B32303136303930313030310000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000072B600BF00BF00BF00BF30BF00BF00BF00BF00BF62B67047EFF3108072B6704780F31088704762B6704772B67047EFF3148040F0010080F3148870470AAB009911F0010F0CBF02B001B0694609B4084604F05EFD09BC079981F30388EFF3148141EA000181F31488069941F0010143F8041C01BC43F8080CA3F10800BDE80E50854601BD1EF0040F0CBFEFF308800AE001468A6932F8023C");
         System.out.println(MyConvertUtil.IntToHexStr(MyConvertUtil.CalculateCRC_Zistone_LP108(data1)));
         System.out.println("____________________________________________________________________");

@@ -1,17 +1,21 @@
 package com.zistone.gprs.util;
 
 import org.junit.Test;
+import org.springframework.lang.Nullable;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class MyConvertUtilTest {
     @Test
     public void createDifferent4Random() {
-        System.out.println(MyConvertUtil.StrAddCharacter("ABCDEFGHIJKLMN",2,"|"));
-        String result = MyConvertUtil.SortStringArray(new String[]{"02","28","5c"},false);
-        System.out.println(result);
+
+        byte[] data1 = MyConvertUtil.HexStrToByteArray("3F070000001b");
+        System.out.println(MyConvertUtil.IntToHexStr(MyConvertUtil.CalculateCRC_Zistone_LP108(data1)));
         System.out.println("____________________________________________________________________");
     }
 
@@ -26,6 +30,12 @@ public class MyConvertUtilTest {
 
     @Test
     public void createCheckCode() throws Exception {
+        String tempBitStr1 = MyConvertUtil.ByteToBitBig((byte) 11);
+        String tempBitStr2 = MyConvertUtil.ByteToBitLittle((byte) 11);
+        System.out.println("大端模式，IntToBit，" + tempBitStr1 + "\t二进制Str转十进制Int:" + Integer.parseInt(tempBitStr1, 2));
+        System.out.println("小端模式，IntToBit，" + tempBitStr2 + "\t二进制Str转十进制Int:" + Integer.parseInt(tempBitStr2, 2));
+        System.out.println("____________________________________________________________________");
+
         byte[] srcBytes1 = new byte[]{2, 4, 1, 2, 3, 5, 6};
         byte[] srcBytes2 = new byte[]{10, 15, 50};
         byte[] destBytes = new byte[srcBytes1.length + srcBytes2.length];
@@ -45,9 +55,6 @@ public class MyConvertUtilTest {
         String str = String.format("%-4s", "928");
         System.out.println(str);
         System.out.println(str.replace(' ', '0'));
-        System.out.println("____________________________________________________________________");
-        byte[] data1 = MyConvertUtil.HexStrToByteArray("3F11020000217265736F7572636500000000000000005C28020100D0D5002039130101B55501014D5D0101DD5D01016D5E0101FD5E010100000000000000000000000000000000E1110101D113010100000000C112010147A40101D7130101F1590101FB590101055A0101EF3E010151AB01010F5A0101195A0101235A01012D5A0101375A0101415A01014B5A0101555A01015F5A0101695A0101735A010157D301017D5A0101875A01013BD30101915A01019B5A0101A55A0101AF5A0101B95A0101C35A0101CD5A0101D75A0101DFF80CD01EF0A4FF004800476F5A0201D0D500200020704710B505F0BBFD002010BD7047704700004D504F53005500000000000000100101041001016B65726E656C00000000000000000000000000000000000000000000000000004731434B32303136303930313030310000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000072B600BF00BF00BF00BF30BF00BF00BF00BF00BF62B67047EFF3108072B6704780F31088704762B6704772B67047EFF3148040F0010080F3148870470AAB009911F0010F0CBF02B001B0694609B4084604F05EFD09BC079981F30388EFF3148141EA000181F31488069941F0010143F8041C01BC43F8080CA3F10800BDE80E50854601BD1EF0040F0CBFEFF308800AE001468A6932F8023C");
-        System.out.println(MyConvertUtil.IntToHexStr(MyConvertUtil.CalculateCRC_Zistone_LP108(data1)));
         System.out.println("____________________________________________________________________");
         String bitStr1 = "11111111";
         String bitStr2 = "00000000";
@@ -156,9 +163,87 @@ public class MyConvertUtilTest {
         System.out.println("____________________________________________________________________");
     }
 
+    private class MyBluetoothDevice {
+        private String name;
+        private String address;
+        private int rssi;
+
+        public MyBluetoothDevice(String name, String address, int rssi) {
+            this.name = name;
+            this.address = address;
+            this.rssi = rssi;
+        }
+
+        public MyBluetoothDevice(String name, String address) {
+            this.name = name;
+            this.address = address;
+            this.rssi = 0;
+        }
+
+        @Override
+        public String toString() {
+            return "MyBluetoothDevice{" + "name='" + name + '\'' + ", address='" + address + '\'' + ", rssi=" + rssi + '}';
+        }
+
+        @Override
+        public boolean equals(@Nullable Object obj) {
+            if (obj == null)
+                return false;
+            if (obj instanceof MyBluetoothDevice) {
+                MyBluetoothDevice other = (MyBluetoothDevice) obj;
+                if (this.address.equals(other.address))
+                    return true;
+                else
+                    return false;
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(address);
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public int getRssi() {
+            return rssi;
+        }
+
+        public void setRssi(int rssi) {
+            this.rssi = rssi;
+        }
+    }
+
     @Test
     public void byteArray1ToInt() {
         System.out.println("____________________________________________________________________");
+        List<MyBluetoothDevice> list = new ArrayList<MyBluetoothDevice>() {{
+            this.add(new MyBluetoothDevice("森远股份", "111", 100));
+            this.add(new MyBluetoothDevice("森远股份", "222", 100));
+            this.add(new MyBluetoothDevice("森远股份", "333", 100));
+        }};
+        MyBluetoothDevice myBluetoothDevice2 = new MyBluetoothDevice("副作用", "222", 960);
+        if (!list.contains(myBluetoothDevice2)) {
+            list.add(myBluetoothDevice2);
+        }
+        for (MyBluetoothDevice temp : list) {
+            System.out.println(temp.toString());
+        }
     }
 
     @Test

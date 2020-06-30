@@ -163,10 +163,38 @@ public class MyConvertUtil {
         return (byte) result;
     }
 
-    public static String ByteToBit(byte b) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append((b >> 7) & 0x1).append((b >> 6) & 0x1).append((b >> 5) & 0x1).append((b >> 4) & 0x1).append((b >> 3) & 0x1).append((b >> 2) & 0x1).append((b >> 1) & 0x1).append((b >> 0) & 0x1);
-        return stringBuffer.toString();
+    /**
+     * 小端模式，高字节在前
+     *
+     * @param b
+     * @return
+     */
+    public static String ByteToBitLittle(byte b) {
+        return "" + (byte) ((b >> 0) & 0x1) +
+                (byte) ((b >> 1) & 0x1) +
+                (byte) ((b >> 2) & 0x1) +
+                (byte) ((b >> 3) & 0x1) +
+                (byte) ((b >> 4) & 0x1) +
+                (byte) ((b >> 5) & 0x1) +
+                (byte) ((b >> 6) & 0x1) +
+                (byte) ((b >> 7) & 0x1);
+    }
+
+    /**
+     * 大端模式，低字节在前
+     *
+     * @param b
+     * @return
+     */
+    public static String ByteToBitBig(byte b) {
+        return "" + (byte) ((b >> 7) & 0x1) +
+                (byte) ((b >> 6) & 0x1) +
+                (byte) ((b >> 5) & 0x1) +
+                (byte) ((b >> 4) & 0x1) +
+                (byte) ((b >> 3) & 0x1) +
+                (byte) ((b >> 2) & 0x1) +
+                (byte) ((b >> 1) & 0x1) +
+                (byte) ((b >> 0) & 0x1);
     }
 
     /**

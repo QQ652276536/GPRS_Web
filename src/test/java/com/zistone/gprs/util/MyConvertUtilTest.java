@@ -7,16 +7,154 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class MyConvertUtilTest {
-    @Test
-    public void createDifferent4Random() {
 
-        byte[] data1 = MyConvertUtil.HexStrToByteArray("3F070000001b");
-        System.out.println(MyConvertUtil.IntToHexStr(MyConvertUtil.CalculateCRC_Zistone_LP108(data1)));
-        System.out.println("____________________________________________________________________");
+    private byte[] get6Bit(String strContent) {
+        // 结果
+        byte[] arrResult = null;
+        try {
+            // 编码方式
+            byte[] arrs = strContent.getBytes("ASCII");
+            System.out.println(new String(arrs));
+
+            arrResult = new byte[arrs.length - (arrs.length / 8)];
+            int intRight = 0;
+            int intLeft = 6;
+            int intIndex = 0;
+            for (int i = 1; i <= arrs.length; i++, intRight++, intLeft--) {
+                if (i % 8 == 0) {
+                    intRight = -1;
+                    intLeft = 8;
+                    continue;
+                }
+                byte newItem = 0;
+                if (i == arrs.length) {
+                    newItem = (byte) (arrs[i - 1] >> intRight);
+                } else {
+                    newItem = (byte) ((arrs[i - 1] >> intRight) | (arrs[i] << intLeft));
+                }
+
+                arrResult[intIndex] = newItem;
+                intIndex++;
+
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return arrResult;
+    }
+
+    @Test
+    public void createDifferent4Random() throws UnsupportedEncodingException {
+        String str = "15Cgah00008LOnt>1Cf`s6NT00SU";
+        String resultBit = "";
+        System.out.println("对应的ASCII码（Hex）：");
+        for (int i = 0; i < str.length(); i++) {
+            System.out.print(str.charAt(i) + "    ASCII：");
+            int ascii = str.charAt(i);
+            String hexAscii = MyConvertUtil.IntToHexStr(ascii);
+            System.out.print(hexAscii + "   6位Bit：");
+            //加0x28（40）大于等于0x80（128），则加0x48（72）取bit位，否则加0x50（80）取bit位
+            if (ascii + 40 >= 128) {
+                String tempBit = MyConvertUtil.ByteTo6BitBig((byte) (ascii + 72));
+                resultBit += tempBit;
+                System.out.print(tempBit);
+            } else {
+                String tempBit = MyConvertUtil.ByteTo6BitBig((byte) (ascii + 80));
+                resultBit += tempBit;
+                System.out.print(tempBit);
+            }
+            System.out.println();
+        }
+        System.out.println("所有的Bit：" + resultBit + "\r\n长度：" + resultBit.length());
+        //开始解析
+        String[] bitArray = MyConvertUtil.StrAddCharacter(resultBit, 1, " ").split(" ");
+        //消息ID
+        String[] bitIdArray = new String[6];
+        System.arraycopy(bitArray, 0, bitIdArray, 0, 6);
+        String bitId = Arrays.toString(bitIdArray);
+        System.out.println("消息ID：" + bitId);
+        //转发指示符
+        String[] bitRepeat = new String[2];
+        System.arraycopy(bitArray, 6, bitRepeat, 0, 2);
+        String repeat = Arrays.toString(bitRepeat);
+        System.out.println("转发指示符：" + repeat);
+        //用户ID/MMSI编号
+        String[] bitMmsi = new String[30];
+        System.arraycopy(bitArray, 8, bitMmsi, 0, 30);
+        String mmsi = Arrays.toString(bitMmsi);
+        System.out.println("用户ID：" + mmsi);
+        //导航状态
+        String[] bitNavigational = new String[4];
+        System.arraycopy(bitArray, 38, bitNavigational, 0, 4);
+        String navigational = Arrays.toString(bitNavigational);
+        System.out.println("导航状态：" + navigational);
+        //旋转速率
+        String[] bitRot = new String[8];
+        System.arraycopy(bitArray, 42, bitRot, 0, 8);
+        String rot = Arrays.toString(bitRot);
+        System.out.println("旋转速率：" + rot);
+        //SOG，地面航速
+        String[] bitSog = new String[10];
+        System.arraycopy(bitArray, 50, bitSog, 0, 10);
+        String sog = Arrays.toString(bitSog);
+        System.out.println("SOG：" + sog);
+        //位置准确度
+        String[] bitAccuracy = new String[1];
+        System.arraycopy(bitArray, 60, bitAccuracy, 0, 1);
+        String accuracy = Arrays.toString(bitAccuracy);
+        System.out.println("位置准确度：" + accuracy);
+        //经度
+        String[] bitLot = new String[28];
+        System.arraycopy(bitArray, 61, bitLot, 0, 28);
+        String lot = Arrays.toString(bitLot);
+        System.out.println("经度：" + lot);
+        //纬度
+        String[] bitLat = new String[27];
+        System.arraycopy(bitArray, 89, bitLat, 0, 27);
+        String lat = Arrays.toString(bitLat);
+        System.out.println("纬度：" + lat);
+        //COG，地面航线
+        String[] bitCog = new String[12];
+        System.arraycopy(bitArray, 116, bitCog, 0, 12);
+        String cog = Arrays.toString(bitCog);
+        System.out.println("COG：" + cog);
+        //实际航向
+        String[] bitTrueHead = new String[9];
+        System.arraycopy(bitArray, 128, bitTrueHead, 0, 9);
+        String trueHead = Arrays.toString(bitTrueHead);
+        System.out.println("实际航向：" + trueHead);
+        //时戳
+        String[] bitUtc = new String[6];
+        System.arraycopy(bitArray, 137, bitUtc, 0, 6);
+        String utc = Arrays.toString(bitUtc);
+        System.out.println("时戳：" + utc);
+        //特定操作指示符
+        String[] bitRegional = new String[2];
+        System.arraycopy(bitArray, 143, bitRegional, 0, 2);
+        String regional = Arrays.toString(bitRegional);
+        System.out.println("特定操作指示符：" + regional);
+        //备用
+        String[] bitSpare = new String[3];
+        System.arraycopy(bitArray, 145, bitSpare, 0, 3);
+        String spare = Arrays.toString(bitSpare);
+        System.out.println("备用：" + spare);
+        //RAIM标志
+        String[] bitRaim = new String[1];
+        System.arraycopy(bitArray, 148, bitRaim, 0, 1);
+        String raim = Arrays.toString(bitRaim);
+        System.out.println("RAIM标志：" + raim);
+        //通信状态
+        String[] bitCommState = new String[19];
+        System.arraycopy(bitArray, 149, bitCommState, 0, 19);
+        String commState = Arrays.toString(bitCommState);
+        System.out.println("通信状态：" + commState);
+
+        
     }
 
     @Test
@@ -30,8 +168,8 @@ public class MyConvertUtilTest {
 
     @Test
     public void createCheckCode() throws Exception {
-        String tempBitStr1 = MyConvertUtil.ByteToBitBig((byte) 11);
-        String tempBitStr2 = MyConvertUtil.ByteToBitLittle((byte) 11);
+        String tempBitStr1 = MyConvertUtil.ByteToBitBig((byte) 93);
+        String tempBitStr2 = MyConvertUtil.ByteToBitLittle((byte) 93);
         System.out.println("大端模式，IntToBit，" + tempBitStr1 + "\t二进制Str转十进制Int:" + Integer.parseInt(tempBitStr1, 2));
         System.out.println("小端模式，IntToBit，" + tempBitStr2 + "\t二进制Str转十进制Int:" + Integer.parseInt(tempBitStr2, 2));
         System.out.println("____________________________________________________________________");

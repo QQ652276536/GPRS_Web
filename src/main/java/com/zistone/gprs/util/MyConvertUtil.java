@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 字符转换工具类
+ * 转换工具类
  * 不支持特殊字符
  */
 public class MyConvertUtil {
@@ -163,6 +163,15 @@ public class MyConvertUtil {
         return (byte) result;
     }
 
+    public static String ByteTo6BitLittle(byte b) {
+        return "" + (byte) ((b >> 0) & 0x1) +
+                (byte) ((b >> 1) & 0x1) +
+                (byte) ((b >> 2) & 0x1) +
+                (byte) ((b >> 3) & 0x1) +
+                (byte) ((b >> 4) & 0x1) +
+                (byte) ((b >> 5) & 0x1);
+    }
+
     /**
      * 小端模式，高字节在前
      *
@@ -178,6 +187,15 @@ public class MyConvertUtil {
                 (byte) ((b >> 5) & 0x1) +
                 (byte) ((b >> 6) & 0x1) +
                 (byte) ((b >> 7) & 0x1);
+    }
+
+    public static String ByteTo6BitBig(byte b) {
+        return "" + (byte) ((b >> 5) & 0x1) +
+                (byte) ((b >> 4) & 0x1) +
+                (byte) ((b >> 3) & 0x1) +
+                (byte) ((b >> 2) & 0x1) +
+                (byte) ((b >> 1) & 0x1) +
+                (byte) ((b >> 0) & 0x1);
     }
 
     /**
@@ -262,7 +280,6 @@ public class MyConvertUtil {
             if (i != str.length() - 1) {
                 stringBuffer.append(str.charAt(i));
                 stringBuffer.append(character);
-
             } else {
                 stringBuffer.append(str.charAt(i));
             }
@@ -591,11 +608,10 @@ public class MyConvertUtil {
     private static String GetHexStr(String str) {
         String hexStr = "";
         for (int i = str.length(); i < 4; i++) {
-            if (i == str.length()) {
+            if (i == str.length())
                 hexStr = "0";
-            } else {
+            else
                 hexStr = hexStr + "0";
-            }
         }
         return hexStr + str;
     }

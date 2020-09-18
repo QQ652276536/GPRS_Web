@@ -31,7 +31,6 @@ public class WebSocketServer {
      * @throws IOException
      */
     public static void InitiativeSendMessage(String message) throws IOException {
-        LOGGER.info("主动推送消息：" + message);
         //群发信息
         for (WebSocketServer item : _webSocketSet) {
             item.SendMessage(message);
@@ -39,6 +38,7 @@ public class WebSocketServer {
     }
 
     public void SendMessage(String message) throws IOException {
+        LOGGER.info("WebSocket服务端发送：" + message);
         _session.getBasicRemote().sendText(message);
     }
 

@@ -12,39 +12,36 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class LocationInfoService
-{
-    private Logger _logger = LoggerFactory.getLogger(LocationInfoService.class);
+public class LocationInfoService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocationInfoService.class);
 
     @Resource
     private LocationInfoRepository _locationInfoRepository;
 
-    public List<LocationInfo> FindByDeviceId(String deviceId)
-    {
-        List<LocationInfo> list = _locationInfoRepository.FindByDeviceId(deviceId);
-        return list;
+    public List<LocationInfo> FindAll() {
+        return _locationInfoRepository.findAll();
     }
 
-    public List<LocationInfo> FindByDeviceIdAndTime(String deviceId, Date startDate, Date endDate)
-    {
-        List<LocationInfo> list = _locationInfoRepository.FindByDeviceIdAndTime(deviceId, startDate, endDate);
-        return list;
+    public List<LocationInfo> FindByDeviceId(String deviceId) {
+        return _locationInfoRepository.FindByDeviceId(deviceId);
     }
 
-    public List<LocationInfo> FindDescDaysLastDataByDeviceId(String deviceId, int days)
-    {
+    public List<LocationInfo> FindByDeviceIdAndTime(String deviceId, Date startDate, Date endDate) {
+        return _locationInfoRepository.FindByDeviceIdAndTime(deviceId, startDate, endDate);
+    }
+
+    public List<LocationInfo> FindDescDaysLastDataByDeviceId(String deviceId, int days) {
         return _locationInfoRepository.FindDescDaysLastDataByDeviceId(deviceId, days);
     }
 
     @Transactional
-    public LocationInfo Insert(LocationInfo locationInfo)
-    {
+    public LocationInfo Insert(LocationInfo locationInfo) {
         return _locationInfoRepository.save(locationInfo);
     }
 
     @Transactional
-    public int InsertList(List<LocationInfo> locationInfoList)
-    {
+    public int InsertList(List<LocationInfo> locationInfoList) {
         return _locationInfoRepository.saveAll(locationInfoList).size();
     }
 

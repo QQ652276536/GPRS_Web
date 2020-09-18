@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Random;
 
 @Service
-public class DeviceInfoService
-{
-    private Logger _logger = LoggerFactory.getLogger(DeviceInfoService.class);
+public class DeviceInfoService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeviceInfoService.class);
 
     @Resource
     private DeviceInfoRepository _deviceInfoRepository;
@@ -29,14 +29,12 @@ public class DeviceInfoService
      * @param akCode
      * @return
      */
-    public DeviceInfo FindByAKCode(String akCode)
-    {
+    public DeviceInfo FindByAKCode(String akCode) {
         return _deviceInfoRepository.FindByAKCode(akCode);
     }
 
     @Transactional
-    public void SaveList(List<DeviceInfo> deviceInfoList)
-    {
+    public void SaveList(List<DeviceInfo> deviceInfoList) {
         _deviceInfoRepository.saveAll(deviceInfoList);
     }
 
@@ -46,8 +44,7 @@ public class DeviceInfoService
      * @param id
      * @return
      */
-    public DeviceInfo FindById(int id)
-    {
+    public DeviceInfo FindById(int id) {
         return _deviceInfoRepository.FindById(id);
     }
 
@@ -56,8 +53,7 @@ public class DeviceInfoService
      *
      * @return
      */
-    public List<DeviceInfo> FindAllDevice()
-    {
+    public List<DeviceInfo> FindAllDevice() {
         return _deviceInfoRepository.findAll();
     }
 
@@ -68,16 +64,13 @@ public class DeviceInfoService
      * @return
      */
     @Transactional
-    public DeviceInfo InsertByDeviceId(DeviceInfo deviceInfo)
-    {
+    public DeviceInfo InsertByDeviceId(DeviceInfo deviceInfo) {
         //鉴权码
         String akCode = "";
         Random random = new Random();
-        for (int i = 0; i < 6; i++)
-        {
+        for (int i = 0; i < 6; i++) {
             int num = random.nextInt(3) % 4;
-            switch (num)
-            {
+            switch (num) {
                 //随机大写字母
                 case 0:
                     akCode += (char) (random.nextInt(26) + 65);
@@ -97,36 +90,28 @@ public class DeviceInfoService
         DeviceInfo queryDevice = _deviceInfoRepository.FindByDeviceId(deviceInfo.getDeviceId());
         //线上环境设备编号不会重复,所以用作判断重复的条件
         //根据设备编号查找设备,没有则新增
-        if (queryDevice == null)
-        {
-            _logger.info(String.format(">>>设备%s不存在,新增该设备...", deviceInfo.getDeviceId()));
+        if (queryDevice == null) {
+            LOGGER.info(String.format("设备%s不存在,新增该设备...", deviceInfo.getDeviceId()));
             deviceInfo.setAkCode(akCode);
             DeviceInfo tempDevice = _deviceInfoRepository.save(deviceInfo);
-            if (null != tempDevice && tempDevice.getId() != 0)
-            {
-                _logger.info(">>>设备注册成功");
-            }
-            else
-            {
-                _logger.error(String.format(">>>设备%s注册失败!!!请检查服务日志排查原因...\r\n", deviceInfo.getDeviceId()));
+            if (null != tempDevice && tempDevice.getId() != 0) {
+                LOGGER.info("设备注册成功");
+            } else {
+                LOGGER.error(String.format("设备%s注册失败!!!请检查服务日志排查原因...\r\n", deviceInfo.getDeviceId()));
             }
             return tempDevice;
         }
         //有则更新
-        else
-        {
-            _logger.info(String.format(">>>设备%s已存在,更新该设备...", queryDevice.getDeviceId()));
+        else {
+            LOGGER.info(String.format("设备%s已存在,更新该设备...", queryDevice.getDeviceId()));
             int num = _deviceInfoRepository
                     .UpdateByDeviceId(deviceInfo.getDeviceId(), deviceInfo.getLat(), deviceInfo.getLot(),
                             deviceInfo
                                     .getHeight(), deviceInfo.getTemperature(), deviceInfo.getElectricity());
-            if (num == 1)
-            {
-                _logger.info(">>>设备更新成功");
-            }
-            else
-            {
-                _logger.error(String.format(">>>设备%s更新失败!!!请检查服务日志排查原因...\r\n", queryDevice.getDeviceId()));
+            if (num == 1) {
+                LOGGER.info("设备更新成功");
+            } else {
+                LOGGER.error(String.format("设备%s更新失败!!!请检查服务日志排查原因...\r\n", queryDevice.getDeviceId()));
             }
             return deviceInfo;
         }
@@ -138,8 +123,7 @@ public class DeviceInfoService
      * @param deviceInfo
      * @return
      */
-    public DeviceInfo Update(DeviceInfo deviceInfo)
-    {
+    public DeviceInfo Update(DeviceInfo deviceInfo) {
         //更新设备表的同时要将当前位置信息插入至轨迹表
         LocationInfo locationInfo = new LocationInfo();
         locationInfo.setDeviceId(deviceInfo.getDeviceId());
@@ -156,8 +140,7 @@ public class DeviceInfoService
      * @param deviceInfo
      * @return 受影响的行数
      */
-    public int UpdateLocationByDeviceId(DeviceInfo deviceInfo)
-    {
+    public int UpdateLocationByDeviceId(DeviceInfo deviceInfo) {
         return _deviceInfoRepository
                 .UpdateLocationByDeviceId(deviceInfo.getDeviceId(), deviceInfo.getLat(), deviceInfo.getLot(),
                         deviceInfo

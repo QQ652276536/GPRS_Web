@@ -12,58 +12,50 @@ import javax.mail.internet.MimeMessage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmailTask_YX
-{
-    private static Logger _logger = LoggerFactory.getLogger(EmailTask_YX.class);
+public class EmailTask_YX {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(EmailTask_YX.class);
+
     private List<LocationInfo> _locationInfoList;
     private MyIMAPReceiveMailUtil.IMAPListener _imapListener;
 
-    public EmailTask_YX() throws Exception
-    {
+    public EmailTask_YX() throws Exception {
         InitListener();
         Message[] messages = MyIMAPReceiveMailUtil.Init("zstwx9xx@163.com", "123456a", _imapListener);
         MyIMAPReceiveMailUtil.Receive(messages);
     }
 
-    private void InitListener()
-    {
-        _imapListener = new MyIMAPReceiveMailUtil.IMAPListener()
-        {
+    private void InitListener() {
+        _imapListener = new MyIMAPReceiveMailUtil.IMAPListener() {
             @Override
-            public void ParseMessage(Message[] messages)
-            {
-                if (messages == null || messages.length < 1)
-                {
-                    _logger.warn(">>>没有要解析的邮件!");
+            public void ParseMessage(Message[] messages) {
+                if (messages == null || messages.length < 1) {
+                    LOGGER.warn("没有要解析的邮件!");
                 }
                 _locationInfoList = new ArrayList<>();
                 //遍历所有邮件
-                for (int i = 0, count = messages.length; i < count; i++)
-                {
-                    try
-                    {
+                for (int i = 0, count = messages.length; i < count; i++) {
+                    try {
                         MimeMessage msg = (MimeMessage) messages[i];
                         boolean isReadFlag = MyIMAPReceiveMailUtil.IsSeen(msg);
                         //只解析铱星网关发过来的未读邮件
-                        if (!isReadFlag && MyIMAPReceiveMailUtil.GetFrom(msg).equals("<sbdservice@sbd.iridium.com>"))
-                        {
+                        if (!isReadFlag && MyIMAPReceiveMailUtil.GetFrom(msg).equals("<sbdservice@sbd.iridium.com>")) {
                             //设为已读
                             msg.setFlag(Flags.Flag.SEEN, true);
-                            _logger.info(String.format(">>>------------------解析第%d封邮件------------------", msg.getMessageNumber()));
+                            LOGGER.info(String.format("------------------解析第%d封邮件------------------", msg.getMessageNumber()));
                             String theme = MyIMAPReceiveMailUtil.GetSubject(msg);
-                            _logger.info(">>>主题:" + theme);
-                            _logger.info(">>>发件人:" + MyIMAPReceiveMailUtil.GetFrom(msg));
-                            _logger.info(">>>收件人:" + MyIMAPReceiveMailUtil.GetReceiveAddress(msg, null));
-                            _logger.info(">>>发送时间:" + MyIMAPReceiveMailUtil.GetSentDate(msg, null));
-                            _logger.info(">>>是否已读:" + isReadFlag);
-                            _logger.info(">>>邮件优先级:" + MyIMAPReceiveMailUtil.GetPriority(msg));
-                            _logger.info(">>>是否需要回执:" + MyIMAPReceiveMailUtil.IsReplySign(msg));
-                            _logger.info(String.format(">>>邮件大小:%d B", msg.getSize()));
+                            LOGGER.info("主题:" + theme);
+                            LOGGER.info("发件人:" + MyIMAPReceiveMailUtil.GetFrom(msg));
+                            LOGGER.info("收件人:" + MyIMAPReceiveMailUtil.GetReceiveAddress(msg, null));
+                            LOGGER.info("发送时间:" + MyIMAPReceiveMailUtil.GetSentDate(msg, null));
+                            LOGGER.info("是否已读:" + isReadFlag);
+                            LOGGER.info("邮件优先级:" + MyIMAPReceiveMailUtil.GetPriority(msg));
+                            LOGGER.info("是否需要回执:" + MyIMAPReceiveMailUtil.IsReplySign(msg));
+                            LOGGER.info(String.format("邮件大小:%d B", msg.getSize()));
                             //是否包含附件
                             boolean flag = MyIMAPReceiveMailUtil.IsContainAttachment(msg);
-                            _logger.info(">>>是否包含附件:" + flag);
-                            if (flag)
-                            {
+                            LOGGER.info("是否包含附件:" + flag);
+                            if (flag) {
                                 //保存附件
                                 MyIMAPReceiveMailUtil.SaveAttachment(msg, String.format("..\\YX_Email\\", msg.getSubject()));
                             }
@@ -71,8 +63,7 @@ public class EmailTask_YX
                             MyIMAPReceiveMailUtil.GetMailTextContent(msg, content);
                             //截取经纬度和辐射半径
                             String tempContent = content.toString();
-                            if (tempContent.contains("Lat") && tempContent.contains("Long"))
-                            {
+                            if (tempContent.contains("Lat") && tempContent.contains("Long")) {
                                 tempContent = tempContent.replace("\r\n", "");
                                 tempContent = tempContent.replace("\n", "");
                                 int index1 = tempContent.indexOf("Lat = ");
@@ -88,24 +79,19 @@ public class EmailTask_YX
                                 locationInfo.setLot(Double.valueOf(lotStr));
                                 _locationInfoList.add(locationInfo);
                             }
-                            _logger.info(String.format(">>>邮件正文:\n%s", (content.length() > 500 ? content.substring(0, 500) + "..." : content)));
+                            LOGGER.info(String.format("邮件正文:\n%s", (content.length() > 500 ? content.substring(0, 500) + "..." : content)));
+                        } else {
+                            LOGGER.info("该邮件与发件人不符,不解析!");
                         }
-                        else
-                        {
-                            _logger.info(">>>该邮件与发件人不符,不解析!");
-                        }
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                if (_locationInfoList.size() > 0)
-                {
+                if (_locationInfoList.size() > 0) {
                     //获取Spring管理的Service
                     LocationInfoService locationInfoService = ServiceUtil.GetBean("locationInfoService", LocationInfoService.class);
                     int count = locationInfoService.InsertList(_locationInfoList);
-                    _logger.info(String.format(">>>本次共新增%d条历史位置信息", count));
+                    LOGGER.info(String.format("本次共新增%d条历史位置信息", count));
                 }
             }
         };

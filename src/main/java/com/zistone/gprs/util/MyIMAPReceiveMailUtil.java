@@ -16,19 +16,23 @@ import java.util.Properties;
 /**
  * 使用IMAP协议接收邮件
  */
-public class MyIMAPReceiveMailUtil
-{
+public final class MyIMAPReceiveMailUtil {
+
     private static IMAPListener _imapListener;
     private static IMAPFolder _imapFolder;
     private static IMAPStore _imapStore;
 
-    public interface IMAPListener
-    {
+    public interface IMAPListener {
         void ParseMessage(Message[] messages);
     }
 
-    public static Message[] Init(String name, String pwd, IMAPListener imapListener) throws MessagingException
-    {
+    /**
+     * （禁止外部实例化）
+     */
+    private MyIMAPReceiveMailUtil() {
+    }
+
+    public static Message[] Init(String name, String pwd, IMAPListener imapListener) throws MessagingException {
         _imapListener = imapListener;
         //准备连接服务器的会话信息
         Properties props = new Properties();
@@ -69,8 +73,7 @@ public class MyIMAPReceiveMailUtil
     /**
      * 接收邮件
      */
-    public static void Receive(Message... messages) throws Exception
-    {
+    public static void Receive(Message... messages) throws Exception {
         _imapListener.ParseMessage(messages);
         //释放资源
         _imapFolder.close(true);
@@ -83,8 +86,7 @@ public class MyIMAPReceiveMailUtil
      * @param msg 邮件内容
      * @return 解码后的邮件主题
      */
-    public static String GetSubject(MimeMessage msg) throws UnsupportedEncodingException, MessagingException
-    {
+    public static String GetSubject(MimeMessage msg) throws UnsupportedEncodingException, MessagingException {
         return MimeUtility.decodeText(msg.getSubject());
     }
 
@@ -96,22 +98,17 @@ public class MyIMAPReceiveMailUtil
      * @throws MessagingException
      * @throws UnsupportedEncodingException
      */
-    public static String GetFrom(MimeMessage msg) throws MessagingException, UnsupportedEncodingException
-    {
+    public static String GetFrom(MimeMessage msg) throws MessagingException, UnsupportedEncodingException {
         String from;
         Address[] froms = msg.getFrom();
-        if (froms.length < 1)
-        {
+        if (froms.length < 1) {
             throw new MessagingException("没有发件人!");
         }
         InternetAddress address = (InternetAddress) froms[0];
         String person = address.getPersonal();
-        if (person != null)
-        {
+        if (person != null) {
             person = MimeUtility.decodeText(person) + " ";
-        }
-        else
-        {
+        } else {
             person = "";
         }
         from = person + "<" + address.getAddress() + ">";
@@ -130,24 +127,18 @@ public class MyIMAPReceiveMailUtil
      * @return 收件人1<邮件地址1>, 收件人2<邮件地址2>, ...
      * @throws MessagingException
      */
-    public static String GetReceiveAddress(MimeMessage msg, Message.RecipientType type) throws MessagingException
-    {
+    public static String GetReceiveAddress(MimeMessage msg, Message.RecipientType type) throws MessagingException {
         StringBuffer receiveAddress = new StringBuffer();
         Address[] addresss;
-        if (type == null)
-        {
+        if (type == null) {
             addresss = msg.getAllRecipients();
-        }
-        else
-        {
+        } else {
             addresss = msg.getRecipients(type);
         }
-        if (addresss == null || addresss.length < 1)
-        {
+        if (addresss == null || addresss.length < 1) {
             throw new MessagingException("没有收件人!");
         }
-        for (Address address : addresss)
-        {
+        for (Address address : addresss) {
             InternetAddress internetAddress = (InternetAddress) address;
             receiveAddress.append(internetAddress.toUnicodeString()).append(",");
         }
@@ -163,15 +154,12 @@ public class MyIMAPReceiveMailUtil
      * @return yyyy年mm月dd日 星期X HH:mm
      * @throws MessagingException
      */
-    public static String GetSentDate(MimeMessage mimeMessage, String pattern) throws MessagingException
-    {
+    public static String GetSentDate(MimeMessage mimeMessage, String pattern) throws MessagingException {
         Date receivedDate = mimeMessage.getSentDate();
-        if (receivedDate == null)
-        {
+        if (receivedDate == null) {
             return "";
         }
-        if (pattern == null || "".equals(pattern))
-        {
+        if (pattern == null || "".equals(pattern)) {
             pattern = "yyyy年MM月dd日 E HH:mm ";
             //pattern = "yyyy-MM-dd HH:mm:ss";
         }
@@ -185,46 +173,33 @@ public class MyIMAPReceiveMailUtil
      * @throws MessagingException
      * @throws IOException
      */
-    public static boolean IsContainAttachment(Part part) throws MessagingException, IOException
-    {
+    public static boolean IsContainAttachment(Part part) throws MessagingException, IOException {
         boolean flag = false;
-        if (part.isMimeType("multipart/*"))
-        {
+        if (part.isMimeType("multipart/*")) {
             MimeMultipart multipart = (MimeMultipart) part.getContent();
             int partCount = multipart.getCount();
-            for (int i = 0; i < partCount; i++)
-            {
+            for (int i = 0; i < partCount; i++) {
                 BodyPart bodyPart = multipart.getBodyPart(i);
                 String disp = bodyPart.getDisposition();
-                if (disp != null && (disp.equalsIgnoreCase(Part.ATTACHMENT) || disp.equalsIgnoreCase(Part.INLINE)))
-                {
+                if (disp != null && (disp.equalsIgnoreCase(Part.ATTACHMENT) || disp.equalsIgnoreCase(Part.INLINE))) {
                     flag = true;
-                }
-                else if (bodyPart.isMimeType("multipart/*"))
-                {
+                } else if (bodyPart.isMimeType("multipart/*")) {
                     flag = IsContainAttachment(bodyPart);
-                }
-                else
-                {
+                } else {
                     String contentType = bodyPart.getContentType();
-                    if (contentType.indexOf("application") != -1)
-                    {
+                    if (contentType.indexOf("application") != -1) {
                         flag = true;
                     }
 
-                    if (contentType.indexOf("name") != -1)
-                    {
+                    if (contentType.indexOf("name") != -1) {
                         flag = true;
                     }
                 }
-                if (flag)
-                {
+                if (flag) {
                     break;
                 }
             }
-        }
-        else if (part.isMimeType("message/rfc822"))
-        {
+        } else if (part.isMimeType("message/rfc822")) {
             flag = IsContainAttachment((Part) part.getContent());
         }
         return flag;
@@ -237,8 +212,7 @@ public class MyIMAPReceiveMailUtil
      * @return 如果邮件已读返回true, 否则返回false
      * @throws MessagingException
      */
-    public static boolean IsSeen(MimeMessage msg) throws MessagingException
-    {
+    public static boolean IsSeen(MimeMessage msg) throws MessagingException {
         return msg.getFlags().contains(Flags.Flag.SEEN);
     }
 
@@ -249,12 +223,10 @@ public class MyIMAPReceiveMailUtil
      * @return 需要回执返回true, 否则返回false
      * @throws MessagingException
      */
-    public static boolean IsReplySign(MimeMessage msg) throws MessagingException
-    {
+    public static boolean IsReplySign(MimeMessage msg) throws MessagingException {
         boolean replySign = false;
         String[] headers = msg.getHeader("Disposition-Notification-To");
-        if (headers != null)
-        {
+        if (headers != null) {
             replySign = true;
         }
         return replySign;
@@ -267,23 +239,16 @@ public class MyIMAPReceiveMailUtil
      * @return 1(High):紧急  3:普通(Normal)  5:低(Low)
      * @throws MessagingException
      */
-    public static String GetPriority(MimeMessage msg) throws MessagingException
-    {
+    public static String GetPriority(MimeMessage msg) throws MessagingException {
         String priority = "普通";
         String[] headers = msg.getHeader("X-Priority");
-        if (headers != null)
-        {
+        if (headers != null) {
             String headerPriority = headers[0];
-            if (headerPriority.indexOf("1") != -1 || headerPriority.indexOf("High") != -1)
-            {
+            if (headerPriority.indexOf("1") != -1 || headerPriority.indexOf("High") != -1) {
                 priority = "紧急";
-            }
-            else if (headerPriority.indexOf("5") != -1 || headerPriority.indexOf("Low") != -1)
-            {
+            } else if (headerPriority.indexOf("5") != -1 || headerPriority.indexOf("Low") != -1) {
                 priority = "低";
-            }
-            else
-            {
+            } else {
                 priority = "普通";
             }
         }
@@ -298,24 +263,17 @@ public class MyIMAPReceiveMailUtil
      * @throws MessagingException
      * @throws IOException
      */
-    public static void GetMailTextContent(Part part, StringBuffer content) throws MessagingException, IOException
-    {
+    public static void GetMailTextContent(Part part, StringBuffer content) throws MessagingException, IOException {
         //如果是文本类型的附件,通过getContent方法可以取到文本内容,但这不是我们需要的结果,所以在这里要做判断
         boolean isContainTextAttach = part.getContentType().indexOf("name") > 0;
-        if (part.isMimeType("text/*") && !isContainTextAttach)
-        {
+        if (part.isMimeType("text/*") && !isContainTextAttach) {
             content.append(part.getContent().toString());
-        }
-        else if (part.isMimeType("message/rfc822"))
-        {
+        } else if (part.isMimeType("message/rfc822")) {
             GetMailTextContent((Part) part.getContent(), content);
-        }
-        else if (part.isMimeType("multipart/*"))
-        {
+        } else if (part.isMimeType("multipart/*")) {
             Multipart multipart = (Multipart) part.getContent();
             int partCount = multipart.getCount();
-            for (int i = 0; i < partCount; i++)
-            {
+            for (int i = 0; i < partCount; i++) {
                 BodyPart bodyPart = multipart.getBodyPart(i);
                 GetMailTextContent(bodyPart, content);
             }
@@ -333,47 +291,34 @@ public class MyIMAPReceiveMailUtil
      * @throws IOException
      */
     public static void SaveAttachment(Part part, String destDir) throws UnsupportedEncodingException, MessagingException,
-            FileNotFoundException, IOException
-    {
-        if (part.isMimeType("multipart/*"))
-        {
+            FileNotFoundException, IOException {
+        if (part.isMimeType("multipart/*")) {
             Multipart multipart = (Multipart) part.getContent();
             //复杂体邮件包含多个邮件体
             int partCount = multipart.getCount();
-            for (int i = 0; i < partCount; i++)
-            {
+            for (int i = 0; i < partCount; i++) {
                 //获得复杂体邮件中其中一个邮件体
                 BodyPart bodyPart = multipart.getBodyPart(i);
                 //某一个邮件体也有可能是由多个邮件体组成的复杂体
                 String disp = bodyPart.getDisposition();
-                if (disp != null && (disp.equalsIgnoreCase(Part.ATTACHMENT) || disp.equalsIgnoreCase(Part.INLINE)))
-                {
+                if (disp != null && (disp.equalsIgnoreCase(Part.ATTACHMENT) || disp.equalsIgnoreCase(Part.INLINE))) {
                     String fileName = bodyPart.getFileName();
-                    if (fileName != null && !fileName.equals(""))
-                    {
+                    if (fileName != null && !fileName.equals("")) {
                         SaveFile(bodyPart.getInputStream(), destDir, DecodeText(fileName));
                     }
-                }
-                else if (bodyPart.isMimeType("multipart/*"))
-                {
+                } else if (bodyPart.isMimeType("multipart/*")) {
                     SaveAttachment(bodyPart, destDir);
-                }
-                else
-                {
+                } else {
                     String contentType = bodyPart.getContentType();
-                    if (contentType.indexOf("name") != -1 || contentType.indexOf("application") != -1)
-                    {
+                    if (contentType.indexOf("name") != -1 || contentType.indexOf("application") != -1) {
                         String fileName = bodyPart.getFileName();
-                        if (fileName != null && !fileName.equals(""))
-                        {
+                        if (fileName != null && !fileName.equals("")) {
                             SaveFile(bodyPart.getInputStream(), destDir, DecodeText(fileName));
                         }
                     }
                 }
             }
-        }
-        else if (part.isMimeType("message/rfc822"))
-        {
+        } else if (part.isMimeType("message/rfc822")) {
             SaveAttachment((Part) part.getContent(), destDir);
         }
     }
@@ -387,30 +332,25 @@ public class MyIMAPReceiveMailUtil
      * @throws FileNotFoundException
      * @throws IOException
      */
-    private static void SaveFile(InputStream inputStream, String destDir, String fileName) throws FileNotFoundException, IOException
-    {
-        if (fileName == null || fileName.equals(""))
-        {
+    private static void SaveFile(InputStream inputStream, String destDir, String fileName) throws FileNotFoundException, IOException {
+        if (fileName == null || fileName.equals("")) {
             System.err.println("要写入的文件名不能为空!");
             return;
         }
         File file1 = new File(destDir);
         //文件夹不存在则新建
-        if (!file1.exists())
-        {
+        if (!file1.exists()) {
             file1.mkdir();
         }
         //文件存在则不再保存
         File file2 = new File(destDir + fileName);
-        if (file2.exists())
-        {
+        if (file2.exists()) {
             return;
         }
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file2));
         int len;
-        while ((len = bufferedInputStream.read()) != -1)
-        {
+        while ((len = bufferedInputStream.read()) != -1) {
             bufferedOutputStream.write(len);
             bufferedOutputStream.flush();
         }
@@ -425,15 +365,12 @@ public class MyIMAPReceiveMailUtil
      * @return 解码后的文本
      * @throws UnsupportedEncodingException
      */
-    public static String DecodeText(String encodeText) throws UnsupportedEncodingException
-    {
-        if (encodeText == null || "".equals(encodeText))
-        {
+    public static String DecodeText(String encodeText) throws UnsupportedEncodingException {
+        if (encodeText == null || "".equals(encodeText)) {
             return "";
-        }
-        else
-        {
+        } else {
             return MimeUtility.decodeText(encodeText);
         }
     }
+
 }

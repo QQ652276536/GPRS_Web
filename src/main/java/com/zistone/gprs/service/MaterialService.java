@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service
-public class MaterialService
-{
-    private Logger _logger = LoggerFactory.getLogger(MaterialService.class);
+public class MaterialService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MaterialService.class);
 
     @Resource
     private MaterialRepository _materialRepository;
@@ -22,20 +22,16 @@ public class MaterialService
      * @param material
      * @return
      */
-    public Material Update(Material material)
-    {
+    public Material Update(Material material) {
         Material temp = _materialRepository.FindByDeviceAddress(material.getDeviceAddress());
         //该设备已经绑定过物料
-        if (temp != null)
-        {
+        if (temp != null) {
             temp.setMaterialName(material.getMaterialName());
             temp.setDepotRow(material.getDepotRow());
             temp.setDepotColumn(material.getDepotColumn());
             temp.setDeviceName(material.getDeviceName());
             return _materialRepository.save(temp);
-        }
-        else
-        {
+        } else {
             return _materialRepository.save(material);
         }
     }
@@ -46,8 +42,7 @@ public class MaterialService
      * @param deviceAddress
      * @return
      */
-    public Material FindByDeviceAddress(String deviceAddress)
-    {
+    public Material FindByDeviceAddress(String deviceAddress) {
         return _materialRepository.FindByDeviceAddress(deviceAddress);
     }
 }

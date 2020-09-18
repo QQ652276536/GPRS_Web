@@ -7,32 +7,39 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
-//将WebSocket服务端运行在ws://[ServerIP]:[ServerPort]/项目名/WebSocket的访问节点
+/**
+ * 服务器主动向客户端发送消息
+ */
 @ServerEndpoint(value = "/WebSocket")
 @Component
-public class WebSocketServer
-{
-    public static CopyOnWriteArraySet<WebSocketServer> webSocketSet = new CopyOnWriteArraySet<>();
-    private Logger _logger = LoggerFactory.getLogger(WebSocketServer.class);
+public class WebSocketServer {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketServer.class);
+
+    //线程安全的Set，用来存放每个客户端对应的WebSocket对象
+    public static volatile Set<WebSocketServer> _webSocketSet = ConcurrentHashMap.newKeySet();
+
     private Session _session;
-    //当前在线连接数
-    private static int _connectCount = 0;
 
-    public static synchronized int getConnectCount()
-    {
-        return _connectCount;
+    /**
+     * 主动推送消息
+     *
+     * @param message
+     * @throws IOException
+     */
+    public static void InitiativeSendMessage(String message) throws IOException {
+        LOGGER.info("主动推送消息：" + message);
+        //群发信息
+        for (WebSocketServer item : _webSocketSet) {
+            item.SendMessage(message);
+        }
     }
 
-    public static synchronized void addConnectCount()
-    {
-        _connectCount++;
-    }
-
-    public static synchronized void subConnectCount()
-    {
-        _connectCount--;
+    public void SendMessage(String message) throws IOException {
+        _session.getBasicRemote().sendText(message);
     }
 
     /**
@@ -41,20 +48,15 @@ public class WebSocketServer
      * @param session
      */
     @OnOpen
-    public void Open(Session session)
-    {
+    public void Open(Session session) {
         _session = session;
-        webSocketSet.add(this);
-        addConnectCount();
-        _logger.info(String.format("有新连接加入,当前在线人数为:%s", getConnectCount()));
-        try
-        {
+        _webSocketSet.add(this);
+        LOGGER.info(String.format("有新连接加入，当前在线人数为:%s", _webSocketSet.size()));
+        try {
             SendMessage("连接成功...!!!");
-        }
-        catch (IOException e)
-        {
-            _logger.error("WebSocket IO异常");
+        } catch (IOException e) {
             e.printStackTrace();
+            LOGGER.error(e.toString());
         }
     }
 
@@ -62,11 +64,9 @@ public class WebSocketServer
      * 连接关闭
      */
     @OnClose
-    public void Close()
-    {
-        webSocketSet.remove(this);
-        subConnectCount();
-        _logger.info(String.format("有一个连接关闭,当前在线人数:", getConnectCount()));
+    public void Close() {
+        _webSocketSet.remove(this);
+        LOGGER.info(String.format("有一个连接关闭,当前在线人数:%s", _webSocketSet.size()));
     }
 
     /**
@@ -76,13 +76,11 @@ public class WebSocketServer
      * @param session
      */
     @OnMessage
-    public void OnMessage(String message, Session session) throws IOException
-    {
-        _logger.info(String.format("收到来自客户端的信息:%s", message));
+    public void OnMessage(String message, Session session) throws IOException {
+        LOGGER.info(String.format("收到来自客户端的信息:%s", message));
         //群发信息
-        for (WebSocketServer item : webSocketSet)
-        {
-            item.SendMessage(message);
+        for (WebSocketServer item : _webSocketSet) {
+            item.SendMessage("我是WebSocket发送过来的消息");
         }
     }
 
@@ -93,15 +91,9 @@ public class WebSocketServer
      * @param throwable
      */
     @OnError
-    public void OnError(Session session, Throwable throwable)
-    {
-        _logger.info(String.format("%s连接时发生错误!", session.getId()));
+    public void OnError(Session session, Throwable throwable) {
+        LOGGER.info(String.format("[%s]连接时发生错误!", session.getId()));
         throwable.printStackTrace();
-    }
-
-    public void SendMessage(String message) throws IOException
-    {
-        _session.getBasicRemote().sendText(message);
     }
 
 }

@@ -154,7 +154,7 @@ public class MyConvertUtilTest {
         String commState = Arrays.toString(bitCommState);
         System.out.println("通信状态：" + commState);
 
-        
+
     }
 
     @Test
@@ -301,87 +301,11 @@ public class MyConvertUtilTest {
         System.out.println("____________________________________________________________________");
     }
 
-    private class MyBluetoothDevice {
-        private String name;
-        private String address;
-        private int rssi;
-
-        public MyBluetoothDevice(String name, String address, int rssi) {
-            this.name = name;
-            this.address = address;
-            this.rssi = rssi;
-        }
-
-        public MyBluetoothDevice(String name, String address) {
-            this.name = name;
-            this.address = address;
-            this.rssi = 0;
-        }
-
-        @Override
-        public String toString() {
-            return "MyBluetoothDevice{" + "name='" + name + '\'' + ", address='" + address + '\'' + ", rssi=" + rssi + '}';
-        }
-
-        @Override
-        public boolean equals(@Nullable Object obj) {
-            if (obj == null)
-                return false;
-            if (obj instanceof MyBluetoothDevice) {
-                MyBluetoothDevice other = (MyBluetoothDevice) obj;
-                if (this.address.equals(other.address))
-                    return true;
-                else
-                    return false;
-            }
-            return false;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(address);
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public int getRssi() {
-            return rssi;
-        }
-
-        public void setRssi(int rssi) {
-            this.rssi = rssi;
-        }
-    }
-
     @Test
     public void byteArray1ToInt() {
         System.out.println("____________________________________________________________________");
-        List<MyBluetoothDevice> list = new ArrayList<MyBluetoothDevice>() {{
-            this.add(new MyBluetoothDevice("森远股份", "111", 100));
-            this.add(new MyBluetoothDevice("森远股份", "222", 100));
-            this.add(new MyBluetoothDevice("森远股份", "333", 100));
-        }};
-        MyBluetoothDevice myBluetoothDevice2 = new MyBluetoothDevice("副作用", "222", 960);
-        if (!list.contains(myBluetoothDevice2)) {
-            list.add(myBluetoothDevice2);
-        }
-        for (MyBluetoothDevice temp : list) {
-            System.out.println(temp.toString());
-        }
+
+
     }
 
     @Test

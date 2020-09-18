@@ -1,12 +1,9 @@
 package com.zistone.gprs.file_listener;
 
-import java.util.Date;
+public class FileData {
 
-public class FileData
-{
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "FileData{" +
                 "path='" + path + '\'' +
                 ", encode='" + encode + '\'' +
@@ -20,43 +17,35 @@ public class FileData
     private String content;
     private long timeLength;
 
-    public String getPath()
-    {
+    public String getPath() {
         return path;
     }
 
-    public void setPath(String path)
-    {
+    public void setPath(String path) {
         this.path = path;
     }
 
-    public String getEncode()
-    {
+    public String getEncode() {
         return encode;
     }
 
-    public void setEncode(String encode)
-    {
+    public void setEncode(String encode) {
         this.encode = encode;
     }
 
-    public String getContent()
-    {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(String content)
-    {
+    public void setContent(String content) {
         this.content = content;
     }
 
-    public long getTimeLength()
-    {
+    public long getTimeLength() {
         return timeLength;
     }
 
-    public void setTimeLength(long timeLength)
-    {
+    public void setTimeLength(long timeLength) {
         this.timeLength = timeLength;
     }
 

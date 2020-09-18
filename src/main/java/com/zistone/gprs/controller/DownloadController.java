@@ -20,11 +20,12 @@ import java.util.Objects;
 @RestController
 @RequestMapping(value = "/Download")
 public class DownloadController {
-    private Logger _logger = LoggerFactory.getLogger(DownloadController.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DownloadController.class);
 
     @RequestMapping(value = "/OTATest", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public ResponseEntity<Resource> OTATest(HttpServletRequest request) throws IOException {
-        _logger.info("收到下载更新包的请求");
+        LOGGER.info("收到下载更新包的请求");
         //待下载文件名
         String fileName = "update.zip";
         File file = new File(fileName);
@@ -34,9 +35,9 @@ public class DownloadController {
             try {
                 resource = new FileSystemResource(file);
                 contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-                _logger.info("已获取到要下载的更新包资源");
+                LOGGER.info("已获取到要下载的更新包资源");
             } catch (IOException e) {
-                _logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
             if (Objects.isNull(contentType)) {
                 contentType = "application/octet-stream";
@@ -53,7 +54,7 @@ public class DownloadController {
 
     @RequestMapping(value = "/TxtTest", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public ResponseEntity<Resource> TxtTest(HttpServletRequest request) throws IOException {
-        _logger.info("收到下载更新文本的请求");
+        LOGGER.info("收到下载更新文本的请求");
         //待下载文件名
         String fileName = "update_info.txt";
         File file = new File(fileName);
@@ -63,9 +64,9 @@ public class DownloadController {
             try {
                 resource = new FileSystemResource(file);
                 contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-                _logger.info("已获取到要下载的文本资源");
+                LOGGER.info("已获取到要下载的文本资源");
             } catch (IOException e) {
-                _logger.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
             if (Objects.isNull(contentType)) {
                 contentType = "text/plain";

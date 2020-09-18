@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -18,8 +19,10 @@ import java.util.stream.Stream;
 @SpringBootTest(classes = {StartApplication.class})
 public class LocationInfoServiceTest
 {
-    @Autowired
-    private LocationInfoService _locationInfoService;
+    //@Resource默认按byName自动注入
+    //@Autowired默认按byType自动注入
+    @Resource
+    LocationInfoService _locationInfoService;
 
     private static final SimpleDateFormat SIMPLEDATEFORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static final SimpleDateFormat SIMPLEDATEFORMAT2 = new SimpleDateFormat("yyyy-MM-dd");

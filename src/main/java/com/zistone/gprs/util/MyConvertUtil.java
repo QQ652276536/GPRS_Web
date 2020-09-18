@@ -5,13 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 转换工具类
- * 不支持特殊字符
+ * 字符串转换，不支持特殊字符
+ *
+ * @author LiWei
+ * @date 2020/7/18 9:33
+ * @email 652276536@qq.com
  */
-public class MyConvertUtil {
+public final class MyConvertUtil {
 
     //16进制数字字符集
     public static final String HEXSTRING = "0123456789ABCDEF";
+
+    /**
+     * （禁止外部实例化）
+     */
+    private MyConvertUtil() {
+    }
 
     /**
      * 隔指定位置插入字符
@@ -77,7 +86,7 @@ public class MyConvertUtil {
      * @param asc
      * @return
      */
-    public static String SortStringArray(String[] array, boolean asc) {
+    public static String[] SortStringArray(String[] array, boolean asc) {
         //从小到大
         if (asc) {
             for (int i = 0; i < array.length; i++) {
@@ -102,11 +111,7 @@ public class MyConvertUtil {
                 }
             }
         }
-        String result = "";
-        for (String tempStr : array) {
-            result += tempStr;
-        }
-        return result;
+        return array;
     }
 
     /**
@@ -137,58 +142,12 @@ public class MyConvertUtil {
         return text.replaceFirst("(?s)" + strToReplace + "(?!.*?" + strToReplace + ")", replaceWithThis);
     }
 
-    public static byte BitToByte(String bit) {
-        int result, len;
-        if (null == bit) {
-            return 0;
-        }
-        len = bit.length();
-        if (len != 4 && len != 8) {
-            return 0;
-        }
-        if (len == 8) {
-            //正数
-            if (bit.charAt(0) == '0') {
-                result = Integer.parseInt(bit, 2);
-            }
-            //负数
-            else {
-                result = Integer.parseInt(bit, 2) - 256;
-            }
-        }
-        //4bit处理
-        else {
-            result = Integer.parseInt(bit, 2);
-        }
-        return (byte) result;
-    }
-
-    public static String ByteTo6BitLittle(byte b) {
-        return "" + (byte) ((b >> 0) & 0x1) +
-                (byte) ((b >> 1) & 0x1) +
-                (byte) ((b >> 2) & 0x1) +
-                (byte) ((b >> 3) & 0x1) +
-                (byte) ((b >> 4) & 0x1) +
-                (byte) ((b >> 5) & 0x1);
-    }
-
     /**
-     * 小端模式，高字节在前
+     * 大端模式，低字节在前
      *
      * @param b
      * @return
      */
-    public static String ByteToBitLittle(byte b) {
-        return "" + (byte) ((b >> 0) & 0x1) +
-                (byte) ((b >> 1) & 0x1) +
-                (byte) ((b >> 2) & 0x1) +
-                (byte) ((b >> 3) & 0x1) +
-                (byte) ((b >> 4) & 0x1) +
-                (byte) ((b >> 5) & 0x1) +
-                (byte) ((b >> 6) & 0x1) +
-                (byte) ((b >> 7) & 0x1);
-    }
-
     public static String ByteTo6BitBig(byte b) {
         return "" + (byte) ((b >> 5) & 0x1) +
                 (byte) ((b >> 4) & 0x1) +
@@ -205,14 +164,17 @@ public class MyConvertUtil {
      * @return
      */
     public static String ByteToBitBig(byte b) {
-        return "" + (byte) ((b >> 7) & 0x1) +
-                (byte) ((b >> 6) & 0x1) +
-                (byte) ((b >> 5) & 0x1) +
-                (byte) ((b >> 4) & 0x1) +
-                (byte) ((b >> 3) & 0x1) +
-                (byte) ((b >> 2) & 0x1) +
-                (byte) ((b >> 1) & 0x1) +
-                (byte) ((b >> 0) & 0x1);
+        return "" + (byte) ((b >> 7) & 0x1) + (byte) ((b >> 6) & 0x1) + (byte) ((b >> 5) & 0x1) + (byte) ((b >> 4) & 0x1) + (byte) ((b >> 3) & 0x1) + (byte) ((b >> 2) & 0x1) + (byte) ((b >> 1) & 0x1) + (byte) ((b >> 0) & 0x1);
+    }
+
+    /**
+     * 小端模式，高字节在前
+     *
+     * @param b
+     * @return
+     */
+    public static String ByteToBitLittle(byte b) {
+        return "" + (byte) ((b >> 0) & 0x1) + (byte) ((b >> 1) & 0x1) + (byte) ((b >> 2) & 0x1) + (byte) ((b >> 3) & 0x1) + (byte) ((b >> 4) & 0x1) + (byte) ((b >> 5) & 0x1) + (byte) ((b >> 6) & 0x1) + (byte) ((b >> 7) & 0x1);
     }
 
     /**
@@ -268,26 +230,6 @@ public class MyConvertUtil {
     }
 
     /**
-     * 不带空格的16进制字符串插入指定字符
-     *
-     * @param str       不带空格的字符串
-     * @param character 指定字符
-     * @return
-     */
-    public static String StrAddCharacter(String str, String character) {
-        StringBuffer stringBuffer = new StringBuffer();
-        for (int i = 0; i < str.length(); i++) {
-            if (i != str.length() - 1) {
-                stringBuffer.append(str.charAt(i));
-                stringBuffer.append(character);
-            } else {
-                stringBuffer.append(str.charAt(i));
-            }
-        }
-        return stringBuffer.toString();
-    }
-
-    /**
      * 生成校验码
      * 将收到的消息还原转义后去除标识和校验位,然后按位异或得到的结果就是校验码
      *
@@ -316,7 +258,8 @@ public class MyConvertUtil {
     }
 
     /**
-     * 生成校验码,只用于Zistone的LP108项目
+     * 生成校验码
+     * 仅用于LP108的单片机
      *
      * @param src
      * @return
@@ -437,12 +380,12 @@ public class MyConvertUtil {
         StringBuilder stringBuilder = new StringBuilder(bytes.length * 2);
         //将字节数组中每个字节拆解成2位16进制整数
         for (int i = 0; i < bytes.length; i++) {
-//            stringBuilder.append("0x");
+            //            stringBuilder.append("0x");
             stringBuilder.append(HEXSTRING.charAt((bytes[i] & 0xf0) >> 4));
             stringBuilder.append(HEXSTRING.charAt((bytes[i] & 0x0f) >> 0));
             //去掉末尾的逗号
             if (i != bytes.length - 1) {
-//                stringBuilder.append(",");
+                //                stringBuilder.append(",");
             }
         }
         return stringBuilder.toString();
@@ -584,6 +527,26 @@ public class MyConvertUtil {
      * byte[]转16进制Str
      *
      * @param byteArray
+     * @param length
+     * @return
+     */
+    public static String ByteArrayToHexStr(byte[] byteArray, int length) {
+        StringBuffer stringBuffer = new StringBuffer(length);
+        String temp;
+        for (int i = 0; i < length; i++) {
+            temp = Integer.toHexString(0xFF & byteArray[i]);
+            if (temp.length() < 2) {
+                stringBuffer.append(0);
+            }
+            stringBuffer.append(temp.toUpperCase());
+        }
+        return stringBuffer.toString();
+    }
+
+    /**
+     * byte[]转16进制Str
+     *
+     * @param byteArray
      */
     public static String ByteArrayToHexStr(byte[] byteArray) {
         if (byteArray == null) {
@@ -608,10 +571,11 @@ public class MyConvertUtil {
     private static String GetHexStr(String str) {
         String hexStr = "";
         for (int i = str.length(); i < 4; i++) {
-            if (i == str.length())
+            if (i == str.length()) {
                 hexStr = "0";
-            else
+            } else {
                 hexStr = hexStr + "0";
+            }
         }
         return hexStr + str;
     }

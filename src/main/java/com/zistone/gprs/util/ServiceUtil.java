@@ -10,36 +10,36 @@ import org.springframework.stereotype.Component;
  * 说明:此类需要放到同包或者子包下才能被扫描
  */
 @Component
-public class ServiceUtil implements ApplicationContextAware
-{
+public final class ServiceUtil implements ApplicationContextAware {
+
     private static ApplicationContext applicationContext = null;
 
+    /**
+     * （禁止外部实例化）
+     */
+    private ServiceUtil() {
+    }
+
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException
-    {
-        if (ServiceUtil.applicationContext == null)
-        {
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        if (ServiceUtil.applicationContext == null) {
             ServiceUtil.applicationContext = applicationContext;
         }
     }
 
-    public static ApplicationContext getApplicationContext()
-    {
+    public static ApplicationContext getApplicationContext() {
         return applicationContext;
     }
 
-    public static Object GetBean(String name)
-    {
+    public static Object GetBean(String name) {
         return getApplicationContext().getBean(name);
     }
 
-    public static <T> T GetBean(Class<T> clazz)
-    {
+    public static <T> T GetBean(Class<T> clazz) {
         return getApplicationContext().getBean(clazz);
     }
 
-    public static <T> T GetBean(String name, Class<T> clazz)
-    {
+    public static <T> T GetBean(String name, Class<T> clazz) {
         return getApplicationContext().getBean(name, clazz);
     }
 

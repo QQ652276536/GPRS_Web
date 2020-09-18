@@ -15,24 +15,22 @@ spring:
 
     #使用Unicode编码,UTF-8编码,SSL连接,中国标准时间
     #阿里云
-    #url: jdbc:mysql://101.132.102.203:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
-    #腾讯云
-    #url: jdbc:mysql://49.234.4.245:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://101.132.102.203:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     #本地
     #url: jdbc:mysql://127.0.0.1:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     #公司腾讯云
-    url: jdbc:mysql://129.204.165.206:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    #url: jdbc:mysql://129.204.165.206:3306/zistone?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
 
-    #MongoDB
-  application:
-    name: spirng-boot-mongodb
-  data:
-    mongodb:
-      host: 49.234.4.245
-      port: 27017
-      database: admin
-      username: root
-      password: Passw0rd
+  #  #MongoDB暂时没用上，可以先不配置
+  #  application:
+  #    name: spirng-boot-mongodb
+  #  data:
+  #    mongodb:
+  #      host: 101.132.102.203
+  #      port: 27017
+  #      database: admin
+  #      username: root
+  #      password: Passw0rd
 
   #JPA配置
   jpa:

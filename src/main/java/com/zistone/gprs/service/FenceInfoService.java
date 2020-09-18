@@ -10,26 +10,23 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class FenceInfoService
-{
-    private Logger _logger = LoggerFactory.getLogger(FenceInfoService.class);
+public class FenceInfoService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FenceInfoService.class);
 
     @Resource
     private FenceInfoRepository _fenceInfoRepository;
 
-    public List<FenceInfo> FindByDeviceId(String deviceId)
-    {
+    public List<FenceInfo> FindByDeviceId(String deviceId) {
         List<FenceInfo> list = _fenceInfoRepository.FindByDeviceId(deviceId);
         return list;
     }
 
-    public FenceInfo InsertByDeviceId(FenceInfo fenceInfo)
-    {
+    public FenceInfo InsertByDeviceId(FenceInfo fenceInfo) {
         return _fenceInfoRepository.save(fenceInfo);
     }
 
-    public void DelById(String id)
-    {
+    public void DelById(String id) {
         _fenceInfoRepository.deleteById(Integer.valueOf(id));
     }
 

@@ -23,7 +23,7 @@ public class FileContentEvent_YX {
 
     static {
         _webIP = MyPropertiesUtil.GetValueProperties().getProperty("IP_WEB");
-        _webPort = Integer.valueOf(MyPropertiesUtil.GetValueProperties().getProperty("PORT_WEB"));
+        _webPort = Integer.parseInt(MyPropertiesUtil.GetValueProperties().getProperty("PORT_WEB"));
     }
 
     private Timer _timer = new Timer();

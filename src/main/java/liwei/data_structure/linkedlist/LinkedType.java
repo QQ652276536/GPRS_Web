@@ -1,7 +1,5 @@
 package liwei.data_structure.linkedlist;
 
-import liwei.data_structure.MyNodeTest;
-
 /**
  * 链表结构,由许多节点构成,每个节点由'数据部分'和'地址部分'组成.
  * <p>

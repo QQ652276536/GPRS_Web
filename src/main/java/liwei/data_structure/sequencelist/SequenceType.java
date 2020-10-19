@@ -1,6 +1,6 @@
 package liwei.data_structure.sequencelist;
 
-import liwei.data_structure.MyNodeTest;
+import liwei.data_structure.linkedlist.MyNodeTest;
 
 /**
  * 顺序表结构,就是按顺序存储的线性表.

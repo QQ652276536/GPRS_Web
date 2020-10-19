@@ -1,6 +1,6 @@
 package liwei.data_structure.stack;
 
-import liwei.data_structure.MyNodeTest;
+import liwei.data_structure.linkedlist.MyNodeTest;
 
 /**
  * 栈结构,后进先出,只有栈顶元素是可以访问的.

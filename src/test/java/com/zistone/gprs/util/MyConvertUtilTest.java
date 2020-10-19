@@ -220,8 +220,8 @@ public class MyConvertUtilTest {
     }
 
     @Test
-    public void strArrayToStr() {
-        System.out.println("____________________________________________________________________");
+    public void strArrayToStr() throws Exception {
+        System.out.println(MyConvertUtil.CreateCheckCode("48 65 6C 6C 6F 31 32 33")+"\n____________________________________________________________________");
     }
 
     @Test

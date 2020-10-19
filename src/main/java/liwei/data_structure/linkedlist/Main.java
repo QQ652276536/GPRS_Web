@@ -1,7 +1,5 @@
 package liwei.data_structure.linkedlist;
 
-import liwei.data_structure.MyNodeTest;
-
 public class Main
 {
     public static void main(String[] args)

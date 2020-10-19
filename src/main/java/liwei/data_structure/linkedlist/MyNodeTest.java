@@ -1,4 +1,4 @@
-package liwei.data_structure;
+package liwei.data_structure.linkedlist;
 
 public class MyNodeTest
 {

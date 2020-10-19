@@ -1,6 +1,6 @@
 package liwei.data_structure.queuelist;
 
-import liwei.data_structure.MyNodeTest;
+import liwei.data_structure.linkedlist.MyNodeTest;
 
 /**
  * 队列结构,队头只能删除,队尾只能新增,先进先出.

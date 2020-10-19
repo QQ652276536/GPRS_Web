@@ -1,6 +1,6 @@
 package liwei.data_structure.sequencelist;
 
-import liwei.data_structure.MyNodeTest;
+import liwei.data_structure.linkedlist.MyNodeTest;
 
 public class Main
 {
